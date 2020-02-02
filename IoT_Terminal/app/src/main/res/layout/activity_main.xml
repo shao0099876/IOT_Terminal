@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/MainActivity_Root_LinearLayout"
+        android:layout_width="1280dp"
+        android:layout_height="805dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/MainActivity_Title_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="214dp"
+            android:gravity="bottom|center_horizontal"
+            android:text="@string/MainActivity_Title"
+            android:textSize="60sp" />
+
+        <TextView
+            android:id="@+id/MainActivity_WriterInfo_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:gravity="center"
+            android:text="@string/MainActivity_WriterInfo"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/MainActivity_VersionInfo_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:gravity="center"
+            android:text="@string/MainActivity_VersionInfo"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/MainActivity_ButtonCenter_LinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/MainActivity_Entersystem_Button"
+                android:layout_width="196dp"
+                android:layout_height="103dp"
+                android:text="@string/MainActivity_EnterButtonText"
+                android:textSize="25sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
