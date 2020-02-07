@@ -9,11 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.hit_src.ui.MainuiActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_mainui"
-            android:theme="@style/FullscreenTheme"></activity>
+        <activity android:name="com.hit_src.ui.OverviewActivity"></activity>
         <activity
             android:name="com.hit_src.ui.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

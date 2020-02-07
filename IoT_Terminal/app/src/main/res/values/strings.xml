@@ -10,4 +10,8 @@
     <string name="MainActivity_WriterInfo">哈尔滨工业大学（威海） 邵若忱</string>
     <string name="MainActivity_VersionInfo">Version 0.0.1</string>
     <string name="MainActivity_EnterButtonText">进入系统</string>
+    <string name="OverviewButtonText">系统概览</string>
+    <string name="Mainui_serialarea_Title">传感网状态</string>
+    <string name="Mainui_overviewarea_Title">系统运行综合状态</string>
+    <string name="Mainui_internetarea_Title">互联网状态</string>
 </resources>

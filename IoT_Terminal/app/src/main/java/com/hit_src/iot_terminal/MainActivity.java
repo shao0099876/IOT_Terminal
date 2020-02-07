@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.hit_src.ui.MainuiActivity;
+import com.hit_src.ui.OverviewActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,8 +42,8 @@ class enterButton_OnClickListener implements View.OnClickListener {
     }
     private void SystemInit(){  //系统初始化函数
         //启动界面Acitivity
-        Intent mainuiActivityIntent =new Intent(self, MainuiActivity.class);
-        self.startActivity(mainuiActivityIntent);
+        Intent overviewActivityIntent =new Intent(self, OverviewActivity.class);
+        self.startActivity(overviewActivityIntent);
 
         //系统初始化完毕后，关掉初始化用的Activity
         self.finish();
