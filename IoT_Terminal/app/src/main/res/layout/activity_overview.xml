@@ -7,7 +7,6 @@
     tools:context="com.hit_src.ui.OverviewActivity">
 
     <LinearLayout
-        android:id="@+id/Overview_base_LinearLayout"
         android:layout_width="1278dp"
         android:layout_height="661dp"
         android:orientation="vertical"
@@ -17,19 +16,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/Overview_content_LinearLayout"
             android:layout_width="match_parent"
             android:layout_height="575dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/Overview_serial_LinearLayout"
                 android:layout_width="334dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Overview_serialarea_title_TextView"
                     android:layout_width="match_parent"
                     android:layout_height="91dp"
                     android:gravity="bottom|center_horizontal"
@@ -38,40 +34,79 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/Overview_overview_LinearLayout"
                 android:layout_width="623dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Overview_overviewarea_title_textview"
                     android:layout_width="match_parent"
-                    android:layout_height="63dp"
-                    android:gravity="bottom|center_horizontal"
+                    android:layout_height="102dp"
+                    android:gravity="center"
                     android:text="@string/Overview_overviewarea_Title"
                     android:textSize="40sp" />
 
                 <LinearLayout
-                    android:id="@+id/Overview_overviewdraw_LinearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="444dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/Overview_overviewarea_serialstatus_TextView"
+                        android:id="@+id/Overview_OverviewStatus_TextView"
                         android:layout_width="518dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="30sp" />
 
                     <ImageView
-                        android:id="@+id/Overview_overviewarea_serialstatuslight_ImageView"
+                        android:id="@+id/Overview_Overviewstatus_ImageView"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/Overview_overviewimage_description" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/Overview_Serialstatus_Textview"
+                        android:layout_width="518dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="30sp" />
+
+                    <ImageView
+                        android:id="@+id/Overview_Serialstatus_ImageView"
                         android:layout_width="30dp"
                         android:layout_height="42dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/Overview_serialimage_description"
                         android:scaleType="fitCenter" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/Overview_Internetstatus_Textview"
+                        android:layout_width="518dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="30sp" />
+
+                    <ImageView
+                        android:id="@+id/Overview_Internetstatus_Imageview"
+                        android:layout_width="30dp"
+                        android:layout_height="42dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/Overview_internetimage_description" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
