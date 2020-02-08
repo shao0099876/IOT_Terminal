@@ -8,7 +8,7 @@
     <string name="title_activity_mainui">MainuiActivity</string>
     <string name="MainActivity_Title">健康监测终端</string>
     <string name="MainActivity_WriterInfo">哈尔滨工业大学（威海） 邵若忱</string>
-    <string name="MainActivity_VersionInfo">Version 0.0.0.1.1</string>
+    <string name="MainActivity_VersionInfo">Version 0.0.0.1.3</string>
     <string name="MainActivity_EnterButtonText">进入系统</string>
 
     <string name="OverviewButtonText">系统概览</string>

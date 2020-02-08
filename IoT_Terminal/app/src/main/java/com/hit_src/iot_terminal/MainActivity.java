@@ -23,13 +23,6 @@ public class MainActivity extends AppCompatActivity {
         //此处代码为开始界面代码，按需修改即可
         Button enterButton=findViewById(R.id.MainActivity_Entersystem_Button);
         enterButton.setOnClickListener(new enterButton_OnClickListener(this));
-
-
-
-
-
-
-
     }
 }
 
@@ -47,6 +40,7 @@ class enterButton_OnClickListener implements View.OnClickListener {
     private void SystemInit(){  //系统初始化函数
         //检查状态配置文件
         SharedPreferences sharedPreferences=self.getSharedPreferences("StatusProfile",Activity.MODE_PRIVATE);
+
         if(!sharedPreferences.contains("inited")){//如果未初始化
             SharedPreferences.Editor editor=sharedPreferences.edit();
             editor.putBoolean("inited", true);
