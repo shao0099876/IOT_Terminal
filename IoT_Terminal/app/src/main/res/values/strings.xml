@@ -16,7 +16,10 @@
     <string name="Overview_serialarea_Title">传感网状态</string>
     <string name="Overview_overviewarea_Title">系统运行综合状态</string>
     <string name="Overview_internetarea_Title">互联网状态</string>
+
     <string name="Overview_overviewimage_description">系统综合状态指示灯</string>
+    <string name="Overview_serialimage_description">传感网状态指示灯</string>
+    <string name="Overview_internetimage_description">网络状态指示灯</string>
 
     <string name="Serialstatus_allbroken">所有传感器断开</string>
     <string name="Serialstatus_partbroken">部分传感器断开</string>
@@ -24,4 +27,8 @@
 
     <string name="Internetstatus_normal">互联网连接正常</string>
     <string name="Internetstatus_broken">互联网连接断开</string>
+
+    <string name="Overview_normal">系统综合状态正常</string>
+    <string name="Overview_partbroken">系统部分状态异常</string>
+    <string name="Overview_allbroken">系统状态异常</string>
 </resources>

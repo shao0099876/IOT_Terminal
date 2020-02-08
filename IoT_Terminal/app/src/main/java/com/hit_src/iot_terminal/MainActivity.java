@@ -2,6 +2,7 @@ package com.hit_src.iot_terminal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +12,6 @@ import android.widget.Button;
 
 import com.hit_src.ui.OverviewActivity;
 
-import java.security.KeyStore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 //进入系统按钮的监听器实现
 class enterButton_OnClickListener implements View.OnClickListener {
-    private Activity self=null;
+    private Activity self;
     enterButton_OnClickListener(Activity parentActivity){
         self=parentActivity;
     }
@@ -43,6 +43,7 @@ class enterButton_OnClickListener implements View.OnClickListener {
     public void onClick(View v) {
         SystemInit();
     }
+    @SuppressLint("ApplySharedPref")
     private void SystemInit(){  //系统初始化函数
         //检查状态配置文件
         SharedPreferences sharedPreferences=self.getSharedPreferences("StatusProfile",Activity.MODE_PRIVATE);
