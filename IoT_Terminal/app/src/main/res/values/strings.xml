@@ -10,8 +10,18 @@
     <string name="MainActivity_WriterInfo">哈尔滨工业大学（威海） 邵若忱</string>
     <string name="MainActivity_VersionInfo">Version 0.0.1</string>
     <string name="MainActivity_EnterButtonText">进入系统</string>
+
     <string name="OverviewButtonText">系统概览</string>
-    <string name="Mainui_serialarea_Title">传感网状态</string>
-    <string name="Mainui_overviewarea_Title">系统运行综合状态</string>
-    <string name="Mainui_internetarea_Title">互联网状态</string>
+
+    <string name="Overview_serialarea_Title">传感网状态</string>
+    <string name="Overview_overviewarea_Title">系统运行综合状态</string>
+    <string name="Overview_internetarea_Title">互联网状态</string>
+    <string name="Overview_overviewimage_description">系统综合状态指示灯</string>
+
+    <string name="Serialstatus_allbroken">所有传感器断开</string>
+    <string name="Serialstatus_partbroken">部分传感器断开</string>
+    <string name="Serialstatus_normal">所有传感器正常</string>
+
+    <string name="Internetstatus_normal">互联网连接正常</string>
+    <string name="Internetstatus_broken">互联网连接断开</string>
 </resources>
