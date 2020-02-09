@@ -1,4 +1,4 @@
-package com.hit_src.ui;
+package com.hit_src.iot_terminal.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,16 +31,13 @@ public class OverviewActivity extends AppCompatActivity {
     private SharedPreferences.OnSharedPreferenceChangeListener profileChangeListener=new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            switch(key){
-                case "serial":
-                    uiStatusUpdate(SERIAL_UPDATE);
-                    uiStatusUpdate(OVERVIEW_UPDATE);
-                    break;
-                case "internet":
-                    uiStatusUpdate(INTERNET_UPDATE);
-                    uiStatusUpdate(OVERVIEW_UPDATE);
-                    break;
+            if(key.equals("serial")){
+                uiStatusUpdate(SERIAL_UPDATE);
             }
+            else if(key.equals("internet")){
+                uiStatusUpdate(INTERNET_UPDATE);
+            }
+            uiStatusUpdate(OVERVIEW_UPDATE);
         }
     };
     private void uiStatusUpdate(final int code){
