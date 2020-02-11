@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,20 +13,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.tools.Tools;
 
 public class OverviewActivity extends AppCompatActivity {
     private static final int SERIAL_UPDATE=1;
     private static final int INTERNET_UPDATE=2;
     private static final int OVERVIEW_UPDATE=3;
+
+    @Override
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+
+        SharedPreferences sp=getSharedPreferences("StatusProfile", Activity.MODE_PRIVATE);
+        sp.registerOnSharedPreferenceChangeListener(profileChangeListener);
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Tools.guidanceButtonSet(this);
         uiStatusUpdate(SERIAL_UPDATE);
         uiStatusUpdate(INTERNET_UPDATE);
         uiStatusUpdate(OVERVIEW_UPDATE);
-        SharedPreferences sp=getSharedPreferences("StatusProfile", Activity.MODE_PRIVATE);
-        sp.registerOnSharedPreferenceChangeListener(profileChangeListener);
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener profileChangeListener=new SharedPreferences.OnSharedPreferenceChangeListener() {

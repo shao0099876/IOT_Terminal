@@ -45,7 +45,10 @@ class enterButton_OnClickListener implements View.OnClickListener {
             editor.putString("internet",self.getString(R.string.Internetstatus_broken));
             editor.commit();
         }
+
         Intent overviewActivityIntent =new Intent(self, OverviewActivity.class);
+        overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         self.startActivity(overviewActivityIntent);
 
         self.finish();
