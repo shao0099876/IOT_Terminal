@@ -7,21 +7,14 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.OverviewActivity;
 import com.hit_src.iot_terminal.ui.SerialActivity;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class Tools {
     public static void guidanceButtonSet(Activity self){
-        Button overviewButton=self.findViewById(R.id.GuidanceBar_Overview_Button);
-        overviewButton.setOnClickListener(new GuidanceButtonClickListener(self, OverviewActivity.class));
-        overviewButton.setEnabled(true);
-
-        Button serialButton=self.findViewById(R.id.GuidanceBar_Serial_Button);
-        serialButton.setOnClickListener(new GuidanceButtonClickListener(self, SerialActivity.class));
-        serialButton.setEnabled(true);
-
-
+        setGuidanceButton((Button) self.findViewById(R.id.GuidanceBar_Overview_Button),self,OverviewActivity.class);
+        setGuidanceButton((Button) self.findViewById(R.id.GuidanceBar_Serial_Button),self,SerialActivity.class);
     }
-
+    private static void setGuidanceButton(Button button,Activity self,Class<?> activityClass){
+        button.setOnClickListener(new GuidanceButtonClickListener(self,activityClass));
+        button.setEnabled(true);
+    }
 
 }

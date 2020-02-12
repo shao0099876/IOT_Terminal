@@ -4,20 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-import com.hit_src.iot_terminal.ui.OverviewActivity;
-import com.hit_src.iot_terminal.ui.SerialActivity;
-
 public class GuidanceButtonClickListener implements View.OnClickListener {
     private Activity self;
     private Class<?> target;
-    public GuidanceButtonClickListener(){
-        self=null;
-        target=null;
-    }
 
-    public GuidanceButtonClickListener(Activity self, Class<?> overviewActivityClass) {
+    public GuidanceButtonClickListener(Activity self, Class<?> activityClass) {
         this.self=self;
-        target=overviewActivityClass;
+        target=activityClass;
     }
 
     @Override
