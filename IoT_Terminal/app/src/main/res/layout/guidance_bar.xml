@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.hit_src.iot_terminal.ui.component.button.guidance.OverviewButton
         android:id="@+id/GuidanceBar_Overview_Button"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -12,7 +12,7 @@
         android:text="@string/OverviewButtonText"
         android:textSize="30sp" />
 
-    <Button
+    <com.hit_src.iot_terminal.ui.component.button.guidance.SerialButton
         android:id="@+id/GuidanceBar_Serial_Button"
         android:layout_width="0dp"
         android:layout_height="match_parent"

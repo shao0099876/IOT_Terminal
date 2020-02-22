@@ -7,28 +7,16 @@ public class Sensor {
     private int ID;
     private int type;
 
-    public Sensor(){
-        ID=-1;
-        type=-1;
-    }
-
     public Sensor(int p1, int p2){
         ID=p1;
         type=p2;
     }
 
     public String toString(){
-        StringBuilder sb=new StringBuilder();
-        sb.append(ID);
-        sb.append("号");
-        sb.append(typeList[type]);
-        sb.append("传感器");
-        return sb.toString();
-    }
-    public String id_toString(){
-        StringBuilder sb=new StringBuilder();
-        sb.append(ID);
-        return sb.toString();
+        return ID +"号" +typeList[type] +"传感器";
     }
 
+    public int getID() {
+        return ID;
+    }
 }

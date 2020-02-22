@@ -32,4 +32,6 @@
     <string name="Overview_normal">系统综合状态正常</string>
     <string name="Overview_partbroken">系统部分状态异常</string>
     <string name="Overview_allbroken">系统状态异常</string>
+
+    <string name="Serial_serialarea_Title">传感器列表</string>
 </resources>

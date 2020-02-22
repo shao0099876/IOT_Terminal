@@ -1,5 +1,6 @@
 package com.hit_src.iot_terminal.db;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private static DatabaseOpenHelper databaseOpenHelper=new DatabaseOpenHelper(null,"iot",null,0);
+    private static DatabaseOpenHelper databaseOpenHelper;
 
-    public Database(){
-
+    public Database(Context context){
+        databaseOpenHelper=new DatabaseOpenHelper(context,"iot",null,1);
     }
     public List<Sensor> getSensorList(){
         SQLiteDatabase db=databaseOpenHelper.getReadableDatabase();

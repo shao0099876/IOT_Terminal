@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.tools.Tools;
 
 public class SerialActivity extends AppCompatActivity {
 
@@ -24,6 +23,6 @@ public class SerialActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Tools.guidanceButtonSet(this);
     }
+
 }
