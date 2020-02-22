@@ -11,11 +11,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.SerialActivity"></activity>
         <activity android:name=".ui.OverviewActivity" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main"
-            android:theme="@style/FullscreenTheme" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

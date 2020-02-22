@@ -1,7 +1,6 @@
 package com.hit_src.iot_terminal.db;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
