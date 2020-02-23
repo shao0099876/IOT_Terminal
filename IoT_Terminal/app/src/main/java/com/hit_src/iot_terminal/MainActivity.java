@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.hit_src.iot_terminal.db.Database;
 import com.hit_src.iot_terminal.ui.OverviewActivity;
 
 import java.util.HashSet;
@@ -27,12 +28,7 @@ public class MainActivity extends AppCompatActivity {
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences=self.getSharedPreferences("StatusProfile",Activity.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor=sharedPreferences.edit();
-                editor.putString("internet",self.getString(R.string.Internetstatus_broken));
-                editor.putStringSet("connected_sensor", new HashSet<String>());
-                editor.apply();
+                new Database(v.getContext());
 
                 Intent overviewActivityIntent =new Intent(self, OverviewActivity.class);
                 overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

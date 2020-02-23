@@ -39,7 +39,7 @@ public class OverviewStatusHandler extends Handler {
         switch (msg.what){
             case SENSOR_UPDATE:
                 HashSet<Integer> sensorList= Status.readSensorSet();//获取当前连接的传感器列表
-                List<Sensor> list=new Database(self).getSensorList();//获取数据库的传感器列表
+                List<Sensor> list= Database.getSensorList();//获取数据库的传感器列表
 
                 ListView sensorListView=((Activity)self).findViewById(R.id.Overview_sensorlist_ListView);
                 sensorListView.setAdapter(SensorListAdapterFactory.product(self,list,sensorList));

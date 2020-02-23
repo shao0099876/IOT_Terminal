@@ -8,7 +8,7 @@
     <string name="title_activity_mainui">MainuiActivity</string>
     <string name="MainActivity_Title">健康监测终端</string>
     <string name="MainActivity_WriterInfo">哈尔滨工业大学（威海） 邵若忱</string>
-    <string name="MainActivity_VersionInfo">Version 0.0.0.3.0</string>
+    <string name="MainActivity_VersionInfo">Version 0.0.2</string>
     <string name="MainActivity_EnterButtonText">进入系统</string>
 
     <string name="OverviewButtonText">系统概览</string>
@@ -34,4 +34,12 @@
     <string name="Overview_allbroken">系统状态异常</string>
 
     <string name="Serial_serialarea_Title">传感器列表</string>
+    <string name="Serial_flushbutton_Text">刷新列表</string>
+    <string name="Serial_addbutton_Text">增加传感器</string>
+    <string name="Serial_deletebutton_Text">删除传感器</string>
+    <string name="Serial_editbutton_Text">编辑传感器</string>
+
+    <string name="Serial_edit_ID_title">传感器  ID</string>
+    <string name="Serial_edit_type_title">传感器类型</string>
+
 </resources>
