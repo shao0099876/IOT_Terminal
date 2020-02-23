@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_content">
+        <item>床垫</item>
+        <item>血压</item>
+        <item>体温</item>
+        <item>血氧</item>
+    </string-array>
+</resources>

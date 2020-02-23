@@ -2,7 +2,7 @@ package com.hit_src.iot_terminal.object;
 
 public class Sensor {
     public static String dbCreateSQL="CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type integer NOT NULL );";
-    private static String[] typeList={"床垫","血压","体温","血氧"};
+    public static String[] typeList={"床垫","血压","体温","血氧"};
 
     private int ID;
     private int type;
@@ -18,5 +18,9 @@ public class Sensor {
 
     public int getID() {
         return ID;
+    }
+
+    public int getTypeNum() {
+        return type;
     }
 }
