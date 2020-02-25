@@ -5,12 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
-import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.db.Database;
-import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
-import com.hit_src.iot_terminal.profile.Status;
 import com.hit_src.iot_terminal.tools.MessageThread;
 import com.hit_src.iot_terminal.ui.SerialActivity;
 import com.hit_src.iot_terminal.ui.handler.SerialUIHandler;

@@ -5,15 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.db.Database;
-import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.profile.Status;
 import com.hit_src.iot_terminal.tools.MessageThread;
 import com.hit_src.iot_terminal.ui.handler.SerialUIHandler;
 

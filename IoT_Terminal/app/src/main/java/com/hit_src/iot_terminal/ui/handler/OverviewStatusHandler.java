@@ -12,7 +12,8 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.db.Database;
 import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.profile.Status;
+import com.hit_src.iot_terminal.profile.status.IPStatus;
+import com.hit_src.iot_terminal.profile.status.Status;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,8 +27,8 @@ public class OverviewStatusHandler extends Handler {
     public static final int SENSOR_NORMAL=2;
 
 
-    private static Boolean sensor_status=false;
-    private static Boolean internet_status=false;
+    private static boolean sensor_status=false;
+    private static boolean internet_status=false;
 
     private Context self;
     public OverviewStatusHandler(Context p){
@@ -56,27 +57,24 @@ public class OverviewStatusHandler extends Handler {
                 }
                 break;
             case INTERNET_UPDATE:
+                IPStatus status=Status.readInternetStatus();
                 ImageView imageView=((Activity)self).findViewById(R.id.Overview_Internetstatus_Imageview);
-                imageView.setImageResource(R.drawable.redlight);
                 TextView textView=((Activity)self).findViewById(R.id.Overview_Internetstatus_Textview);
-                textView.setText(R.string.Internetstatus_broken);
-                internet_status=false;
-                    /*sp=getSharedPreferences("StatusProfile",Activity.MODE_PRIVATE);
-                    String status=sp.getString("internet","ERROR!");
-                    if(status.equals(getString(R.string.Internetstatus_broken))){
-                        ImageView imageView=findViewById(R.id.Overview_Internetstatus_Imageview);
-                        imageView.setImageResource(R.drawable.redlight);
-                        TextView textView=findViewById(R.id.Overview_Internetstatus_Textview);
-                        textView.setText(R.string.Internetstatus_broken);
-                        internet_status=false;
-                    }
-                    else if(status.equals(getString(R.string.Internetstatus_normal))){
-                        ImageView imageView=findViewById(R.id.Overview_Internetstatus_Imageview);
-                        imageView.setImageResource(R.drawable.greenlight);
-                        TextView textView=findViewById(R.id.Overview_Internetstatus_Textview);
-                        textView.setText(R.string.Internetstatus_normal);
-                        internet_status=true;
-                    }*/
+                TextView internetarea_connectionstatus_TextView=((Activity)self).findViewById(R.id.Overview_internet_status_TextView);
+                TextView internetarea_connectionlasttime_TextView=((Activity)self).findViewById(R.id.Overview_internet_status_lasttime_TextView);
+                if(status.connected()){
+                    imageView.setImageResource(R.drawable.greenlight);
+                    textView.setText(R.string.Internetstatus_normal);
+                    internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_normal);
+                    internet_status=true;
+                }
+                else{
+                    imageView.setImageResource(R.drawable.redlight);
+                    textView.setText(R.string.Internetstatus_broken);
+                    internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_failure);
+                    internet_status=false;
+                }
+                internetarea_connectionlasttime_TextView.setText(status.time());
                 break;
         }
         ImageView imageView=((Activity)self).findViewById(R.id.Overview_Overviewstatus_ImageView);

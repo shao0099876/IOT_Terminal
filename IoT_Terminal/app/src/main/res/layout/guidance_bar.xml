@@ -19,4 +19,12 @@
         android:layout_weight="1"
         android:text="@string/SerialButtonText"
         android:textSize="30sp" />
+    <com.hit_src.iot_terminal.ui.component.button.guidance.InternetButton
+        android:id="@+id/GuidanceBar_Internet_Button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/InternetButtonText"
+        android:textSize="30sp" />
+
 </LinearLayout>
