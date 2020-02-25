@@ -18,17 +18,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="650dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="640dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:gravity="center"
                     android:text="@string/Serial_serialarea_Title"
                     android:textSize="30sp" />
@@ -36,12 +39,14 @@
                 <com.hit_src.iot_terminal.ui.component.listview.SerialSensorListView
                     android:id="@+id/Serial_sensorlist_ListView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <com.hit_src.iot_terminal.ui.component.button.serial.SerialFlushButton
@@ -85,7 +90,8 @@
         <include
             layout="@layout/guidance_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="8" />
 
     </LinearLayout>
 

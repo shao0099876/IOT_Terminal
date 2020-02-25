@@ -12,34 +12,49 @@
     <string name="MainActivity_EnterButtonText">进入系统</string>
 
     <string name="OverviewButtonText">系统概览</string>
-    <string name="SerialButtonText">传感网</string>
-
+    <string name="SerialButtonText">传感器配置</string>
+    <string name="InternetButtonText">互联网配置</string>
+    
     <string name="Overview_serialarea_Title">传感网状态</string>
     <string name="Overview_overviewarea_Title">系统运行综合状态</string>
     <string name="Overview_internetarea_Title">互联网状态</string>
-
     <string name="Overview_overviewimage_description">系统综合状态指示灯</string>
     <string name="Overview_serialimage_description">传感网状态指示灯</string>
     <string name="Overview_internetimage_description">网络状态指示灯</string>
+    <string name="Overview_internet_status_title">链接状态：</string>
+    <string name="Overview_internet_status_lasttime_title">上次链接时间：</string>
 
     <string name="Serialstatus_allbroken">所有传感器断开</string>
     <string name="Serialstatus_partbroken">部分传感器断开</string>
     <string name="Serialstatus_normal">所有传感器正常</string>
-
     <string name="Internetstatus_normal">互联网连接正常</string>
     <string name="Internetstatus_broken">互联网连接断开</string>
-
     <string name="Overview_normal">系统综合状态正常</string>
     <string name="Overview_partbroken">系统部分状态异常</string>
     <string name="Overview_allbroken">系统状态异常</string>
+    <string name="Internet_connection_failure">无法连接至上位机</string>
+    <string name="Internet_connection_normal">已连接至上位机</string>
 
     <string name="Serial_serialarea_Title">传感器列表</string>
     <string name="Serial_flushbutton_Text">刷新列表</string>
     <string name="Serial_addbutton_Text">增加传感器</string>
     <string name="Serial_deletebutton_Text">删除传感器</string>
     <string name="Serial_editbutton_Text">编辑传感器</string>
-
     <string name="Serial_edit_ID_title">传感器  ID</string>
     <string name="Serial_edit_type_title">传感器类型</string>
+
+    <string name="Internet_Title">互联网配置界面</string>
+    <string name="Internet_edit_IP_title">本机IP：</string>
+    <string name="Internet_edit_Netmask_title">子网掩码：</string>
+    <string name="Internet_edit_Gateway_title">网关IP：</string>
+    <string name="Internet_edit_autoconfig_switch">自动配置网络</string>
+    <string name="Internet_edit_server_title">上位机：</string>
+    <string name="Internet_edit_serverport_title">上位端口：</string>
+    <string name="Internet_status_title">网络状态</string>
+    <string name="Internet_status_link_title">上位机链接状态：</string>
+    <string name="Internet_status_lasttime_title">上次链接时间：</string>
+    <string name="Internet_edit_button_title">保存修改</string>
+
+
 
 </resources>
