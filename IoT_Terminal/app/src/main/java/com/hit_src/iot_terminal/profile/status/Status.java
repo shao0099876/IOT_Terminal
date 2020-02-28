@@ -9,6 +9,7 @@ import java.util.HashSet;
 public class Status {
     private static volatile HashSet<Integer> Connected_Sensor_Set=new HashSet<>();
     private static volatile IPStatus ipStatus=new IPStatus();
+
     public void writeSensorSet(HashSet<Integer> p){
         Connected_Sensor_Set=p;
         MessageThread.sendMessage(OverviewActivity.handler, OverviewStatusHandler.SENSOR_UPDATE);

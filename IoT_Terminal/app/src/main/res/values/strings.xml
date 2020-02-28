@@ -14,7 +14,7 @@
     <string name="OverviewButtonText">系统概览</string>
     <string name="SerialButtonText">传感器配置</string>
     <string name="InternetButtonText">互联网配置</string>
-    
+
     <string name="Overview_serialarea_Title">传感网状态</string>
     <string name="Overview_overviewarea_Title">系统运行综合状态</string>
     <string name="Overview_internetarea_Title">互联网状态</string>
@@ -54,7 +54,9 @@
     <string name="Internet_status_link_title">上位机链接状态：</string>
     <string name="Internet_status_lasttime_title">上次链接时间：</string>
     <string name="Internet_edit_button_title">保存修改</string>
+    <string name="Internet_status_reflush_button_title">刷新</string>
 
+    <string name="title_activity_test">test</string>
 
 
 </resources>

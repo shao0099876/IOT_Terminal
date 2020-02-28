@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.handler.OverviewStatusHandler;
@@ -14,7 +17,6 @@ public class OverviewActivity extends AppCompatActivity {
      * OverviewActivity是“系统概述”界面的活动类
      */
     public static OverviewStatusHandler handler;
-
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
