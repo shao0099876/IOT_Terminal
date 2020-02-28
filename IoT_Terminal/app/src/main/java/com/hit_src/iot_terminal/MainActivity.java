@@ -5,30 +5,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.hit_src.iot_terminal.db.Database;
+import com.hit_src.iot_terminal.hardware.EthernetNetworkCard;
+import com.hit_src.iot_terminal.profile.settings.InternetSettings;
 import com.hit_src.iot_terminal.ui.OverviewActivity;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashSet;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private Activity self;
+    private MainActivity self;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         self=this;
+
         Button enterButton=findViewById(R.id.MainActivity_Entersystem_Button);
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Database(v.getContext());
+                //test code
+                EthernetNetworkCard.getnetworkConfig();
+
+
+                //!test code
+                new Database(self);
+                new InternetSettings(self);
 
                 Intent overviewActivityIntent =new Intent(self, OverviewActivity.class);
                 overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -83,6 +83,13 @@
                             android:textSize="30sp" />
                     </LinearLayout>
 
+                    <com.hit_src.iot_terminal.ui.component.button.internet.InternetStatusFlushButton
+                        android:id="@+id/Internet_status_reflush_Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_status_reflush_button_title"
+                        android:textSize="30sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -155,7 +162,7 @@
                             android:inputType="text" />
                     </LinearLayout>
 
-                    <Switch
+                    <com.hit_src.iot_terminal.ui.component.switch_widet.InternetAutoConfigSwitch
                         android:id="@+id/Internet_edit_autoconfig_Switch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -204,7 +211,7 @@
                             android:inputType="number" />
                     </LinearLayout>
 
-                    <Button
+                    <com.hit_src.iot_terminal.ui.component.button.internet.InternetEditSaveButton
                         android:id="@+id/Internet_edit_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
