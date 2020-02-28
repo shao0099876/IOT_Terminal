@@ -1,2 +1,2 @@
-include ':app'
 rootProject.name='IoT_Terminal'
+include ':app'
