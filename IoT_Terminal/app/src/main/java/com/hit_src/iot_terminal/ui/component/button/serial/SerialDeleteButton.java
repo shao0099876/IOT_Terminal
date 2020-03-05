@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.db.Database;
@@ -47,7 +46,7 @@ public class SerialDeleteButton extends Button {
                 }
                 else{
                     int id= Integer.parseInt(tmp);
-                    Database.delSensor(id);
+                    Database.exec(Database.DELETE_SENSOR, new Object[]{id});
                     MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.EDITAREA_CLEAR);
                     MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.LIST_FLUSH);
                 }

@@ -25,16 +25,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="7"
+                    android:layout_weight="10"
                     android:gravity="center"
                     android:text="@string/Serial_serialarea_Title"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <com.hit_src.iot_terminal.ui.component.listview.SerialSensorListView
                     android:id="@+id/Serial_sensorlist_ListView"
@@ -54,28 +54,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_flushbutton_Text"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <com.hit_src.iot_terminal.ui.component.button.serial.SerialAddButton
                     android:id="@+id/Serial_add_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_addbutton_Text"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <com.hit_src.iot_terminal.ui.component.button.serial.SerialDeleteButton
                     android:id="@+id/Serial_delete_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_deletebutton_Text"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <com.hit_src.iot_terminal.ui.component.button.serial.SerialEditButton
                     android:id="@+id/Serial_edit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_editbutton_Text"
-                    android:textSize="30sp" />
+                    android:textSize="20sp" />
 
                 <include
                     layout="@layout/serial_edit_area"

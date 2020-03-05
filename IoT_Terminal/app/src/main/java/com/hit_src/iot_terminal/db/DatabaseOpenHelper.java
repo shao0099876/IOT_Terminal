@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.hit_src.iot_terminal.db.table.SensorTable;
 import com.hit_src.iot_terminal.object.Sensor;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
@@ -15,7 +16,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Sensor.dbCreateSQL);
+        db.execSQL(SensorTable.dbCreateSQL);
     }
 
     @Override

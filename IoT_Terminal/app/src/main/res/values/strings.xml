@@ -34,6 +34,7 @@
     <string name="Overview_allbroken">系统状态异常</string>
     <string name="Internet_connection_failure">无法连接至上位机</string>
     <string name="Internet_connection_normal">已连接至上位机</string>
+    <string name="Internet_connection_heartfailed">上位机未响应心跳数据</string>
 
     <string name="Serial_serialarea_Title">传感器列表</string>
     <string name="Serial_flushbutton_Text">刷新列表</string>

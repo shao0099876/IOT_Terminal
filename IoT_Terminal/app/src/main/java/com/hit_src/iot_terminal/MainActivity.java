@@ -2,32 +2,21 @@ package com.hit_src.iot_terminal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.hit_src.iot_terminal.db.Database;
-import com.hit_src.iot_terminal.hardware.EthernetNetworkCard;
 import com.hit_src.iot_terminal.profile.settings.InternetSettings;
+import com.hit_src.iot_terminal.service.internet.InternetService;
 import com.hit_src.iot_terminal.ui.OverviewActivity;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashSet;
-
-
 public class MainActivity extends AppCompatActivity {
-
+    /**
+     * MainActivity 是系统启动界面
+     * enterButton中注册的函数就是系统初始化所需要的的步骤
+     */
     private MainActivity self;
 
     @Override
@@ -35,25 +24,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         self=this;
-
+        //test code
+        //!test code
         Button enterButton=findViewById(R.id.MainActivity_Entersystem_Button);
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //test code
-                EthernetNetworkCard.getnetworkConfig();
+                new Database(self);//初始化数据库
+                new InternetSettings(self);//初始化网络设置文件
 
-
-                //!test code
-                new Database(self);
-                new InternetSettings(self);
-
+                //启动Service
+                self.startService(new Intent(self, InternetService.class));
+                //启动OverviewActivity
                 Intent overviewActivityIntent =new Intent(self, OverviewActivity.class);
                 overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 overviewActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 self.startActivity(overviewActivityIntent);
 
-                self.finish();
+                self.finish();//MainActivity使命完成，永久关闭
             }
         });
     }
