@@ -14,6 +14,7 @@ import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.profile.status.Status;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class SerialUIHandler extends Handler {
@@ -34,14 +35,14 @@ public class SerialUIHandler extends Handler {
         Spinner spinner=self.findViewById(R.id.Serial_edit_type_Spinner);
         switch(msg.what){
             case LIST_FLUSH:
-                listView.setAdapter((SensorListAdapterFactory.product(self, Database.getSensorList(), Status.readSensorSet())));
+                listView.setAdapter((SensorListAdapterFactory.product(self, (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null), (HashSet<Integer>) Status.getStatusData(Status.SENSOR_LIST))));
                 break;
             case EDITAREA_FLUSH:
                 int position=msg.getData().getInt("p1");
-                List<Sensor> dbList=Database.getSensorList();
+                List<Sensor> dbList= (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null);
                 Sensor selected=dbList.get(position);
-                editText.setText(Integer.toString(selected.getID()));
-                spinner.setSelection(selected.getTypeNum());
+                editText.setText(Integer.toString(selected.ID));
+                spinner.setSelection(selected.type);
                 break;
             case EDITAREA_CLEAR:
                 editText.setText("");

@@ -5,46 +5,45 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hit_src.iot_terminal.db.table.SensorTable;
 import com.hit_src.iot_terminal.object.Sensor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
+    //DatabaseOpenHelper用于获取数据库对象
     private static DatabaseOpenHelper databaseOpenHelper;
+
+    //数据库执行命令表
+    public static final int READ_SENSOR_TABLE_ALL=0;
+    public static final int ADD_SENSOR=1;
+    public static final int UPDATE_SENSOR=2;
+    public static final int DELETE_SENSOR=3;
+
+
+    //构造函数，初始化databaseOpenHelper
     public Database(Context context){
         databaseOpenHelper=new DatabaseOpenHelper(context,"iot",null,1);
     }
-    public static List<Sensor> getSensorList(){
-        SQLiteDatabase db=databaseOpenHelper.getReadableDatabase();
-        Cursor cursor=db.query("Sensor", new String[]{"sensor_id", "sensor_type"},null,null,null,null,null);
-        List<Sensor> res= new ArrayList<>();
-        while(cursor.moveToNext()){
-            res.add(new Sensor(cursor.getInt(0),cursor.getInt(1)));
+
+    //处理数据库执行命令
+    public static Object exec(int cmd,Object[] arg){
+        Object res=null;
+        switch(cmd){
+            case READ_SENSOR_TABLE_ALL://读数据库
+                res=SensorTable.getAllSensor(databaseOpenHelper.getReadableDatabase());
+                break;
+            case ADD_SENSOR:
+                SensorTable.addSensor(databaseOpenHelper.getWritableDatabase(), (Sensor) arg[0]);
+                break;
+            case UPDATE_SENSOR:
+                SensorTable.updateSensor(databaseOpenHelper.getWritableDatabase(),(int)arg[0],(int)arg[1]);
+                break;
+            case DELETE_SENSOR:
+                SensorTable.delSensor(databaseOpenHelper.getWritableDatabase(),(int)arg[0]);
+                break;
         }
-        cursor.close();
         return res;
-    }
-
-    public static void addSensor(Sensor newsensor) {
-        SQLiteDatabase db=databaseOpenHelper.getWritableDatabase();
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("sensor_id",newsensor.getID());
-        contentValues.put("sensor_type",newsensor.getTypeNum());
-        db.insert("Sensor",null,contentValues);
-    }
-
-    public static void delSensor(int id) {
-        SQLiteDatabase db=databaseOpenHelper.getWritableDatabase();
-        String[] arg=new String[1];
-        arg[0]=Integer.toString(id);
-        db.delete("Sensor","sensor_id=?",arg);
-    }
-
-    public static void updateSensor(int id, int typenum) {
-        SQLiteDatabase db=databaseOpenHelper.getWritableDatabase();
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("sensor_type",typenum);
-        db.update("Sensor",contentValues,"sensor_id=?", new String[]{Integer.toString(id)});
     }
 }

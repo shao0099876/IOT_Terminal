@@ -17,207 +17,161 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/Internet_Title"
-                android:textSize="40sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_status_link_title"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/Internet_status_link_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="@string/Internet_status_title"
-                        android:textSize="30sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Internet_status_link_title"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/Internet_status_link_TextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="30sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/Internet_status_lasttime_title"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/Internet_status_lasttime_TextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="30sp" />
-                    </LinearLayout>
-
-                    <com.hit_src.iot_terminal.ui.component.button.internet.InternetStatusFlushButton
-                        android:id="@+id/Internet_status_reflush_Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Internet_status_reflush_button_title"
-                        android:textSize="30sp" />
-
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_status_lasttime_title"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/Internet_status_lasttime_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/Internet_edit_IP_title"
-                            android:textSize="30sp" />
-
-                        <EditText
-                            android:id="@+id/Internet_edit_IP_EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="text"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/Internet_edit_Netmask_title"
-                            android:textSize="30sp" />
-
-                        <EditText
-                            android:id="@+id/Internet_edit_NetMask_EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/Internet_edit_Gateway_title"
-                            android:textSize="30sp" />
-
-                        <EditText
-                            android:id="@+id/Internet_edit_Gateway_EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="text" />
-                    </LinearLayout>
-
-                    <com.hit_src.iot_terminal.ui.component.switch_widet.InternetAutoConfigSwitch
-                        android:id="@+id/Internet_edit_autoconfig_Switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Internet_edit_autoconfig_switch"
-                        android:textSize="30sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/Internet_edit_server_title"
-                            android:textSize="30sp" />
-
-                        <EditText
-                            android:id="@+id/Internet_edit_server_EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/Internet_edit_serverport_title"
-                            android:textSize="30sp" />
-
-                        <EditText
-                            android:id="@+id/Internet_edit_serverport_EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="number" />
-                    </LinearLayout>
-
-                    <com.hit_src.iot_terminal.ui.component.button.internet.InternetEditSaveButton
-                        android:id="@+id/Internet_edit_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Internet_edit_button_title"
-                        android:textSize="30sp" />
+                        android:textSize="18sp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_edit_IP_title"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Internet_edit_IP_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_edit_Netmask_title"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Internet_edit_NetMask_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_edit_Gateway_title"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Internet_edit_Gateway_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_edit_server_title"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Internet_edit_server_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Internet_edit_serverport_title"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/Internet_edit_serverport_EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <com.hit_src.iot_terminal.ui.component.button.internet.InternetStatusFlushButton
+                    android:id="@+id/Internet_status_reflush_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Internet_status_reflush_button_title"
+                    android:textSize="18sp" />
+
+                <com.hit_src.iot_terminal.ui.component.button.internet.InternetEditSaveButton
+                    android:id="@+id/Internet_edit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Internet_edit_button_title"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

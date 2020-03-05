@@ -42,12 +42,12 @@ public class SerialAddButton extends Button {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Sensor> list=Database.getSensorList();
+                List<Sensor> list= (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null);
                 int id=cal_id(list);
                 Spinner spinner=self.findViewById(R.id.Serial_edit_type_Spinner);
                 int typenum=spinner.getSelectedItemPosition();
                 Sensor newsensor=new Sensor(id,typenum);
-                Database.addSensor(newsensor);
+                Database.exec(Database.ADD_SENSOR,new Sensor[]{newsensor});
                 MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.EDITAREA_CLEAR);
                 MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.LIST_FLUSH);
             }
@@ -56,7 +56,7 @@ public class SerialAddButton extends Button {
     private int cal_id(List<Sensor> list){
         int res=0;
         for(Sensor sensor:list){
-            res=max(res,sensor.getID());
+            res=max(res,sensor.ID);
         }
         return res+1;
     }

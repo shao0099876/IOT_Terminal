@@ -37,61 +37,15 @@ public class InternetEditSaveButton extends Button {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText=self.findViewById(R.id.Internet_edit_IP_EditText);
-                String ip=editText.getText().toString();
-                if(!check(ip)){
-                    new AlertDialog.Builder(self).setTitle("输入格式错误！").setMessage("IP格式错误").show();
-                    return;
-                }
-                editText=self.findViewById(R.id.Internet_edit_NetMask_EditText);
-                String netMask=editText.getText().toString();
-                if(!check(netMask)){
-                    new AlertDialog.Builder(self).setTitle("输入格式错误！").setMessage("子网掩码格式错误").show();
-                    return;
-                }
-                editText=self.findViewById(R.id.Internet_edit_Gateway_EditText);
-                String gateway=editText.getText().toString();
-                if(!check(gateway)){
-                    new AlertDialog.Builder(self).setTitle("输入格式错误！").setMessage("子网掩码格式错误").show();
-                    return;
-                }
-                editText=self.findViewById(R.id.Internet_edit_server_EditText);
+                EditText editText=self.findViewById(R.id.Internet_edit_server_EditText);
                 String server=editText.getText().toString();
                 editText=self.findViewById(R.id.Internet_edit_serverport_EditText);
                 int port=Integer.valueOf(editText.getText().toString());
-                InternetSettings.setIP(ip);
-                InternetSettings.setNetMask(netMask);
-                InternetSettings.setGateway(gateway);
                 InternetSettings.setServer(server);
                 InternetSettings.setServerPort(port);
+                new AlertDialog.Builder(self).setTitle("成功").setMessage("网络参数设置成功！").show();
             }
         });
     }
 
-    private boolean check(String ip) {
-        if(ip.isEmpty()){
-            return true;
-        }
-        int cnt=0;
-        for(int i=0;i<ip.length();i++){
-            char c=ip.charAt(i);
-            if(!Character.isDigit(c)&&c!='.'){
-                return false;
-            }
-            if(c=='.'){
-                cnt+=1;
-            }
-        }
-        if(cnt!=3){
-            return false;
-        }
-        String[] tmp=ip.split(".");
-        for(int i=0;i<tmp.length;i++){
-            int x=Integer.valueOf(tmp[i]);
-            if(x<0||x>255){
-                return false;
-            }
-        }
-        return true;
-    }
 }

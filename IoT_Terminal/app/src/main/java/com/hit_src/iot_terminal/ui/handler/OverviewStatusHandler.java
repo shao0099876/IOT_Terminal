@@ -12,7 +12,6 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.db.Database;
 import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.profile.status.IPStatus;
 import com.hit_src.iot_terminal.profile.status.Status;
 
 import java.util.HashSet;
@@ -30,21 +29,24 @@ public class OverviewStatusHandler extends Handler {
     private static boolean sensor_status=false;
     private static boolean internet_status=false;
 
-    private Context self;
+    private Activity self;
     public OverviewStatusHandler(Context p){
-        self=p;
+        self= (Activity) p;
     }
 
     @Override
     public void handleMessage(Message msg) {
         switch (msg.what){
             case SENSOR_UPDATE:
-                HashSet<Integer> sensorList= Status.readSensorSet();//获取当前连接的传感器列表
-                List<Sensor> list= Database.getSensorList();//获取数据库的传感器列表
+                HashSet<Integer> sensorList= (HashSet<Integer>) Status.getStatusData(Status.SENSOR_LIST);//获取当前连接的传感器列表
 
-                ListView sensorListView=((Activity)self).findViewById(R.id.Overview_sensorlist_ListView);
+                List<Sensor> list= (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null);
+
+                //获取ListView控件并设置适配器
+                ListView sensorListView=self.findViewById(R.id.Overview_sensorlist_ListView);
                 sensorListView.setAdapter(SensorListAdapterFactory.product(self,list,sensorList));
 
+                //通过sensorList的个数来确定当前的状态
                 if(sensorList.isEmpty()) {
                     setSensor(SENSOR_ALLBROKEN);
                 }
@@ -57,24 +59,33 @@ public class OverviewStatusHandler extends Handler {
                 }
                 break;
             case INTERNET_UPDATE:
-                IPStatus status=Status.readInternetStatus();
+                int internetConnection= (int) Status.getStatusData(Status.INTERNET_CONNECTION_STATUS);
+                String lasttime= (String) Status.getStatusData(Status.INTERNET_CONNECTION_LASTTIME);
                 ImageView imageView=((Activity)self).findViewById(R.id.Overview_Internetstatus_Imageview);
                 TextView textView=((Activity)self).findViewById(R.id.Overview_Internetstatus_Textview);
                 TextView internetarea_connectionstatus_TextView=((Activity)self).findViewById(R.id.Overview_internet_status_TextView);
                 TextView internetarea_connectionlasttime_TextView=((Activity)self).findViewById(R.id.Overview_internet_status_lasttime_TextView);
-                if(status.connected()){
-                    imageView.setImageResource(R.drawable.greenlight);
-                    textView.setText(R.string.Internetstatus_normal);
-                    internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_normal);
-                    internet_status=true;
+                switch(internetConnection){
+                    case 0:
+                        imageView.setImageResource(R.drawable.greenlight);
+                        textView.setText(R.string.Internetstatus_normal);
+                        internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_normal);
+                        internet_status=true;
+                        break;
+                    case 1:
+                        imageView.setImageResource(R.drawable.redlight);
+                        textView.setText(R.string.Internetstatus_broken);
+                        internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_failure);
+                        internet_status=false;
+                        break;
+                    case 2:
+                        imageView.setImageResource(R.drawable.redlight);
+                        textView.setText(R.string.Internetstatus_broken);
+                        internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_heartfailed);
+                        internet_status=false;
+                        break;
                 }
-                else{
-                    imageView.setImageResource(R.drawable.redlight);
-                    textView.setText(R.string.Internetstatus_broken);
-                    internetarea_connectionstatus_TextView.setText(R.string.Internet_connection_failure);
-                    internet_status=false;
-                }
-                internetarea_connectionlasttime_TextView.setText(status.time());
+                internetarea_connectionlasttime_TextView.setText(lasttime);
                 break;
         }
         ImageView imageView=((Activity)self).findViewById(R.id.Overview_Overviewstatus_ImageView);

@@ -49,7 +49,7 @@ public class SerialEditButton extends Button {
                 else{
                     int id=Integer.parseInt(tmp);
                     int typenum=spinner.getSelectedItemPosition();
-                    Database.updateSensor(id,typenum);
+                    Database.exec(Database.UPDATE_SENSOR,new Object[]{id,typenum});
                     MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.LIST_FLUSH);
                     MessageThread.sendMessage(((SerialActivity)self).handler, SerialUIHandler.EDITAREA_CLEAR);
                 }
