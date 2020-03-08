@@ -4,16 +4,27 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.hit_src.iot_terminal.hardware.EthernetNetworkCard;
+import static java.lang.Thread.sleep;
 
 public class InternetSettings {
-    private static String filename="InternetSettings";
-    private static SharedPreferences file;
+    private Activity self;
     public InternetSettings(Activity p){
-        file=p.getSharedPreferences(filename,Activity.MODE_PRIVATE);
+        Log.d("InternetSettings","InternetSettings initing...");
+        self=p;
+        file=self.getSharedPreferences(filename,Activity.MODE_PRIVATE);
+        Log.d("InternetSettings","InternetSettings inited");
     }
+    private static String filename="InternetSettings";
+    private static SharedPreferences file=null;
 
     public static String getServer() {
+        while(file==null){
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return file.getString("server","");
     }
 

@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.ui.handler.OverviewStatusHandler;
+import com.hit_src.iot_terminal.db.Database;
+import com.hit_src.iot_terminal.profile.settings.InternetSettings;
+import com.hit_src.iot_terminal.service.internet.InternetService;
+import com.hit_src.iot_terminal.ui.handler.OverviewUIHandler;
 import com.hit_src.iot_terminal.tools.MessageThread;
 
 public class OverviewActivity extends AppCompatActivity {
@@ -17,7 +20,8 @@ public class OverviewActivity extends AppCompatActivity {
      * onCreate是固定的处理活动创建的生命周期函数
      * onResume是固定的处理活动显示的生命周期函数
      */
-    public static OverviewStatusHandler handler;
+    public static OverviewUIHandler handler;
+
     @Override
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
@@ -27,13 +31,22 @@ public class OverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
-        handler=new OverviewStatusHandler(this);//注册界面变更handler
+        handler=new OverviewUIHandler(this);
+        new Database(this);
+        new InternetSettings(this);
+        startService(new Intent(this,InternetService.class));
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        MessageThread.sendMessage(handler,OverviewStatusHandler.SENSOR_UPDATE);//更新传感器部分显示
-        MessageThread.sendMessage(handler,OverviewStatusHandler.INTERNET_UPDATE);//更新网络部分显示
+        updateSensorStatusShow();
+        updateInternetStatusShow();
+    }
+    public static void updateSensorStatusShow(){
+        MessageThread.sendMessage(handler, OverviewUIHandler.SENSOR_UPDATE);
+    }
+    public static void updateInternetStatusShow(){
+        MessageThread.sendMessage(handler, OverviewUIHandler.INTERNET_UPDATE);
     }
 }

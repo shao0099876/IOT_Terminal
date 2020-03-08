@@ -12,7 +12,6 @@ import com.hit_src.iot_terminal.ui.handler.InternetUIHandler;
 public class InternetActivity extends AppCompatActivity {
 
     public InternetUIHandler handler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,13 @@ public class InternetActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        MessageThread.sendMessage(handler,InternetUIHandler.STATUS_UPDATE);//状态更新
-        MessageThread.sendMessage(handler,InternetUIHandler.CONFIG_UPDATE);//配置更新
+        updateInternetStatusShow();
+        updateInternetConfigShow();
+    }
+    public void updateInternetStatusShow(){
+        MessageThread.sendMessage(handler,InternetUIHandler.STATUS_UPDATE);
+    }
+    public void updateInternetConfigShow(){
+        MessageThread.sendMessage(handler,InternetUIHandler.CONFIG_UPDATE);
     }
 }

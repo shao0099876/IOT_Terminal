@@ -2,7 +2,7 @@ package com.hit_src.iot_terminal.profile.status;
 
 import com.hit_src.iot_terminal.tools.MessageThread;
 import com.hit_src.iot_terminal.ui.OverviewActivity;
-import com.hit_src.iot_terminal.ui.handler.OverviewStatusHandler;
+import com.hit_src.iot_terminal.ui.handler.OverviewUIHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +10,7 @@ import java.util.HashSet;
 
 public class Status {
     private static volatile HashSet<Integer> sensorSet=new HashSet<>();//已连接的传感器ID集合
-    private static volatile int internetConnection=1;
+    private static volatile boolean internetConnection=false;
     private static volatile long internetConnectionLastTime=0;//存毫秒数时间以节省空间
 
     public static final int SENSOR_LIST=0;
@@ -37,24 +37,24 @@ public class Status {
         switch (cmd){
             case SENSOR_LIST:
                 sensorSet= (HashSet<Integer>) arg;
-                MessageThread.sendMessage(OverviewActivity.handler, OverviewStatusHandler.SENSOR_UPDATE);
+                OverviewActivity.updateSensorStatusShow();
                 break;
             case INTERNET_CONNECTION_STATUS:
-                internetConnection= (int) arg;
-                MessageThread.sendMessage(OverviewActivity.handler,OverviewStatusHandler.INTERNET_UPDATE);
+                internetConnection= (boolean) arg;
+                OverviewActivity.updateInternetStatusShow();
                 break;
             case INTERNET_CONNECTION_LASTTIME:
                 internetConnectionLastTime= (long) arg;
-                MessageThread.sendMessage(OverviewActivity.handler,OverviewStatusHandler.INTERNET_UPDATE);
+                OverviewActivity.updateInternetStatusShow();
                 break;
         }
     }
     public static void setStatusData(int cmd,Object arg1,Object arg2){
         switch (cmd){
             case INTERNET_CONNECTION:
-                internetConnection= (int) arg1;
+                internetConnection= (boolean) arg1;
                 internetConnectionLastTime= (long) arg2;
-                MessageThread.sendMessage(OverviewActivity.handler, OverviewStatusHandler.INTERNET_UPDATE);
+                OverviewActivity.updateInternetStatusShow();
                 break;
         }
     }

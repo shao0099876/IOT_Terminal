@@ -15,16 +15,12 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".service.internet.InternetService"
-            android:enabled="true"
             android:exported="true"></service>
 
         <activity android:name=".ui.InternetActivity" />
         <activity android:name=".ui.SerialActivity" />
-        <activity android:name=".ui.OverviewActivity" />
         <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme">
+            android:name=".ui.OverviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

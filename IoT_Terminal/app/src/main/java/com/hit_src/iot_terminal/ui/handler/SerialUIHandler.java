@@ -13,6 +13,7 @@ import com.hit_src.iot_terminal.db.Database;
 import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.profile.status.Status;
+import com.hit_src.iot_terminal.ui.SerialActivity;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,34 +23,40 @@ public class SerialUIHandler extends Handler {
     public static final int EDITAREA_FLUSH=1;
     public static final int EDITAREA_CLEAR=2;
 
-    private Activity self;
-
-    public SerialUIHandler(Context p){
-        self= (Activity) p;
+    private SerialActivity self;
+    public SerialUIHandler(SerialActivity p){
+        self=p;
     }
-
     @Override
     public void handleMessage(Message msg){
-        ListView listView=self.findViewById(R.id.Serial_sensorlist_ListView);
-        EditText editText=self.findViewById(R.id.Serial_edit_ID_editText);
-        Spinner spinner=self.findViewById(R.id.Serial_edit_type_Spinner);
         switch(msg.what){
             case LIST_FLUSH:
-                listView.setAdapter((SensorListAdapterFactory.product(self, (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null), (HashSet<Integer>) Status.getStatusData(Status.SENSOR_LIST))));
+                setSensorListShow();
                 break;
             case EDITAREA_FLUSH:
-                int position=msg.getData().getInt("p1");
-                List<Sensor> dbList= (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null);
-                Sensor selected=dbList.get(position);
-                editText.setText(Integer.toString(selected.ID));
-                spinner.setSelection(selected.type);
+                setEditAreaShow(msg.getData().getInt("p1"));
                 break;
             case EDITAREA_CLEAR:
-                editText.setText("");
-                spinner.setSelection(-1);
+                setEditAreaShow(-1);
                 break;
         }
         super.handleMessage(msg);
     }
-
+    private void setSensorListShow(){
+        ListView listView=self.findViewById(R.id.Serial_sensorlist_ListView);
+        listView.setAdapter((SensorListAdapterFactory.product(self, (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null), (HashSet<Integer>) Status.getStatusData(Status.SENSOR_LIST))));
+    }
+    private void setEditAreaShow(int pos){
+        EditText editText=self.findViewById(R.id.Serial_edit_ID_editText);
+        Spinner spinner=self.findViewById(R.id.Serial_edit_type_Spinner);
+        if(pos==-1){
+            editText.setText("");
+            spinner.setSelection(-1);
+            return;
+        }
+        List<Sensor> dbList= (List<Sensor>) Database.exec(Database.READ_SENSOR_TABLE_ALL,null);
+        Sensor selected=dbList.get(pos);
+        editText.setText(Integer.toString(selected.ID));
+        spinner.setSelection(selected.type);
+    }
 }
