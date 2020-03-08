@@ -20,17 +20,12 @@ public class SerialActivity extends AppCompatActivity {
      * onResume用于处理界面显示的生命周期
      */
     public SerialUIHandler handler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_serial);
         handler=new SerialUIHandler(this);
-
-        //为传感器类型选择框填入数据，只需要在onCreate中执行一次即可
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_item ,Sensor.typeList);
-        Spinner spinner =findViewById(R.id.Serial_edit_type_Spinner);
-        spinner.setAdapter(arrayAdapter);
+        setSpinnerInitialData();
     }
 
     @Override
@@ -41,7 +36,15 @@ public class SerialActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MessageThread.sendMessage(handler,SerialUIHandler.LIST_FLUSH);//刷新传感器列表
+        updateSensorListShow();
+    }
+    public void updateSensorListShow(){
+        MessageThread.sendMessage(handler,SerialUIHandler.LIST_FLUSH);
+    }
+    private void setSpinnerInitialData(){
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_item ,Sensor.typeList);
+        Spinner spinner =findViewById(R.id.Serial_edit_type_Spinner);
+        spinner.setAdapter(arrayAdapter);
     }
 
 }

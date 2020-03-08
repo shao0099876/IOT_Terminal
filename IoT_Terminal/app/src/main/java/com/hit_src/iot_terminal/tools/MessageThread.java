@@ -13,6 +13,7 @@ public class MessageThread {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while(handler==null){}
                 Message msg=new Message();
                 msg.what=command;
                 handler.sendMessage(msg);
@@ -24,6 +25,7 @@ public class MessageThread {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while(handler==null){}
                 Message msg=new Message();
                 msg.what=command;
                 Bundle bundle=new Bundle();

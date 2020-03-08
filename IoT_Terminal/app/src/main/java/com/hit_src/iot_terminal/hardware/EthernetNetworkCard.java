@@ -14,6 +14,7 @@ public class EthernetNetworkCard {
     public static final int BROADADDR=2;
     public static final int NETMASK=3;
     public static final int FLAGS=4;
+
     public static String getInfo(int METHOD){
         byte[] bytes=null;
         String name="eth0";
