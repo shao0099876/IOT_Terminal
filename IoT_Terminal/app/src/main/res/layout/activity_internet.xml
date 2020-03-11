@@ -159,14 +159,14 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <com.hit_src.iot_terminal.ui.component.button.internet.InternetStatusFlushButton
+                <Button
                     android:id="@+id/Internet_status_reflush_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Internet_status_reflush_button_title"
                     android:textSize="18sp" />
 
-                <com.hit_src.iot_terminal.ui.component.button.internet.InternetEditSaveButton
+                <Button
                     android:id="@+id/Internet_edit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

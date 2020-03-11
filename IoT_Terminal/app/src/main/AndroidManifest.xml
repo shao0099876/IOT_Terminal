@@ -13,14 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".MainActivity" />
+
         <service
-            android:name=".service.internet.InternetService"
-            android:exported="true"></service>
+            android:name=".service.StatusService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.hit_src.iot_terminal.service.IStatusService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".service.DatabaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.hit_src.iot_terminal.service.IDatabaseService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".service.InternetService"
+            android:exported="true" />
 
         <activity android:name=".ui.InternetActivity" />
         <activity android:name=".ui.SerialActivity" />
-        <activity
-            android:name=".ui.OverviewActivity">
+        <activity android:name=".ui.OverviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
