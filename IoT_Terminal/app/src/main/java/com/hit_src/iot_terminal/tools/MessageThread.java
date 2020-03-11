@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.hit_src.iot_terminal.ui.handler.SerialUIHandler;
-
 public class MessageThread {
 
     private MessageThread(){}
@@ -13,7 +11,6 @@ public class MessageThread {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(handler==null){}
                 Message msg=new Message();
                 msg.what=command;
                 handler.sendMessage(msg);
@@ -25,7 +22,6 @@ public class MessageThread {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(handler==null){}
                 Message msg=new Message();
                 msg.what=command;
                 Bundle bundle=new Bundle();

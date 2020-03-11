@@ -14,9 +14,9 @@ import java.util.List;
 public class SensorListAdapterFactory {
     private static String[] from={"name","status"};
     private static int[] to={R.id.Overview_Sensor_ListviewLayout_name,R.id.Overview_Sensor_ListviewLayout_status};
-    private static HashSet<Integer> connectedList;
+    private static ArrayList<Integer> connectedList;
     private SensorListAdapterFactory(){}
-    public static SimpleAdapter product(Context self, List<Sensor> dbList, HashSet<Integer> statusList){
+    public static SimpleAdapter product(Context self, List<Sensor> dbList, ArrayList<Integer> statusList){
         connectedList=statusList;
         List<HashMap<String,Object>> data=new ArrayList<>();
         for (Sensor now : dbList) {

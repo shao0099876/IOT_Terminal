@@ -36,7 +36,7 @@
                     android:text="@string/Serial_serialarea_Title"
                     android:textSize="20sp" />
 
-                <com.hit_src.iot_terminal.ui.component.listview.SerialSensorListView
+                <ListView
                     android:id="@+id/Serial_sensorlist_ListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -49,28 +49,28 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.hit_src.iot_terminal.ui.component.button.serial.SerialFlushButton
+                <Button
                     android:id="@+id/Serial_flush_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_flushbutton_Text"
                     android:textSize="20sp" />
 
-                <com.hit_src.iot_terminal.ui.component.button.serial.SerialAddButton
+                <Button
                     android:id="@+id/Serial_add_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_addbutton_Text"
                     android:textSize="20sp" />
 
-                <com.hit_src.iot_terminal.ui.component.button.serial.SerialDeleteButton
+                <Button
                     android:id="@+id/Serial_delete_Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/Serial_deletebutton_Text"
                     android:textSize="20sp" />
 
-                <com.hit_src.iot_terminal.ui.component.button.serial.SerialEditButton
+                <Button
                     android:id="@+id/Serial_edit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

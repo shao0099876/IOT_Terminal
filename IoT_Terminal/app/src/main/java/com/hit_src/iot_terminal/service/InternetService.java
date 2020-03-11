@@ -1,29 +1,19 @@
-package com.hit_src.iot_terminal.service.internet;
+package com.hit_src.iot_terminal.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.icu.util.Output;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.hit_src.iot_terminal.profile.settings.InternetSettings;
-import com.hit_src.iot_terminal.profile.status.Status;
 import com.hit_src.iot_terminal.protocol.Modbus;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class InternetService extends Service {
 
@@ -59,7 +49,8 @@ public class InternetService extends Service {
                         Log.d("Internet","Unable to access server");
                         Log.d("Internet",e.toString());
                     }
-                    Status.setStatusData(Status.INTERNET_CONNECTION_STATUS,false);
+
+                    //Status.setStatusData(Status.INTERNET_CONNECTION_STATUS,false);
                 }
             }
         }).start();
