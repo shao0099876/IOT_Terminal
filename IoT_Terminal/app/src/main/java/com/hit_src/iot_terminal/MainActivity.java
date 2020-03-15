@@ -10,35 +10,23 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.service.IStatusService;
 
 public class MainActivity extends AppCompatActivity {
-    private IStatusService iStatusService;
-    private ServiceConnection statusServiceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d("SRCDEBUG","sereviceConnected");
-            iStatusService=IStatusService.Stub.asInterface(service);
-            try {
-                boolean test=iStatusService.getInternetConnectionStatus();
-                Log.d("SRCDEBUG",Boolean.toString(test));
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
+    static {
+        System.loadLibrary("serial-HAI");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bindService(new Intent("com.hit_src.iot_terminal.service.IStatusService"),statusServiceConnection,BIND_AUTO_CREATE);
-
-
+        byte[] test=new byte[]{0,0,1,0x55};
+        SerialPort.write(test);
+        byte[] res=SerialPort.read(2);
+        for(int i=0;i<res.length;i++){
+            Log.d("SRCDEBUG", Byte.toString(res[i]));
+        }
     }
 }

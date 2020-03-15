@@ -6,8 +6,6 @@ public class EthernetNetworkCard {
     static {
         System.loadLibrary("network-HAI");
     }
-    private static EthernetNetworkCard self=new EthernetNetworkCard();
-    private EthernetNetworkCard(){    }
 
     public static final int MAC=0;
     public static final int ADDR=1;
