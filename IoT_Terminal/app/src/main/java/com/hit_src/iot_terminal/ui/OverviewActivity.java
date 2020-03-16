@@ -1,16 +1,14 @@
 package com.hit_src.iot_terminal.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 public class OverviewActivity extends AbstractActivity {
 
@@ -34,7 +31,6 @@ public class OverviewActivity extends AbstractActivity {
             }
         },50,3000);
     }
-
 
     private OverviewActivity self;
     private static boolean sensor_status;
@@ -64,13 +60,9 @@ public class OverviewActivity extends AbstractActivity {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                final SimpleAdapter adapter=SensorListAdapterFactory.product(self,dbSensorList,statusSensorList);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        sensorListListView.setAdapter(adapter);
-                    }
-                });
+
+                Global.setSensorList(self,statusSensorList,dbSensorList,statusService,dbService,sensorListListView);
+
                 if(statusSensorList.size()==dbSensorList.size()){
                     imageID=R.drawable.greenlight;
                     textID=R.string.Serialstatus_normal;

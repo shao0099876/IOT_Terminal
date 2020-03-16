@@ -1,13 +1,8 @@
 package com.hit_src.iot_terminal.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,12 +13,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
+import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.service.IDatabaseService;
-import com.hit_src.iot_terminal.service.IStatusService;
-
 import java.util.ArrayList;
 
 public class SerialActivity extends AbstractActivity {
@@ -43,17 +36,7 @@ public class SerialActivity extends AbstractActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    final SimpleAdapter adapter=SensorListAdapterFactory.product(self, dbService.getSensorList(), (ArrayList<Integer>) statusService.getSensorList());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            sensorListView.setAdapter(adapter);
-                        }
-                    });
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                Global.setSensorList(self,null,null,statusService,dbService,sensorListView);
             }
         }).start();
     }
