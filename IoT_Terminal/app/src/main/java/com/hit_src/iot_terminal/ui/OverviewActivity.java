@@ -1,12 +1,7 @@
 package com.hit_src.iot_terminal.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,63 +12,29 @@ import android.widget.TextView;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.profile.settings.InternetSettings;
-import com.hit_src.iot_terminal.service.IDatabaseService;
-import com.hit_src.iot_terminal.service.IStatusService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class OverviewActivity extends AppCompatActivity {
-    /**
-     * OverviewActivity是系统概述界面
-     * OverviewStatusHandler用于处理界面显示变更
-     * onNewIntent是固定的处理活动切换的生命周期函数
-     * onCreate是固定的处理活动创建的生命周期函数
-     * onResume是固定的处理活动显示的生命周期函数
-     */
-    private IStatusService statusService;
-    private IDatabaseService dbService;
-    private int serviceReadyCNT=0;
-    private ServiceConnection statusServiceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            statusService=IStatusService.Stub.asInterface(service);
-            synchronized ((Integer)serviceReadyCNT){
-                serviceReadyCNT+=1;
-                if(serviceReadyCNT>=2){
-                    updateSensorShow();
-                    updateInternetShow();
-                    updateOverviewShow();
-                }
+
+public class OverviewActivity extends AbstractActivity {
+
+    @Override
+    protected void runOnBindService(){
+        Timer timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                updateSensorShow();
+                updateInternetShow();
+                updateOverviewShow();
             }
-        }
+        },50,3000);
+    }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-    private ServiceConnection dbServiceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            dbService=IDatabaseService.Stub.asInterface(service);
-            synchronized ((Integer)serviceReadyCNT){
-                serviceReadyCNT+=1;
-                if(serviceReadyCNT>=2){
-                    updateSensorShow();
-                    updateInternetShow();
-                    updateOverviewShow();
-                }
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
 
     private OverviewActivity self;
     private static boolean sensor_status;
@@ -88,37 +49,8 @@ public class OverviewActivity extends AppCompatActivity {
     private TextView overviewStatusTextView;
     private TextView internetConnectionTextView;
     private TextView internetLasttimeTextView;
-
-    @Override
-    protected void onNewIntent(Intent intent){
-        super.onNewIntent(intent);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
-        self=this;
-
-        sensorListListView=findViewById(R.id.Overview_sensorlist_ListView);
-        serialStatusImageView=findViewById(R.id.Overview_Serialstatus_ImageView);
-        serialStatusTextView=findViewById(R.id.Overview_Serialstatus_Textview);
-        internetStatusImageView=findViewById(R.id.Overview_Internetstatus_Imageview);
-        internetStatusTextView=findViewById(R.id.Overview_Internetstatus_Textview);
-        overviewStatusImageView=findViewById(R.id.Overview_Overviewstatus_ImageView);
-        overviewStatusTextView=findViewById(R.id.Overview_OverviewStatus_TextView);
-        internetConnectionTextView=findViewById(R.id.Overview_internet_status_TextView);
-        internetLasttimeTextView=findViewById(R.id.Overview_internet_status_lasttime_TextView);
-
-        new InternetSettings(this);
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        bindService(new Intent("com.hit_src.iot_terminal.service.IStatusService"),statusServiceConnection,BIND_AUTO_CREATE);
-        bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
-    }
+    private static int imageID;
+    private static int textID;
 
     private void updateSensorShow(){
         new Thread(new Runnable() {
@@ -139,9 +71,11 @@ public class OverviewActivity extends AppCompatActivity {
                         sensorListListView.setAdapter(adapter);
                     }
                 });
-                final int imageID;
-                final int textID;
-                if(statusSensorList.isEmpty()){
+                if(statusSensorList.size()==dbSensorList.size()){
+                    imageID=R.drawable.greenlight;
+                    textID=R.string.Serialstatus_normal;
+                    sensor_status=true;
+                } else if(statusSensorList.isEmpty()){
                     imageID=R.drawable.redlight;
                     textID=R.string.Serialstatus_allbroken;
                     sensor_status=false;
@@ -149,10 +83,6 @@ public class OverviewActivity extends AppCompatActivity {
                     imageID=R.drawable.yellowlight;
                     textID=R.string.Serialstatus_partbroken;
                     sensor_status=false;
-                } else{
-                    imageID=R.drawable.greenlight;
-                    textID=R.string.Serialstatus_normal;
-                    sensor_status=true;
                 }
                 runOnUiThread(new Runnable() {
                     @Override
@@ -252,11 +182,22 @@ public class OverviewActivity extends AppCompatActivity {
                 Log.w("OverviewStatusHandler", "Not Matched value!");
         }
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unbindService(statusServiceConnection);
-        unbindService(dbServiceConnection);
-    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_overview);
+        self=this;
+
+        sensorListListView=findViewById(R.id.Overview_sensorlist_ListView);
+        serialStatusImageView=findViewById(R.id.Overview_Serialstatus_ImageView);
+        serialStatusTextView=findViewById(R.id.Overview_Serialstatus_Textview);
+        internetStatusImageView=findViewById(R.id.Overview_Internetstatus_Imageview);
+        internetStatusTextView=findViewById(R.id.Overview_Internetstatus_Textview);
+        overviewStatusImageView=findViewById(R.id.Overview_Overviewstatus_ImageView);
+        overviewStatusTextView=findViewById(R.id.Overview_OverviewStatus_TextView);
+        internetConnectionTextView=findViewById(R.id.Overview_internet_status_TextView);
+        internetLasttimeTextView=findViewById(R.id.Overview_internet_status_lasttime_TextView);
+
+    }
 }

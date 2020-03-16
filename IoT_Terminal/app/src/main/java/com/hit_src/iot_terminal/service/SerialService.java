@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.profile.settings.InternetSettings;
 import com.hit_src.iot_terminal.protocol.Modbus;
@@ -18,7 +19,10 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 public class SerialService extends Service {
     private IStatusService statusService;
@@ -69,11 +73,35 @@ public class SerialService extends Service {
                     e.printStackTrace();
                 }
                 for(Sensor i:sensorList){
-                    
+                    send(i);
+                    recv(i);
+                    try {
+                        statusService.setSensorStatus(i.ID,true);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
     });
+    private void send(Sensor i){
+        byte[] cmd=i.packageCMD();
+        SerialPort.write(cmd);
+    }
+    private void recv(Sensor i){
+        byte[] raw_data=SerialPort.read(i.replyLength);
+        int res=i.unpackage(raw_data);
+        try {
+            dbService.addSensorData(i.ID,res);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreate(){//初始化

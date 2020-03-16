@@ -27,4 +27,26 @@
         android:text="@string/InternetButtonText"
         android:textSize="30sp" />
 
+    <com.hit_src.iot_terminal.ui.component.button.guidance.DrawButton
+        android:id="@+id/GuidanceBar_Draw_Button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/DrawButtonText"
+        android:textSize="30sp"/>
+    <com.hit_src.iot_terminal.ui.component.button.guidance.RealtimeDrawButton
+        android:id="@+id/GuidanceBar_RealtimeDraw_Button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/RealtimeDrawButtonText"
+        android:textSize="30sp"/>
+    <com.hit_src.iot_terminal.ui.component.button.guidance.SettingsButton
+        android:id="@+id/GuidanceBar_Settings_Button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="@string/SettingsButtonText"
+        android:textSize="30sp"/>
+
 </LinearLayout>
