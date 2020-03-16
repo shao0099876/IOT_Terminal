@@ -11,6 +11,7 @@ interface IDatabaseService {
 
     List getSensorList();
     void addSensor(in Sensor newsensor);
-    void updateSensor(in int ID,in int type);
+    void updateSensor(in int ID,in int type,in int addr);
     void delSensor(in int ID);
+    void addSensorData(in int sensorID,in int data);
 }

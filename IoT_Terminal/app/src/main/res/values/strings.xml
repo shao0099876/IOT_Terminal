@@ -8,6 +8,9 @@
     <string name="OverviewButtonText">系统概览</string>
     <string name="SerialButtonText">传感器配置</string>
     <string name="InternetButtonText">互联网配置</string>
+    <string name="DrawButtonText">历史数据</string>
+    <string name="RealtimeDrawButtonText">实时数据</string>
+    <string name="SettingsButtonText">设置</string>
 
     <string name="Overview_serialarea_Title">传感网状态</string>
     <string name="Overview_overviewarea_Title">系统运行综合状态</string>
@@ -37,6 +40,7 @@
     <string name="Serial_editbutton_Text">编辑传感器</string>
     <string name="Serial_edit_ID_title">传感器  ID</string>
     <string name="Serial_edit_type_title">传感器类型</string>
+    <string name="Serial_edit_addr_title">传感器LoRa地址</string>
 
     <string name="Internet_Title">互联网配置界面</string>
     <string name="Internet_edit_IP_title">本机IP：</string>
@@ -52,6 +56,22 @@
     <string name="Internet_status_reflush_button_title">刷新</string>
 
     <string name="title_activity_test">test</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 
 </resources>

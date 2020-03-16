@@ -10,4 +10,5 @@ interface IStatusService {
     List getSensorList();
     boolean getInternetConnectionStatus();
     long getInternetConnectionLasttime();
+    void setSensorStatus(in int i, in boolean status);
 }

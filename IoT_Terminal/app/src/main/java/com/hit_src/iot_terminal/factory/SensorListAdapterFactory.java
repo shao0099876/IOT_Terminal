@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class SensorListAdapterFactory {
-    private static String[] from={"name","status"};
-    private static int[] to={R.id.Overview_Sensor_ListviewLayout_name,R.id.Overview_Sensor_ListviewLayout_status};
+    private static String[] from={"name","addr","status"};
+    private static int[] to={R.id.Overview_Sensor_ListviewLayout_name,R.id.Overview_Sensor_ListviewLayout_status,R.id.Overview_Sensor_ListviewLayout_addr};
     private static ArrayList<Integer> connectedList;
     private SensorListAdapterFactory(){}
     public static SimpleAdapter product(Context self, List<Sensor> dbList, ArrayList<Integer> statusList){
@@ -28,7 +28,8 @@ public class SensorListAdapterFactory {
     private static HashMap<String, Object> draw(Sensor now) {
         HashMap<String,Object> res=new HashMap<>();
         res.put(from[0],now.toString());
-        res.put(from[1],connectedList.contains(now.ID)?"  已连接":"  未连接");
+        res.put(from[1],Integer.toString(now.addr));
+        res.put(from[2],connectedList.contains(now.ID)?"  已连接":"  未连接");
         return res;
     }
 }

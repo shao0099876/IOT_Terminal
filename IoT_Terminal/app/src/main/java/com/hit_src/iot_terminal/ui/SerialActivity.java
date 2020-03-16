@@ -26,164 +26,18 @@ import com.hit_src.iot_terminal.service.IStatusService;
 
 import java.util.ArrayList;
 
-public class SerialActivity extends AppCompatActivity {
-    private IStatusService statusService;
-    private IDatabaseService dbService;
-    private int serviceReadyCNT=0;
-    private ServiceConnection statusServiceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            statusService=IStatusService.Stub.asInterface(service);
-            synchronized ((Integer)serviceReadyCNT){
-                serviceReadyCNT+=1;
-                if(serviceReadyCNT>=2){
-                    flushList();
-                }
-            }
-        }
+public class SerialActivity extends AbstractActivity {
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-    private ServiceConnection dbServiceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            dbService=IDatabaseService.Stub.asInterface(service);
-            synchronized ((Integer)serviceReadyCNT){
-                serviceReadyCNT+=1;
-                if(serviceReadyCNT>=2){
-                    flushList();
-                }
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
+    @Override
+    protected void runOnBindService(){
+        flushList();
+    }
     private ListView sensorListView;
     private EditText idEditText;
     private Spinner spinner;
+    private EditText addrEditText;
 
     private SerialActivity self;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_serial);
-        self=this;
-
-        sensorListView=findViewById(R.id.Serial_sensorlist_ListView);
-        Button flushButton = findViewById(R.id.Serial_flush_Button);
-        Button addButton = findViewById(R.id.Serial_add_Button);
-        Button delButton = findViewById(R.id.Serial_delete_Button);
-        Button editButton = findViewById(R.id.Serial_edit_button);
-        idEditText=findViewById(R.id.Serial_edit_ID_editText);
-        spinner=findViewById(R.id.Serial_edit_type_Spinner);
-
-        sensorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                flushEditArea(position);
-            }
-        });
-        flushButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flushList();
-            }
-        });
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<Sensor> list=null;
-                try {
-                    list= (ArrayList<Sensor>) dbService.getSensorList();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                int id=0;
-                for(Sensor sensor:list){
-                    if(id<sensor.ID){
-                        id=sensor.ID;
-                    }
-                }
-                id+=1;
-                int typenum=spinner.getSelectedItemPosition();
-                Sensor newsensor=new Sensor(id,typenum);
-                try {
-                    dbService.addSensor(newsensor);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                flushList();
-                clearEditArea();
-            }
-        });
-        delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tmp=String.valueOf(idEditText.getText());
-                if(tmp.isEmpty()){
-                    new AlertDialog.Builder(self).setTitle("警告").setMessage("未选中要删除的传感器").show();
-                }
-                else{
-                    int id=Integer.parseInt(tmp);
-                    try {
-                        dbService.delSensor(id);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    clearEditArea();
-                    flushList();
-                }
-            }
-        });
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String tmp=String.valueOf(idEditText.getText());
-                if(tmp.isEmpty()){
-                    new AlertDialog.Builder(self).setTitle("警告").setMessage("未选中要编辑的传感器").show();
-                }
-                else{
-                    int id=Integer.parseInt(tmp);
-                    int typenum=spinner.getSelectedItemPosition();
-                    try {
-                        dbService.updateSensor(id,typenum);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                    clearEditArea();
-                    flushList();
-                }
-            }
-        });
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Sensor.typeList);
-        spinner.setAdapter(arrayAdapter);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bindService(new Intent("com.hit_src.iot_terminal.service.IStatusService"),statusServiceConnection,BIND_AUTO_CREATE);
-        bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unbindService(dbServiceConnection);
-        unbindService(statusServiceConnection);
-    }
 
     private void flushList(){
         new Thread(new Runnable() {
@@ -238,4 +92,127 @@ public class SerialActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_serial);
+        self=this;
+
+        sensorListView=findViewById(R.id.Serial_sensorlist_ListView);
+        Button flushButton = findViewById(R.id.Serial_flush_Button);
+        Button addButton = findViewById(R.id.Serial_add_Button);
+        Button delButton = findViewById(R.id.Serial_delete_Button);
+        Button editButton = findViewById(R.id.Serial_edit_button);
+        idEditText=findViewById(R.id.Serial_edit_ID_editText);
+        spinner=findViewById(R.id.Serial_edit_type_Spinner);
+        addrEditText=findViewById(R.id.Serial_edit_addr_editText);
+
+        sensorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                flushEditArea(position);
+            }
+        });
+        flushButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flushList();
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Sensor> list=null;
+                try {
+                    list= (ArrayList<Sensor>) dbService.getSensorList();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                int id=0;
+                for(Sensor sensor:list){
+                    if(id<sensor.ID){
+                        id=sensor.ID;
+                    }
+                }
+                id+=1;
+                int typenum=spinner.getSelectedItemPosition();
+                String addr_raw=addrEditText.getText().toString();
+                int addr=Integer.parseInt(addr_raw);
+                Sensor newsensor=new Sensor(id,typenum,addr);
+                try {
+                    dbService.addSensor(newsensor);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                flushList();
+                clearEditArea();
+            }
+        });
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tmp=String.valueOf(idEditText.getText());
+                if(tmp.isEmpty()){
+                    new AlertDialog.Builder(self).setTitle("警告").setMessage("未选中要删除的传感器").show();
+                }
+                else{
+                    int id=Integer.parseInt(tmp);
+                    try {
+                        dbService.delSensor(id);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    clearEditArea();
+                    flushList();
+                }
+            }
+        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tmp=String.valueOf(idEditText.getText());
+                if(tmp.isEmpty()){
+                    new AlertDialog.Builder(self).setTitle("警告").setMessage("未选中要编辑的传感器").show();
+                }
+                else{
+                    int id=Integer.parseInt(tmp);
+                    int typenum=spinner.getSelectedItemPosition();
+                    String addr_raw=addrEditText.getText().toString();
+                    int addr=Integer.parseInt(addr_raw);
+                    try {
+                        dbService.updateSensor(id,typenum,addr);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    clearEditArea();
+                    flushList();
+                }
+            }
+        });
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Sensor.typeList);
+        spinner.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindService(new Intent("com.hit_src.iot_terminal.service.IStatusService"),statusServiceConnection,BIND_AUTO_CREATE);
+        bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(dbServiceConnection);
+        unbindService(statusServiceConnection);
+    }
+
+
 }
