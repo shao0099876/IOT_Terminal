@@ -1,5 +1,6 @@
 package com.hit_src.iot_terminal.ui.component.button.guidance;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -8,6 +9,7 @@ import android.widget.Button;
 
 import com.hit_src.iot_terminal.ui.SettingsActivity;
 
+@SuppressLint("AppCompatCustomView")
 public class SettingsButton extends Button {
     public SettingsButton(Context context) {
         super(context);

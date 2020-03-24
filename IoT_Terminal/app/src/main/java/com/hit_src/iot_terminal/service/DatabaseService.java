@@ -8,11 +8,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.hit_src.iot_terminal.object.DrawPoint;
 import com.hit_src.iot_terminal.object.Sensor;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class DatabaseService extends Service {
     public class DatabaseServiceImpl extends IDatabaseService.Stub{
 
         @Override
-        public List getSensorList() throws RemoteException {
+        public List getSensorList() {
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
             Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr"},null,
                     null,null,null,null);
@@ -36,7 +35,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void addSensor(Sensor newsensor) throws RemoteException {
+        public void addSensor(Sensor newsensor) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put("sensor_id",newsensor.ID);
@@ -46,7 +45,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void updateSensor(int ID, int type,int addr) throws RemoteException {
+        public void updateSensor(int ID, int type,int addr) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put("sensor_type",type);
@@ -56,7 +55,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void delSensor(int ID) throws RemoteException {
+        public void delSensor(int ID) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             String[] arg=new String[1];
             arg[0]=Integer.toString(ID);
@@ -73,6 +72,22 @@ public class DatabaseService extends Service {
             writeDB.insert("SensorData",null,contentValues);
         }
 
+        @Override
+        public List getDrawPoint(int sensorID) {
+            List<DrawPoint> res=new ArrayList<>();
+            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
+            Cursor cursor=readDB.query("SensorData",new String[]{"time","data"},"SensorID=?",
+                    new String[]{Integer.toString(sensorID)},null,null,null);
+            while(cursor.moveToNext()){
+                long time=cursor.getLong(0);
+                int data=cursor.getInt(1);
+                res.add(new DrawPoint(time,data));
+            }
+            cursor.close();
+            return res;
+        }
+
+
     }
     private DatabaseOpenHelper databaseOpenHelper;
     @Override
@@ -82,20 +97,20 @@ public class DatabaseService extends Service {
     }
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d("SRCDEBUG","serviceonbind");
         return new DatabaseServiceImpl();
     }
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
-        static String dbCreateSQL= new StringBuilder().append("CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type integer NOT NULL, sensor_addr integer NOT NULL );")
-                                                      .append("CREATE TABLE SensorData ( SensorID integer NOT NULL, time datetime PRIMARY KEY, data integer NOT NULL);").toString();
-
-        public DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL );",
+                                                 "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
+        DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(dbCreateSQL);
+            for(String i:dbCreateSQL){
+                db.execSQL(i);
+            }
         }
 
         @Override

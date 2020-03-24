@@ -8,7 +8,9 @@ interface IStatusService {
      * and return values in AIDL.
      */
     List getSensorList();
-    boolean getInternetConnectionStatus();
-    long getInternetConnectionLasttime();
     void setSensorStatus(in int i, in boolean status);
+    boolean getInternetConnectionStatus();
+    void setInternetConnectionStatus(in boolean status);
+    long getInternetConnectionLasttime();
+    void setInternetConnectionLasttime(in long lasttime);
 }
