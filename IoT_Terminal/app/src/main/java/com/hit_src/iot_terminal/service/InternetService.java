@@ -1,11 +1,7 @@
 package com.hit_src.iot_terminal.service;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
+import android.os.RemoteException;
 
-import com.hit_src.iot_terminal.profile.settings.InternetSettings;
 import com.hit_src.iot_terminal.protocol.Modbus;
 
 import java.io.IOException;
@@ -13,56 +9,61 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
+import java.util.Date;
 
-public class InternetService extends Service {
-
-    @Override
-    public void onCreate(){//初始化
-        super.onCreate();
-    }
-    @Override
-    public int onStartCommand(Intent intent,int flags,int startId){//从这里启动处理线程
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String addr= InternetSettings.getServer();
-                int port=InternetSettings.getServerPort();
-                Socket socket=null;
-                InputStream inputStream=null;
-                OutputStream outputStream=null;
-                while(true){
-                    try {
-                        socket=new Socket();
-                        SocketAddress socketAddress=new InetSocketAddress(addr,port);
-                        socket.connect(socketAddress,1000);
-                        socket.setSoTimeout(3000);
-                        inputStream=socket.getInputStream();
-                        outputStream=socket.getOutputStream();
-                        byte[] cmd=new byte[8];
-                        while(true){
-                            inputStream.read(cmd,0,8);
-                            outputStream.write(Modbus.exec(cmd));
-                            outputStream.flush();
-                        }
-                    } catch (IOException e) {
-                        Log.d("Internet","Unable to access server");
-                        Log.d("Internet",e.toString());
-                    }
-
-                    //Status.setStatusData(Status.INTERNET_CONNECTION_STATUS,false);
+public class InternetService extends AbstractRunningService {
+    private Thread mainThread=new Thread(new Runnable() {
+        @Override
+        public void run() {
+            Socket socket=new Socket();
+            while(true){
+                String hostname = null;
+                int port = -1;
+                try {
+                    hostname=settingsService.getUpperServerAddr();
+                    port=settingsService.getUpperServerPort();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
+                try {
+                    socket.connect(new InetSocketAddress(hostname,port),5000);
+                } catch (IOException e) {//无法上联到服务器
+                    try {
+                        statusService.setInternetConnectionStatus(false);
+                    } catch (RemoteException ex) {
+                        ex.printStackTrace();
+                    }
+                    continue;
+                }
+                try {
+                    statusService.setInternetConnectionStatus(true);
+                    statusService.setInternetConnectionLasttime(new Date().getTime());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    InputStream inputStream = socket.getInputStream();
+                    OutputStream outputStream=socket.getOutputStream();
+                    while(true){
+                        byte[] cmd=new byte[8];
+                        inputStream.read(cmd);
+                        byte[] rep= Modbus.exec(cmd);
+                        outputStream.write(rep);
+                        outputStream.flush();
+                        statusService.setInternetConnectionLasttime(new Date().getTime());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+
             }
-        }).start();
-        return super.onStartCommand(intent,flags,startId);
-    }
+        }
+    });
+
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-    }
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+    protected void runOnReady() {
+        mainThread.start();
     }
 }

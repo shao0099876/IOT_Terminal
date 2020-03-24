@@ -14,6 +14,9 @@ import com.hit_src.iot_terminal.ui.OverviewActivity;
 import java.util.ArrayList;
 
 public class Global {
+    static {
+
+    }
     public static void setSensorList(AbstractActivity self, ArrayList<Integer> stList, ArrayList<Sensor> dbList, IStatusService statusService, IDatabaseService dbService, final ListView listView){
         //通用的传感器列表设置函数
         if(stList==null){
@@ -38,4 +41,5 @@ public class Global {
             }
         });
     }
+    public static native byte[] CRC(byte[] data);
 }

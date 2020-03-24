@@ -1,24 +1,17 @@
-package com.hit_src.iot_terminal.ui;
+package com.hit_src.iot_terminal.service;
 
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.hit_src.iot_terminal.service.IDatabaseService;
-import com.hit_src.iot_terminal.service.ISettingsService;
-import com.hit_src.iot_terminal.service.IStatusService;
-
-public abstract class AbstractActivity extends AppCompatActivity {
-
-    protected abstract void runOnBindService();
-
+public abstract class AbstractRunningService extends Service {
     protected IStatusService statusService;
     protected IDatabaseService dbService;
     protected ISettingsService settingsService;
     private int serviceReadyCNT=0;
+    protected abstract void runOnReady();
     protected ServiceConnection statusServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -26,7 +19,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
             synchronized ((Integer)serviceReadyCNT){
                 serviceReadyCNT+=1;
                 if(serviceReadyCNT>=3){
-                    runOnBindService();
+                    runOnReady();
                 }
             }
         }
@@ -43,7 +36,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
             synchronized ((Integer)serviceReadyCNT){
                 serviceReadyCNT+=1;
                 if(serviceReadyCNT>=3){
-                    runOnBindService();
+                    runOnReady();
                 }
             }
         }
@@ -53,14 +46,14 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         }
     };
-    protected ServiceConnection settingServiceConnection=new ServiceConnection() {
+    protected ServiceConnection settingsServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             settingsService=ISettingsService.Stub.asInterface(service);
             synchronized ((Integer)serviceReadyCNT){
                 serviceReadyCNT+=1;
                 if(serviceReadyCNT>=3){
-                    runOnBindService();
+                    runOnReady();
                 }
             }
         }
@@ -70,25 +63,27 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         }
     };
-
     @Override
-    protected void onResume(){
-        super.onResume();
+    public void onCreate(){//初始化
+        super.onCreate();
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId){
         bindService(new Intent("com.hit_src.iot_terminal.service.IStatusService"),statusServiceConnection,BIND_AUTO_CREATE);
         bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
-        bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingServiceConnection,BIND_AUTO_CREATE);
+        bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingsServiceConnection,BIND_AUTO_CREATE);
+        return super.onStartCommand(intent,flags,startId);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onDestroy(){
+        super.onDestroy();
         unbindService(statusServiceConnection);
         unbindService(dbServiceConnection);
-        unbindService(settingServiceConnection);
+        unbindService(settingsServiceConnection);
     }
     @Override
-    protected void onNewIntent(Intent intent){
-        super.onNewIntent(intent);
+    public IBinder onBind(Intent intent) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
-
 }

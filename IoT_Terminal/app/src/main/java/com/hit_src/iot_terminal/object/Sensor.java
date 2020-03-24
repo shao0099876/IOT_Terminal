@@ -64,9 +64,11 @@ public class Sensor implements Parcelable {
 
     public int unpackage(byte[] raw_data) {
         int res=0;
-        res=raw_data[0];
-        res<<=8;
-        res&=raw_data[1];
+        int high=raw_data[0]<<8;
+        high&=0x0FFFF;
+        int low=raw_data[1];
+        low&=0x0FFFF;
+        res=high|low;
         return res;
     }
 }

@@ -25,12 +25,10 @@ extern "C"
 JNIEXPORT jbyteArray JNICALL
 Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass clazz, jint length) {
     // TODO: implement read()
-    jbyteArray res=env->NewByteArray(length+1);
+    jbyteArray res=env->NewByteArray(length);
     jbyte *p=env->GetByteArrayElements(res,NULL);
-    p[0]=0;
     int fd=open(DEV_NAME,O_RDWR);
     if(fd==-1){
-        p[0]=-1;
     }
     else{
         termios ctlStruct;
@@ -38,15 +36,11 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
         makeConfid(&ctlStruct);
         int err=tcsetattr(fd,TCSANOW,&ctlStruct);
         if(err!=0){
-            p[0]=-2;
         }
         else{
             char* buffer=(char*)malloc(length);
             int cnt=read(fd,buffer,length);
-            p[0]=cnt;
-            for(int i=1;i<=cnt;i++){
-                p[i]=buffer[i-1];
-            }
+            memcpy(p,buffer,cnt);
             free(buffer);
         }
         close(fd);
