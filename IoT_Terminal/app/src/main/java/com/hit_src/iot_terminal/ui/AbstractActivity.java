@@ -1,5 +1,6 @@
 package com.hit_src.iot_terminal.ui;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -11,7 +12,7 @@ import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 import com.hit_src.iot_terminal.service.IStatusService;
 
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity extends Activity {
 
     protected abstract void runOnBindService();
 
