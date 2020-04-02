@@ -4,7 +4,6 @@ import android.os.RemoteException;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.hit_src.iot_terminal.factory.SensorListAdapterFactory;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.ui.AbstractActivity;

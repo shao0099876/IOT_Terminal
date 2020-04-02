@@ -1,6 +1,7 @@
 package com.hit_src.iot_terminal.ui.sensor;
 
 import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
@@ -42,7 +43,7 @@ public class SensorViewModel extends ViewModel {
 
             @Override
             public void onItemRangeRemoved(ObservableList<Sensor> sender, int positionStart, int itemCount) {
-
+                sensorListLiveData.postValue(new ArrayList<>(sender.subList(0, sender.size())));
             }
         });
     }
