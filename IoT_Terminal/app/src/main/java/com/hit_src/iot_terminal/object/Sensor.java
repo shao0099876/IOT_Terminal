@@ -6,78 +6,67 @@ import android.os.Parcelable;
 import java.nio.ByteBuffer;
 
 public class Sensor implements Parcelable {
-    public static String[] typeList={"床垫","血压","体温","血氧"};
 
-    public int ID;
-    public int type;
-    public int addr;
-    public boolean connected;
+    //database attribute
+    private int ID;
+    private String type;
+    private int loraAddr;
+    //setting&db attribute
+    private int enabled;
+    //status attribute
+    private boolean connected;
 
-    public int sendLength=1;
-    public int replyLength=2;
-
-    public Sensor(int p1, int p2, int p3,boolean p4){
-        ID=p1;
-        type=p2;
-        addr=p3;
-        connected=p4;
-    }
-
-    public Sensor(Parcel in) {
-        ID = in.readInt();
-        type = in.readInt();
-        addr=in.readInt();
-    }
-
-    public static final Creator<Sensor> CREATOR = new Creator<Sensor>() {
-        @Override
-        public Sensor createFromParcel(Parcel in) {
-            return new Sensor(in);
-        }
-
-        @Override
-        public Sensor[] newArray(int size) {
-            return new Sensor[size];
-        }
-    };
-
-    public Sensor(int id_res) {
-        ID=id_res;
-        type=-1;
-        addr=-1;
+    public Sensor(){
         connected=false;
     }
+
 
     public int getID(){
         return ID;
     }
     public String getType(){
-        return type==-1?"":typeList[type];
+        return type;
     }
-    public boolean getConnectionStatus(){
+    public int getLoraAddr(){
+        return loraAddr;
+    }
+    public boolean isEnabled(){
+        return enabled==0?false:true;
+    }
+    public boolean isConnected(){
         return connected;
     }
 
-
-    public String toString(){
-        return ID +"号" +typeList[type] +"传感器";
+    public void setID(int p){
+        ID=p;
+    }
+    public void setType(String p){
+        type=p;
+    }
+    public void setLoraAddr(int p){
+        loraAddr=p;
+    }
+    public void setEnabled(boolean p){
+        if(p){
+            enabled=1;
+        }
+        else{
+            enabled=0;
+        }
+    }
+    public void setConnected(boolean p){
+        connected=p;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(ID);
-        dest.writeInt(type);
-        dest.writeInt(addr);
-    }
+    public int sendLength=1;
+    public int replyLength=2;
+
+
     public byte[] packageCMD() {
         ByteBuffer buffer=ByteBuffer.allocate(3+sendLength);
-        buffer.put((byte)((addr>>=4)&15));
-        buffer.put((byte)(addr&15));
+        buffer.put((byte)((loraAddr>>=4)&15));
+        buffer.put((byte)(loraAddr&15));
         buffer.put((byte)0x01);
         buffer.put((byte)0x55);
         return buffer.array();
@@ -92,4 +81,35 @@ public class Sensor implements Parcelable {
         res=high|low;
         return res;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ID);
+        dest.writeString(type);
+        dest.writeInt(loraAddr);
+        dest.writeInt(enabled);
+    }
+    protected Sensor(Parcel in) {
+        ID = in.readInt();
+        type = in.readString();
+        loraAddr = in.readInt();
+        enabled = in.readInt();
+    }
+
+    public static final Creator<Sensor> CREATOR = new Creator<Sensor>() {
+        @Override
+        public Sensor createFromParcel(Parcel in) {
+            return new Sensor(in);
+        }
+
+        @Override
+        public Sensor[] newArray(int size) {
+            return new Sensor[size];
+        }
+    };
 }

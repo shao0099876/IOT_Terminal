@@ -29,11 +29,16 @@ public class DatabaseService extends Service {
         @Override
         public List getSensorList() {
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr"},null,
+            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr","sensor_enabled"},null,
                     null,null,null,null);
             ArrayList<Sensor> res=new ArrayList<>();
             while(cursor.moveToNext()){
-                res.add(new Sensor(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),false));
+                Sensor sensor=new Sensor();
+                sensor.setID(cursor.getInt(0));
+                sensor.setType(cursor.getString(1));
+                sensor.setLoraAddr(cursor.getInt(2));
+                sensor.setEnabled(cursor.getInt(3) != 0);
+                res.add(sensor);
             }
             cursor.close();
             return res;
@@ -42,7 +47,7 @@ public class DatabaseService extends Service {
         @Override
         public int getSensorAmount() {
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr"},null,
+            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id"},null,
                     null,null,null,null);
             int res=cursor.getCount();
             cursor.close();
@@ -50,12 +55,20 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void addSensor(Sensor newsensor) {
+        public void addSensor(String type,int loraAddr) {
+            ArrayList<Sensor> list= (ArrayList<Sensor>) getSensorList();
+            int id=0;
+            for(Sensor i:list){
+                if(i.getID()>=id){
+                    id=i.getID()+1;
+                }
+            }
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
-            contentValues.put("sensor_id",newsensor.ID);
-            contentValues.put("sensor_type",newsensor.type);
-            contentValues.put("sensor_addr",newsensor.addr);
+            contentValues.put("sensor_id",id);
+            contentValues.put("sensor_type",type);
+            contentValues.put("sensor_addr",loraAddr);
+            contentValues.put("sensor_enabled",1);
             writeDB.insert("Sensor",null,contentValues);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
@@ -63,11 +76,12 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void updateSensor(int ID, int type,int addr) {
+        public void updateSensor(int ID, String type,int loraAddr,boolean enabled) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put("sensor_type",type);
-            contentValues.put("sensor_addr",addr);
+            contentValues.put("sensor_addr",loraAddr);
+            contentValues.put("sensor_enabled",enabled);
             writeDB.update("Sensor",contentValues,"sensor_id=?",
                     new String[]{Integer.toString(ID)});
             SensorService.sensorList.clear();
@@ -81,6 +95,7 @@ public class DatabaseService extends Service {
             String[] arg=new String[1];
             arg[0]=Integer.toString(ID);
             writeDB.delete("Sensor","sensor_id=?",arg);
+            writeDB.delete("SensorData","SensorID=?",arg);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
             SensorService.sensorAmount.set(getSensorAmount());
@@ -110,8 +125,6 @@ public class DatabaseService extends Service {
             cursor.close();
             return res;
         }
-
-
     }
     private DatabaseOpenHelper databaseOpenHelper;
     @Override
@@ -125,7 +138,7 @@ public class DatabaseService extends Service {
         return new DatabaseServiceImpl();
     }
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
-        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL );",
+        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type text NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
                                                  "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
         DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);

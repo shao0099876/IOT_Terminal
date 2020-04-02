@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +18,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 
+import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.ui.sensor.SensorInfoFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataFragment extends Fragment {
-    private ListView dataListView;
+    private ListView dataTypeListView;
+    private Switch realtimeSwitch;
 
-    public static DataFragment newInstance() {
-        return new DataFragment();
-    }
+    private String selected;
+    private Fragment childFragment=null;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -32,18 +42,58 @@ public class DataFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
         View view=getView();
-        dataListView=view.findViewById(R.id.Data_ListView);
-
+        dataTypeListView=view.findViewById(R.id.Data_ListView);
+        realtimeSwitch=view.findViewById(R.id.Data_Realtime_Switch);
         Button backButton=view.findViewById(R.id.Data_Back_Button);
+
+        dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                selected= Global.getDataTypeList()[position];
+                childFragment=new DataDetailedFragment(selected,realtimeSwitch.isChecked());
+                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
+                transaction.commit();
+            }
+        });
+
+        realtimeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(childFragment==null){
+                    return;
+                }
+                ((DataDetailedFragment)childFragment).setRealtime(isChecked);
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager=getParentFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
-                transaction.hide(DataFragment.this);
+                transaction.remove(DataFragment.this);
                 transaction.commit();
+            }
+        });
+        ArrayList<Map<String,Object>> list=new ArrayList<>();
+        for(String i:Global.getDataTypeList()){
+            HashMap<String,Object> map=new HashMap<>();
+            map.put("content",i);
+            list.add(map);
+        }
+        final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView})
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dataTypeListView.setAdapter(simpleAdapter);
+                dataTypeListView.setDivider(getResources().getDrawable(R.drawable.sensorlist_divider_shape));
             }
         });
     }

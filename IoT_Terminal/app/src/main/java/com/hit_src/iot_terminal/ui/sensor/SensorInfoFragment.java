@@ -28,6 +28,8 @@ public class SensorInfoFragment extends Fragment {
     public Sensor sensor=null;
     private TextView sensorIDTextView;
     private TextView sensorTypeTextView;
+    private TextView sensorLoraAddrTextView;
+    private Switch enabledSwitch;
     private Switch realtimeDataSwitch;
     private LineChart chart;
 
@@ -56,9 +58,25 @@ public class SensorInfoFragment extends Fragment {
         View view=getView();
         sensorIDTextView=view.findViewById(R.id.Sensor_ID_TextView);
         sensorTypeTextView=view.findViewById(R.id.Sensor_Info_Type_TextView);
+        sensorLoraAddrTextView=view.findViewById(R.id.Sensor_Info_LoraAddr_TextView);
+        enabledSwitch=view.findViewById(R.id.Sensor_Enabled_Switch);
         realtimeDataSwitch=view.findViewById(R.id.Sensor_RealtimeData_Switch);
         chart=view.findViewById(R.id.Sensor_Draw_LineChart);
 
+        enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked==sensor.isEnabled()){
+                    return;
+                }
+                sensor.setEnabled(isChecked);
+                try {
+                    MainApplication.dbService.updateSensor(sensor.getID(),sensor.getType(),sensor.getLoraAddr(),isChecked);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         realtimeDataSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -69,7 +87,7 @@ public class SensorInfoFragment extends Fragment {
                         public void run() {
                             List<DrawPoint> pointList=null;
                             try {
-                                pointList= MainApplication.dbService.getDrawPointbySensor(sensor.ID);
+                                pointList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }
@@ -95,7 +113,7 @@ public class SensorInfoFragment extends Fragment {
 
         List<DrawPoint> pointList=null;
         try {
-            pointList= MainApplication.dbService.getDrawPointbySensor(sensor.ID);
+            pointList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -104,8 +122,10 @@ public class SensorInfoFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sensorIDTextView.setText(String.valueOf(sensor.ID));
+                sensorIDTextView.setText(String.valueOf(sensor.getID()));
                 sensorTypeTextView.setText(sensor.getType());
+                sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
+                enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);
                 chart.invalidate();
             }

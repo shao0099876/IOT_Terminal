@@ -25,6 +25,7 @@ import com.hit_src.iot_terminal.ui.sensor.SensorFragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,7 +130,8 @@ public class OverviewFragment extends Fragment {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("hh:mm:ss");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm:ss");
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
                 final String s1=simpleDateFormat.format(new Date());
                 simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日");
                 final String s2=simpleDateFormat.format(new Date());

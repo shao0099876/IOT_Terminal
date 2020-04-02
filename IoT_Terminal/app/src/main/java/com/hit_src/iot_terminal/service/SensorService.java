@@ -14,9 +14,16 @@ import java.util.ArrayList;
 import static java.lang.Thread.sleep;
 
 public class SensorService extends AbstractRunningService {
+
     public static ObservableInt sensorConnectedAmount=new ObservableInt();
     public static ObservableInt sensorAmount=new ObservableInt();
     public static ObservableArrayList<Sensor> sensorList=new ObservableArrayList<>();
+
+    @Override
+    protected void runOnReady() {
+
+    }
+    /*
     private Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
@@ -79,5 +86,5 @@ public class SensorService extends AbstractRunningService {
             e.printStackTrace();
         }
         mainThread.start();
-    }
+    }*/
 }
