@@ -6,5 +6,14 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowTitleSize">40dp</item>
     </style>
+    <style name="ButtonStyle">
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="SensorListStyle">
+        <item name="android:background">@drawable/sensorlist_shape</item>
+        <item name="android:divider">@drawable/sensorlist_divider_shape</item>
+    </style>
 
 </resources>

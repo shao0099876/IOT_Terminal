@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hit_src.iot_terminal"
-    android:sharedUserId="android.uid.system">
+    package="com.hit_src.iot_terminal">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,43 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity" >
+        <activity android:name=".ui.LogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.OverviewActivity"/>
-        <activity android:name=".ui.SerialActivity" />
-        <activity android:name=".ui.InternetActivity" />
-        <activity android:name=".ui.DrawActivity" />
-        <activity android:name=".ui.RealtimeDrawActivity" />
-        <activity android:name=".ui.SettingsActivity"/>
+        <activity android:name=".MainActivity" />
 
         <service
-            android:name=".service.SerialService"
+            android:name=".service.SensorService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="SerialService"/>
+                <action android:name="SerialService" />
             </intent-filter>
         </service>
         <service
             android:name=".service.InternetService"
             android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="InternetService"/>
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".service.StatusService"
-            android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.hit_src.iot_terminal.service.IStatusService" />
+                <action android:name="InternetService" />
             </intent-filter>
         </service>
         <service
@@ -70,7 +54,6 @@
                 <action android:name="com.hit_src.iot_terminal.service.ISettingsService" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

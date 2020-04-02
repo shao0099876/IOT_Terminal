@@ -34,7 +34,7 @@ public class DrawActivity extends AbstractActivity {
 
     @Override
     protected void runOnBindService() {
-        Global.setSensorList(self,null,null,statusService,dbService,sensorListView);
+        //Global.setSensorList(self,null,null,statusService,dbService,sensorListView);
     }
     private DrawActivity self;
     private ListView sensorListView;
@@ -49,6 +49,7 @@ public class DrawActivity extends AbstractActivity {
         sensorListView.setSelection(-1);
 
         lineChart=findViewById(R.id.Draw_LineChart);
+
         XAxis xAxis=lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.setDragXEnabled(true);
@@ -67,7 +68,7 @@ public class DrawActivity extends AbstractActivity {
                 Sensor now=dbList.get(position);
                 List<DrawPoint> pointList=null;
                 try {
-                    pointList=dbService.getDrawPoint(now.ID);
+                    pointList=dbService.getDrawPointbySensor(now.ID);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

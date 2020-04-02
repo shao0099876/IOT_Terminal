@@ -12,25 +12,18 @@
     <string name="RealtimeDrawButtonText">实时数据</string>
     <string name="SettingsButtonText">设置</string>
 
-    <string name="Overview_serialarea_Title">传感网状态</string>
-    <string name="Overview_overviewarea_Title">系统运行综合状态</string>
-    <string name="Overview_internetarea_Title">互联网状态</string>
-    <string name="Overview_overviewimage_description">系统综合状态指示灯</string>
-    <string name="Overview_serialimage_description">传感网状态指示灯</string>
-    <string name="Overview_internetimage_description">网络状态指示灯</string>
-    <string name="Overview_internet_status_title">链接状态：</string>
-    <string name="Overview_internet_status_lasttime_title">上次链接时间：</string>
+    <string name="Overview_SensorStatus_Title">传感网状态</string>
+    <string name="Overview_InternetStatus_Title">互联网状态</string>
+    <string name="Overview_InternetConnectionStatus_Title">链接状态：</string>
+    <string name="Overview_InternetConnectionLasttime_Title">上次链接时间：</string>
 
-    <string name="Serialstatus_allbroken">所有传感器断开</string>
-    <string name="Serialstatus_partbroken">部分传感器断开</string>
-    <string name="Serialstatus_normal">所有传感器正常</string>
-    <string name="Internetstatus_normal">互联网连接正常</string>
-    <string name="Internetstatus_broken">互联网连接断开</string>
-    <string name="Overview_normal">系统综合状态正常</string>
-    <string name="Overview_partbroken">系统部分状态异常</string>
-    <string name="Overview_allbroken">系统状态异常</string>
-    <string name="Internet_connection_failure">无法连接至服务器</string>
-    <string name="Internet_connection_normal">已连接至服务器</string>
+    <string name="SensorStatus_AllDisconnected">所有传感器断开</string>
+    <string name="SensorStatus_PartDisconnected">部分传感器断开</string>
+    <string name="SensorStatus_AllConnected">所有传感器正常</string>
+    <string name="InternetStatus_Connected">互联网连接正常</string>
+    <string name="InternetStatus_Disconnected">互联网连接断开</string>
+    <string name="InternetConnection_failed">无法连接至服务器</string>
+    <string name="InternetConnection_succeed">已连接至服务器</string>
 
     <string name="Serial_serialarea_Title">传感器列表</string>
     <string name="Serial_flushbutton_Text">刷新列表</string>
@@ -73,6 +66,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

@@ -2,6 +2,8 @@ package com.hit_src.iot_terminal.service;
 
 import android.os.RemoteException;
 
+import androidx.databinding.ObservableBoolean;
+
 import com.hit_src.iot_terminal.protocol.Modbus;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.net.Socket;
 import java.util.Date;
 
 public class InternetService extends AbstractRunningService {
+    public static ObservableBoolean internetConnectionStatus=new ObservableBoolean();
     private Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
@@ -28,19 +31,11 @@ public class InternetService extends AbstractRunningService {
                 try {
                     socket.connect(new InetSocketAddress(hostname,port),5000);
                 } catch (IOException e) {//无法上联到服务器
-                    try {
-                        statusService.setInternetConnectionStatus(false);
-                    } catch (RemoteException ex) {
-                        ex.printStackTrace();
-                    }
+                    //statusService.setInternetConnectionStatus(false);
                     continue;
                 }
-                try {
-                    statusService.setInternetConnectionStatus(true);
-                    statusService.setInternetConnectionLasttime(new Date().getTime());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                //statusService.setInternetConnectionStatus(true);
+                //statusService.setInternetConnectionLasttime(new Date().getTime());
                 try {
                     InputStream inputStream = socket.getInputStream();
                     OutputStream outputStream=socket.getOutputStream();
@@ -50,11 +45,9 @@ public class InternetService extends AbstractRunningService {
                         byte[] rep= Modbus.exec(cmd);
                         outputStream.write(rep);
                         outputStream.flush();
-                        statusService.setInternetConnectionLasttime(new Date().getTime());
+                        //statusService.setInternetConnectionLasttime(new Date().getTime());
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (RemoteException e) {
                     e.printStackTrace();
                 }
 
@@ -64,6 +57,7 @@ public class InternetService extends AbstractRunningService {
 
     @Override
     protected void runOnReady() {
+        internetConnectionStatus.set(false);
         mainThread.start();
     }
 }
