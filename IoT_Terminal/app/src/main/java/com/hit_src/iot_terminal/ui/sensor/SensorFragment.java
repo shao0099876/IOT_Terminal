@@ -34,6 +34,9 @@ public class SensorFragment extends Fragment {
 
     private ListView sensorListView;
 
+    private Sensor selected=null;
+    private Fragment childFragment=null;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -59,7 +62,9 @@ public class SensorFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.Sensor_Detailed_Fragment, new SensorInfoFragment(viewModel.sensorListLiveData.getValue().get(position)));
+                selected=viewModel.sensorListLiveData.getValue().get(position);
+                childFragment=new SensorInfoFragment(selected);
+                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }
         });
@@ -77,16 +82,32 @@ public class SensorFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.Sensor_Detailed_Fragment, new SensorAddFragment());
+                childFragment=new SensorAddFragment();
+                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
+                selected=null;
             }
         });
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sensorListView.getSelectedItemPosition() < 0) {
+                if (selected==null) {
                     Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                try {
+                    MainApplication.dbService.delSensor(selected.getID());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                if(childFragment==null){
+                    return;
+                }
+                FragmentManager manager=getFragmentManager();
+                FragmentTransaction transaction=manager.beginTransaction();
+                transaction.remove(childFragment);
+                transaction.commit();
+                childFragment=null;
             }
         });
         viewModel = ViewModelProviders.of(getActivity()).get(SensorViewModel.class);
