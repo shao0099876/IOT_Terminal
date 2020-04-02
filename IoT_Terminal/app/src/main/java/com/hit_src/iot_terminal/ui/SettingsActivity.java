@@ -1,15 +1,11 @@
 package com.hit_src.iot_terminal.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.service.SerialService;
 
 public class SettingsActivity extends AbstractActivity {
     private Switch serialQuerySwitch;

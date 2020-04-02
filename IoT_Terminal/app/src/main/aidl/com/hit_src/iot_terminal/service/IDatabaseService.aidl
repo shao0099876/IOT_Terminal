@@ -10,9 +10,10 @@ interface IDatabaseService {
      */
 
     List getSensorList();
+    int getSensorAmount();
     void addSensor(in Sensor newsensor);
     void updateSensor(in int ID,in int type,in int addr);
     void delSensor(in int ID);
     void addSensorData(in int sensorID,in int data);
-    List getDrawPoint(in int sensorID);
+    List getDrawPointbySensor(in int sensorID);
 }

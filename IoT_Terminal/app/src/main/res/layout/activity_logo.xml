@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/MainFragment"
-        android:name="com.hit_src.iot_terminal.ui.overview.OverviewFragment"
+    tools:context=".ui.LogoActivity">
+    <ImageView
+        android:id="@+id/Main_logo_ImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

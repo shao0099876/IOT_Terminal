@@ -35,7 +35,7 @@ public class RealtimeDrawActivity extends AbstractActivity {
     private LineChart lineChart;
     @Override
     protected void runOnBindService() {
-        Global.setSensorList(self,null,null,statusService,dbService,sensorList);
+        //Global.setSensorList(self,null,null,statusService,dbService,sensorList);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class RealtimeDrawActivity extends AbstractActivity {
                             Sensor now=dbList.get(position);
                             List<DrawPoint> pointList=null;
                             try {
-                                pointList=dbService.getDrawPoint(now.ID);
+                                pointList=dbService.getDrawPointbySensor(now.ID);
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }

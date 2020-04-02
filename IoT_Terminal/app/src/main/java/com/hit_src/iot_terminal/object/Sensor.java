@@ -11,16 +11,19 @@ public class Sensor implements Parcelable {
     public int ID;
     public int type;
     public int addr;
+    public boolean connected;
+
     public int sendLength=1;
     public int replyLength=2;
 
-    public Sensor(int p1, int p2, int p3){
+    public Sensor(int p1, int p2, int p3,boolean p4){
         ID=p1;
         type=p2;
         addr=p3;
+        connected=p4;
     }
 
-    protected Sensor(Parcel in) {
+    public Sensor(Parcel in) {
         ID = in.readInt();
         type = in.readInt();
         addr=in.readInt();
@@ -37,6 +40,24 @@ public class Sensor implements Parcelable {
             return new Sensor[size];
         }
     };
+
+    public Sensor(int id_res) {
+        ID=id_res;
+        type=-1;
+        addr=-1;
+        connected=false;
+    }
+
+    public int getID(){
+        return ID;
+    }
+    public String getType(){
+        return type==-1?"":typeList[type];
+    }
+    public boolean getConnectionStatus(){
+        return connected;
+    }
+
 
     public String toString(){
         return ID +"号" +typeList[type] +"传感器";

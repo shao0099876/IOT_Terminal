@@ -2,6 +2,10 @@ package com.hit_src.iot_terminal.service;
 
 import android.os.RemoteException;
 
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableInt;
+
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.Sensor;
 
@@ -9,7 +13,10 @@ import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 
-public class SerialService extends AbstractRunningService {
+public class SensorService extends AbstractRunningService {
+    public static ObservableInt sensorConnectedAmount=new ObservableInt();
+    public static ObservableInt sensorAmount=new ObservableInt();
+    public static ObservableArrayList<Sensor> sensorList=new ObservableArrayList<>();
     private Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
@@ -37,11 +44,7 @@ public class SerialService extends AbstractRunningService {
                 for(Sensor i:sensorList){
                     send(i);
                     recv(i);
-                    try {
-                        statusService.setSensorStatus(i.ID,true);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    //statusService.setSensorStatus(i.ID,true);
                 }
                 try {
                     sleep(3000);
@@ -68,6 +71,13 @@ public class SerialService extends AbstractRunningService {
 
     @Override
     protected void runOnReady() {
+        sensorConnectedAmount.set(0);
+        try {
+            sensorAmount.set(MainApplication.dbService.getSensorAmount());
+            sensorList.addAll(MainApplication.dbService.getSensorList());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         mainThread.start();
     }
 }

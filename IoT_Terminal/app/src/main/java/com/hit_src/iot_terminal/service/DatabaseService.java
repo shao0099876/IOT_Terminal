@@ -8,12 +8,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableInt;
 
 import com.hit_src.iot_terminal.object.DrawPoint;
 import com.hit_src.iot_terminal.object.Sensor;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,8 +33,18 @@ public class DatabaseService extends Service {
                     null,null,null,null);
             ArrayList<Sensor> res=new ArrayList<>();
             while(cursor.moveToNext()){
-                res.add(new Sensor(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2)));
+                res.add(new Sensor(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),false));
             }
+            cursor.close();
+            return res;
+        }
+
+        @Override
+        public int getSensorAmount() {
+            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
+            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr"},null,
+                    null,null,null,null);
+            int res=cursor.getCount();
             cursor.close();
             return res;
         }
@@ -42,6 +57,9 @@ public class DatabaseService extends Service {
             contentValues.put("sensor_type",newsensor.type);
             contentValues.put("sensor_addr",newsensor.addr);
             writeDB.insert("Sensor",null,contentValues);
+            SensorService.sensorList.clear();
+            SensorService.sensorList.addAll(getSensorList());
+            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override
@@ -52,6 +70,9 @@ public class DatabaseService extends Service {
             contentValues.put("sensor_addr",addr);
             writeDB.update("Sensor",contentValues,"sensor_id=?",
                     new String[]{Integer.toString(ID)});
+            SensorService.sensorList.clear();
+            SensorService.sensorList.addAll(getSensorList());
+            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override
@@ -60,6 +81,9 @@ public class DatabaseService extends Service {
             String[] arg=new String[1];
             arg[0]=Integer.toString(ID);
             writeDB.delete("Sensor","sensor_id=?",arg);
+            SensorService.sensorList.clear();
+            SensorService.sensorList.addAll(getSensorList());
+            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override
@@ -73,7 +97,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public List getDrawPoint(int sensorID) {
+        public List getDrawPointbySensor(int sensorID) {
             List<DrawPoint> res=new ArrayList<>();
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
             Cursor cursor=readDB.query("SensorData",new String[]{"time","data"},"SensorID=?",
@@ -95,6 +119,7 @@ public class DatabaseService extends Service {
         super.onCreate();
         databaseOpenHelper=new DatabaseOpenHelper(this,"iot",null,1);
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return new DatabaseServiceImpl();

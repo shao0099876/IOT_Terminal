@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.hit_src.iot_terminal.ui.InternetActivity;
-import com.hit_src.iot_terminal.ui.OverviewActivity;
 
 @SuppressLint("AppCompatCustomView")
 public class InternetButton extends Button {

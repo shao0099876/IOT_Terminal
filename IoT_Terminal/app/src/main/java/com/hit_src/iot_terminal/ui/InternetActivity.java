@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.hardware.EthernetNetworkCard;
-import com.hit_src.iot_terminal.service.IStatusService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,35 +44,33 @@ public class InternetActivity extends AbstractActivity {
         flushSettings();
     }
     private void flushStatus(){
-        try {
-            boolean status=statusService.getInternetConnectionStatus();
-            long lasttime=statusService.getInternetConnectionLasttime();
-            if(status){
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        statusText.setText(R.string.Internet_connection_normal);
-                    }
-                });
-            } else{
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        statusText.setText(R.string.Internet_connection_failure);
-                    }
-                });
-            }
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-            final String lasttime_str=simpleDateFormat.format(new Date(lasttime));
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    lasttimeText.setText(lasttime_str);
-                }
-            });
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if(status){
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        statusText.setText(R.string.InternetConnection_succeed);
+//                    }
+//                });
+//            } else{
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        statusText.setText(R.string.InternetConnection_failed);
+//                    }
+//                });
+//            }
+//            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+//            final String lasttime_str=simpleDateFormat.format(new Date(lasttime));
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    lasttimeText.setText(lasttime_str);
+//                }
+//            });
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
     }
     private void flushSettings(){
         final String ip=EthernetNetworkCard.getInfo(EthernetNetworkCard.ADDR);
