@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,12 +17,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.object.Sensor;
 
 public class SensorAddFragment extends Fragment {
     private Spinner typeSpinner;
+    private EditText loraAddrEditText;
 
 
     @Override
@@ -40,13 +43,18 @@ public class SensorAddFragment extends Fragment {
 
         View view=getView();
         typeSpinner=view.findViewById(R.id.Sensor_Type_Spinner);
+        loraAddrEditText=view.findViewById(R.id.Sensor_Add_LoraAddr_EditText);
         Button confirmButton=view.findViewById(R.id.Sensor_Add_Button);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(loraAddrEditText.getText().toString()==null||loraAddrEditText.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(),"LoRa地址不能为空",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 try {
-                    MainApplication.dbService.addSensor(new Sensor(MainApplication.dbService.getSensorAmount()+1,typeSpinner.getSelectedItemPosition(),0,false));
+                    MainApplication.dbService.addSensor((String) typeSpinner.getSelectedItem(),Integer.valueOf(loraAddrEditText.getText().toString()));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +65,7 @@ public class SensorAddFragment extends Fragment {
             }
         });
 
-        final ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<>(getContext(),R.layout.spinner_display_style,Sensor.typeList);
+        final ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<>(getContext(),R.layout.spinner_display_style, Global.getSensorTypeList());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
         getActivity().runOnUiThread(new Runnable() {
             @Override

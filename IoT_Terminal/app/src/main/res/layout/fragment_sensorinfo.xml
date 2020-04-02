@@ -62,6 +62,35 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="LoRa地址"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/Sensor_Info_LoraAddr_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/Sensor_Enabled_Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="传感器启用"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
         <Switch
             android:id="@+id/Sensor_RealtimeData_Switch"
             android:layout_width="wrap_content"
