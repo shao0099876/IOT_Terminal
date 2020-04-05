@@ -80,7 +80,7 @@ public class OverviewFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager=getParentFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
-                DataFragment dataFragment=DataFragment.newInstance();
+                DataFragment dataFragment=new DataFragment();
                 transaction.add(R.id.MainFragment,dataFragment);
                 transaction.commit();
             }

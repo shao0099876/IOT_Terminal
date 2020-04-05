@@ -8,17 +8,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.ObservableArrayList;
-import androidx.databinding.ObservableInt;
 
-import com.hit_src.iot_terminal.object.DrawPoint;
+import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -113,14 +108,14 @@ public class DatabaseService extends Service {
 
         @Override
         public List getDrawPointbySensor(int sensorID) {
-            List<DrawPoint> res=new ArrayList<>();
+            List<DataRecord> res=new ArrayList<>();
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
             Cursor cursor=readDB.query("SensorData",new String[]{"time","data"},"SensorID=?",
                     new String[]{Integer.toString(sensorID)},null,null,null);
             while(cursor.moveToNext()){
                 long time=cursor.getLong(0);
                 int data=cursor.getInt(1);
-                res.add(new DrawPoint(time,data));
+                res.add(new DataRecord(sensorID,time,data));
             }
             cursor.close();
             return res;

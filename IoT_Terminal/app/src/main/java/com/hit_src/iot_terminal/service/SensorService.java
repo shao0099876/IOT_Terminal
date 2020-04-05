@@ -7,6 +7,7 @@ import androidx.databinding.ObservableInt;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
+import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
 
 import java.util.ArrayList;
@@ -19,9 +20,13 @@ public class SensorService extends AbstractRunningService {
     public static ObservableInt sensorAmount=new ObservableInt();
     public static ObservableArrayList<Sensor> sensorList=new ObservableArrayList<>();
 
+    public static DataRecord getRealtimeData(int id) {
+        return null;
+    }
+
     @Override
     protected void runOnReady() {
-
+        //TODO: 给实时数据绘制留一个获取数据的途径
     }
     /*
     private Thread mainThread=new Thread(new Runnable() {

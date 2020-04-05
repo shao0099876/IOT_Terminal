@@ -16,9 +16,10 @@ import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.object.DrawPoint;
+import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.tools.ChartFormatTools;
+import com.hit_src.iot_terminal.service.SensorService;
+import com.hit_src.iot_terminal.tools.DataChart;
 
 import java.util.List;
 import java.util.Timer;
@@ -31,7 +32,7 @@ public class SensorInfoFragment extends Fragment {
     private TextView sensorLoraAddrTextView;
     private Switch enabledSwitch;
     private Switch realtimeDataSwitch;
-    private LineChart chart;
+    private DataChart chart;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -61,7 +62,7 @@ public class SensorInfoFragment extends Fragment {
         sensorLoraAddrTextView=view.findViewById(R.id.Sensor_Info_LoraAddr_TextView);
         enabledSwitch=view.findViewById(R.id.Sensor_Enabled_Switch);
         realtimeDataSwitch=view.findViewById(R.id.Sensor_RealtimeData_Switch);
-        chart=view.findViewById(R.id.Sensor_Draw_LineChart);
+        chart.setComponent((LineChart) view.findViewById(R.id.Sensor_Draw_LineChart));
 
         enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -81,17 +82,19 @@ public class SensorInfoFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    List<DataRecord> dataList=null;
+                    try {
+                        dataList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    chart.setData(dataList);
                     timer=new Timer();
                     timerTask=new TimerTask() {
                         @Override
                         public void run() {
-                            List<DrawPoint> pointList=null;
-                            try {
-                                pointList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                            ChartFormatTools.LineChartFormat(chart,pointList);
+                            DataRecord dataRecord= SensorService.getRealtimeData(sensor.getID());
+                            chart.addData(dataRecord);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -111,13 +114,14 @@ public class SensorInfoFragment extends Fragment {
             }
         });
 
-        List<DrawPoint> pointList=null;
+        List<DataRecord> dataList=null;
         try {
-            pointList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
+            dataList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        ChartFormatTools.LineChartFormat(chart,pointList);
+        chart.setData(dataList);
+
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

@@ -15,6 +15,7 @@ public class DataDetailedFragment extends Fragment {
     private String Datatype=null;
     private boolean realtime=false;
 
+
     public DataDetailedFragment(){}
     public DataDetailedFragment(String datatype,boolean real){
         Datatype=datatype;
@@ -33,7 +34,7 @@ public class DataDetailedFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        //根据Datatype找Sensor
     }
     public void setRealtime(boolean data){
 
