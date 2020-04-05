@@ -29,7 +29,7 @@
                     android:background="#01579B"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.hit_src.iot_terminal.ui.components.ClockComponents
                         android:id="@+id/Overview_Clock_TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                         android:textSize="80sp"
                         android:typeface="monospace" />
 
-                    <TextView
+                    <com.hit_src.iot_terminal.ui.components.DateComponents
                         android:id="@+id/Overview_Date_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

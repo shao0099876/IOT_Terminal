@@ -103,7 +103,7 @@ public class DataDetailedFragment extends Fragment {
         ArrayList<Sensor> sensorArrayList= (ArrayList<Sensor>) SensorService.sensorList.subList(0,SensorService.sensorList.size());
         sensors=new ArrayList<>();
         for(Sensor i:sensorArrayList){
-            SensorType sensorType=MainApplication.map.get(i.getType());
+            SensorType sensorType=MainApplication.sensorTypeHashMap.get(i.getType());
             if(sensorType.getDataType().equals(Datatype)){
                 sensors.add(i);
             }
