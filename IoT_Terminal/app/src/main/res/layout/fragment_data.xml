@@ -57,14 +57,6 @@
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
-        <Switch
-            android:id="@+id/Data_Realtime_Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp"
-            android:text="实时数据" />
-
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/Data_DrawFragment"
             android:layout_width="match_parent"

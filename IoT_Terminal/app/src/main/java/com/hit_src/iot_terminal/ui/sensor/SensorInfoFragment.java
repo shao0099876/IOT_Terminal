@@ -94,6 +94,9 @@ public class SensorInfoFragment extends Fragment {
                         @Override
                         public void run() {
                             DataRecord dataRecord= SensorService.getRealtimeData(sensor.getID());
+                            if(dataRecord==null){
+                                return;
+                            }
                             chart.addData(dataRecord);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override

@@ -26,7 +26,6 @@ import java.util.Map;
 
 public class DataFragment extends Fragment {
     private ListView dataTypeListView;
-    private Switch realtimeSwitch;
 
     private String selected;
     private Fragment childFragment=null;
@@ -46,7 +45,6 @@ public class DataFragment extends Fragment {
         super.onStart();
         View view=getView();
         dataTypeListView=view.findViewById(R.id.Data_ListView);
-        realtimeSwitch=view.findViewById(R.id.Data_Realtime_Switch);
         Button backButton=view.findViewById(R.id.Data_Back_Button);
 
         dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,19 +53,9 @@ public class DataFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected= Global.getDataTypeList()[position];
-                childFragment=new DataDetailedFragment(selected,realtimeSwitch.isChecked());
+                childFragment=new DataDetailedFragment(selected);
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
-            }
-        });
-
-        realtimeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(childFragment==null){
-                    return;
-                }
-                ((DataDetailedFragment)childFragment).setRealtime(isChecked);
             }
         });
 
