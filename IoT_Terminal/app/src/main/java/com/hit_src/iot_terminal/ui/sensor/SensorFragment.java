@@ -25,6 +25,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.ui.sensor.components.SensorListView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class SensorFragment extends Fragment {
     private SensorViewModel viewModel;
 
-    private ListView sensorListView;
+    private SensorListView sensorListView;
 
     private Sensor selected=null;
     private Fragment childFragment=null;
@@ -53,63 +54,7 @@ public class SensorFragment extends Fragment {
 
         View view = getView();
         sensorListView = view.findViewById(R.id.Sensor_SensorListView);
-        Button backButton = view.findViewById(R.id.Sensor_Back_Button);
-        Button addButton = view.findViewById(R.id.Sensor_Add_Button);
-        Button delButton = view.findViewById(R.id.Sensor_Delete_Button);
 
-        sensorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                selected=viewModel.sensorListLiveData.getValue().get(position);
-                childFragment=new SensorInfoFragment(selected);
-                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
-                transaction.commit();
-            }
-        });
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getParentFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.remove(SensorFragment.this);
-                transaction.commit();
-            }
-        });
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                childFragment=new SensorAddFragment();
-                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
-                transaction.commit();
-                selected=null;
-            }
-        });
-        delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selected==null) {
-                    Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                try {
-                    MainApplication.dbService.delSensor(selected.getID());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                if(childFragment==null){
-                    return;
-                }
-                FragmentManager manager=getFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                transaction.remove(childFragment);
-                transaction.commit();
-                childFragment=null;
-            }
-        });
         viewModel = ViewModelProviders.of(getActivity()).get(SensorViewModel.class);
         viewModel.sensorListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<Sensor>>() {
             @Override

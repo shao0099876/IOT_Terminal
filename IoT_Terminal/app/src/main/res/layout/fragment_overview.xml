@@ -29,7 +29,7 @@
                     android:background="#01579B"
                     android:orientation="vertical">
 
-                    <com.hit_src.iot_terminal.ui.components.ClockComponents
+                    <com.hit_src.iot_terminal.ui.overview.components.ClockComponents
                         android:id="@+id/Overview_Clock_TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                         android:textSize="80sp"
                         android:typeface="monospace" />
 
-                    <com.hit_src.iot_terminal.ui.components.DateComponents
+                    <com.hit_src.iot_terminal.ui.overview.components.DateComponents
                         android:id="@+id/Overview_Date_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout
                     android:id="@+id/Overview_SensorStatus_LinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,9 +87,9 @@
                         android:text="[已连接/总数]"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
-                </LinearLayout>
+                </com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout>
 
-                <LinearLayout
+                <com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout
                     android:id="@+id/Overview_InternetConnectionStatus_LinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                         android:gravity="center"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
-                </LinearLayout>
+                </com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout>
 
                 <EditText
                     android:id="@+id/Overview_Log_EditText"
@@ -141,7 +141,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <com.hit_src.iot_terminal.ui.components.SensorButton
+                <com.hit_src.iot_terminal.ui.overview.components.SensorGuidanceButton
                     android:id="@+id/Overview_Sensor_Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -153,7 +153,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
 
-                <Button
+                <com.hit_src.iot_terminal.ui.overview.components.DataGuidanceButton
                     android:id="@+id/Overview_Data_Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
