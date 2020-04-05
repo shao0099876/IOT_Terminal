@@ -5,37 +5,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.ui.data.DataFragment;
-import com.hit_src.iot_terminal.ui.sensor.SensorFragment;
+import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class OverviewFragment extends Fragment {
 
     private OverviewViewModel viewModel;
 
-    private LinearLayout sensorStatusLinearLayout;
+    private StatusLinearLayout sensorStatusLinearLayout;
     private TextView sensorStatusTextView;
-    private LinearLayout internetStatusLinearLayout;
+    private StatusLinearLayout internetStatusLinearLayout;
     private TextView internetStatusTextView;
     private EditText logEditText;
 
@@ -60,45 +50,9 @@ public class OverviewFragment extends Fragment {
         internetStatusTextView=view.findViewById(R.id.Overview_InternetStatus_TextView);
         logEditText=view.findViewById(R.id.Overview_Log_EditText);
 
-        Button sensorButton=view.findViewById(R.id.Overview_Sensor_Button);
-        sensorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager=getParentFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                transaction.add(R.id.MainFragment,new SensorFragment());
-                transaction.commit();
-            }
-        });
-        Button dataButton=view.findViewById(R.id.Overview_Data_Button);
-        dataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager=getParentFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                DataFragment dataFragment=new DataFragment();
-                transaction.add(R.id.MainFragment,dataFragment);
-                transaction.commit();
-            }
-        });
-
         viewModel=ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
-        viewModel.sensorConnectedLiveData.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int connected=integer;
-                int amount=viewModel.sensorAmountLiveData.getValue();
-                setSensorStatusShow(connected,amount);
-            }
-        });
-        viewModel.sensorAmountLiveData.observe(getViewLifecycleOwner(), new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                int connected=viewModel.sensorConnectedLiveData.getValue();
-                int amount=integer;
-                setSensorStatusShow(connected,amount);
-            }
-        });
+        viewModel.sensorConnectedLiveData.observe(getViewLifecycleOwner(),sensorStatusObserver);
+        viewModel.sensorAmountLiveData.observe(getViewLifecycleOwner(),sensorStatusObserver);
         viewModel.internetConnectionLiveData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean newStatus) {
@@ -127,63 +81,52 @@ public class OverviewFragment extends Fragment {
             @Override
             public void run() {
                 setSensorStatusShow(viewModel.sensorConnectedLiveData.getValue(),viewModel.sensorAmountLiveData.getValue());
-                final int colorID;
-                String s;
-                boolean status=viewModel.internetConnectionLiveData.getValue();
-                if(status){
-                    colorID=getResources().getColor(R.color.Overview_Status_Green);
-                    s="已连接";
-                } else{
-                    colorID=getResources().getColor(R.color.Overview_Status_Red);
-                    s="未连接";
-                }
-                final int final_colorID= colorID;
-                final String final_s=s;
-                internetStatusLinearLayout.setBackgroundColor(final_colorID);
-                internetStatusTextView.setText(final_s);
+                setInternetStatusShow(viewModel.internetConnectionLiveData.getValue());
                 logEditText.setText("");
             }
         });
     }
     private void setSensorStatusShow(int connected,int amount){
-        int colorID;
         if(connected==amount){
-            colorID=R.color.Overview_Status_Green;
+            sensorStatusLinearLayout.setGreen();
         } else if(connected==0){
-            colorID=R.color.Overview_Status_Red;
+            sensorStatusLinearLayout.setRed();
         } else{
-            colorID=R.color.Overview_Status_Yellow;
+            sensorStatusLinearLayout.setYellow();
         }
         final String s=connected+"/"+amount;
-        final int final_colorID=colorID;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sensorStatusLinearLayout.setBackgroundColor(getResources().getColor(final_colorID));
                 sensorStatusTextView.setText(s);
             }
         });
     }
     private void setInternetStatusShow(Boolean newStatus){
-        final int colorID;
         String s;
         boolean status=newStatus;
         if(status){
-            colorID=getResources().getColor(R.color.Overview_Status_Green);
+            internetStatusLinearLayout.setGreen();
             s="已连接";
         } else{
-            colorID=getResources().getColor(R.color.Overview_Status_Red);
+            internetStatusLinearLayout.setRed();
             s="未连接";
         }
-        final int final_colorID= colorID;
         final String final_s=s;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                internetStatusLinearLayout.setBackgroundColor(final_colorID);
                 internetStatusTextView.setText(final_s);
             }
         });
     }
+    private Observer<Integer> sensorStatusObserver=new Observer<Integer>() {
+        @Override
+        public void onChanged(Integer integer) {
+            int connected=viewModel.sensorConnectedLiveData.getValue();
+            int amount=viewModel.sensorAmountLiveData.getValue();
+            setSensorStatusShow(connected,amount);
+        }
+    };
 
 }
