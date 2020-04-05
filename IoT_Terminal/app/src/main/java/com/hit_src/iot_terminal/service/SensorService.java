@@ -24,6 +24,10 @@ public class SensorService extends AbstractRunningService {
         return null;
     }
 
+    public static DataRecord getRealtimeData(ArrayList<Sensor> sensors) {
+        return null;
+    }
+
     @Override
     protected void runOnReady() {
         //TODO: 给实时数据绘制留一个获取数据的途径

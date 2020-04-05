@@ -7,10 +7,12 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.hit_src.iot_terminal.object.SensorType;
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class MainApplication extends Application {
     static {
@@ -18,6 +20,8 @@ public class MainApplication extends Application {
         System.loadLibrary("network-HAI");
         System.loadLibrary("Global-JNI");
     }
+    public static HashMap<String, SensorType> map=new HashMap<>();
+
     boolean runSerialService=false;
     boolean runInternetService=false;
 
@@ -58,6 +62,6 @@ public class MainApplication extends Application {
         }
         bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
         bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingServiceConnection,BIND_AUTO_CREATE);
-
+        //TODO:读取SensorType的XML并形成String：SensorType对
     }
 }
