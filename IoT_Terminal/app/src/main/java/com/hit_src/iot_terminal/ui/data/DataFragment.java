@@ -16,11 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
 
 import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.ui.sensor.SensorInfoFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +56,7 @@ public class DataFragment extends Fragment {
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected= Global.getDataTypeList()[position];
                 childFragment=new DataDetailedFragment(selected,realtimeSwitch.isChecked());
-                transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
+                transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
             }
         });
@@ -88,7 +86,7 @@ public class DataFragment extends Fragment {
             map.put("content",i);
             list.add(map);
         }
-        final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView})
+        final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView});
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

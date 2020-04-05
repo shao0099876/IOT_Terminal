@@ -2,7 +2,6 @@
 package com.hit_src.iot_terminal.service;
 
 // Declare any non-default types here with import statements
-import com.hit_src.iot_terminal.object.Sensor;
 interface IDatabaseService {
     /**
      * Demonstrates some basic types that you can use as parameters

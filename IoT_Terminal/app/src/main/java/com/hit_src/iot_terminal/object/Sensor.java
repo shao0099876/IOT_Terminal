@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.nio.ByteBuffer;
 
-public class Sensor implements Parcelable {
+public class Sensor{
 
     //database attribute
     private int ID;
@@ -81,35 +81,4 @@ public class Sensor implements Parcelable {
         res=high|low;
         return res;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(ID);
-        dest.writeString(type);
-        dest.writeInt(loraAddr);
-        dest.writeInt(enabled);
-    }
-    protected Sensor(Parcel in) {
-        ID = in.readInt();
-        type = in.readString();
-        loraAddr = in.readInt();
-        enabled = in.readInt();
-    }
-
-    public static final Creator<Sensor> CREATOR = new Creator<Sensor>() {
-        @Override
-        public Sensor createFromParcel(Parcel in) {
-            return new Sensor(in);
-        }
-
-        @Override
-        public Sensor[] newArray(int size) {
-            return new Sensor[size];
-        }
-    };
 }
