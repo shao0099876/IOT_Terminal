@@ -33,8 +33,6 @@ public class OverviewFragment extends Fragment {
 
     private OverviewViewModel viewModel;
 
-    private TextView clockTextView;
-    private TextView dateTextView;
     private LinearLayout sensorStatusLinearLayout;
     private TextView sensorStatusTextView;
     private LinearLayout internetStatusLinearLayout;
@@ -56,8 +54,6 @@ public class OverviewFragment extends Fragment {
         super.onStart();
 
         View view=getView();
-        clockTextView=view.findViewById(R.id.Overview_Clock_TextView);
-        dateTextView=view.findViewById(R.id.Overview_Date_TextView);
         sensorStatusLinearLayout=view.findViewById(R.id.Overview_SensorStatus_LinearLayout);
         sensorStatusTextView=view.findViewById(R.id.Overview_SensorStatus_TextView);
         internetStatusLinearLayout=view.findViewById(R.id.Overview_InternetConnectionStatus_LinearLayout);
@@ -127,23 +123,6 @@ public class OverviewFragment extends Fragment {
                 });
             }
         });
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm:ss");
-                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                final String s1=simpleDateFormat.format(new Date());
-                simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日");
-                final String s2=simpleDateFormat.format(new Date());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        clockTextView.setText(s1);
-                        dateTextView.setText(s2);
-                    }
-                });
-            }
-        },10,1000);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
