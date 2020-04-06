@@ -21,7 +21,7 @@ public class MainApplication extends Application {
     }
     public static HashMap<String, SensorType> sensorTypeHashMap=new HashMap<>();
 
-    boolean runSerialService=false;
+    boolean runSerialService=true;
     boolean runInternetService=false;
 
     public static IDatabaseService dbService;
@@ -66,5 +66,12 @@ public class MainApplication extends Application {
             int b=1;
             b*=-1;
         }
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        stopService(new Intent().setAction("SerialService"));
+        stopService(new Intent().setAction("InternetService"));
     }
 }

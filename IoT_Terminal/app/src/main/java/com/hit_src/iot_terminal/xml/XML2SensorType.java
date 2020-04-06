@@ -40,7 +40,6 @@ public class XML2SensorType extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        Log.d("SRCDEBUG",localName);
         if(localName.equals("name")){
             res.setName(sb.toString().trim());
         }

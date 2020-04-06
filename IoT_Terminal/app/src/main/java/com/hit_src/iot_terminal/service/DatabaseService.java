@@ -67,7 +67,6 @@ public class DatabaseService extends Service {
             writeDB.insert("Sensor",null,contentValues);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
-            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override
@@ -81,7 +80,6 @@ public class DatabaseService extends Service {
                     new String[]{Integer.toString(ID)});
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
-            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override
@@ -93,7 +91,6 @@ public class DatabaseService extends Service {
             writeDB.delete("SensorData","SensorID=?",arg);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
-            SensorService.sensorAmount.set(getSensorAmount());
         }
 
         @Override

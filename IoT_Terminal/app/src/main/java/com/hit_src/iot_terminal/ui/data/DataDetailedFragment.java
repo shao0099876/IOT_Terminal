@@ -35,7 +35,7 @@ public class DataDetailedFragment extends Fragment {
     private ArrayList<Sensor> sensors;
 
     private Switch realtimeSwitch;
-    private DataChart chart;
+    private DataChart chart=new DataChart();
 
     public DataDetailedFragment(){}
     public DataDetailedFragment(String datatype){
@@ -80,12 +80,20 @@ public class DataDetailedFragment extends Fragment {
                                 return;
                             }
                             chart.addData(dataRecord);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    chart.invalidate();
-                                }
-                            });
+                            try{
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        chart.invalidate(true);
+                                    }
+                                });
+                            }catch (NullPointerException e){
+                                timer.cancel();
+                                timerTask.cancel();
+                                timer=null;
+                                timerTask=null;
+                            }
+
                         }
                     };
                     timer.schedule(timerTask,10,1000);
@@ -100,7 +108,7 @@ public class DataDetailedFragment extends Fragment {
         });
 
         //根据Datatype找Sensor
-        ArrayList<Sensor> sensorArrayList= (ArrayList<Sensor>) SensorService.sensorList.subList(0,SensorService.sensorList.size());
+        List<Sensor> sensorArrayList= SensorService.sensorList.subList(0,SensorService.sensorList.size());
         sensors=new ArrayList<>();
         for(Sensor i:sensorArrayList){
             SensorType sensorType=MainApplication.sensorTypeHashMap.get(i.getType());
@@ -121,7 +129,7 @@ public class DataDetailedFragment extends Fragment {
             @Override
             public void run() {
                 realtimeSwitch.setChecked(false);
-                chart.invalidate();
+                chart.invalidate(false);
             }
         });
     }

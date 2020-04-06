@@ -20,6 +20,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.SensorType;
+import com.hit_src.iot_terminal.service.SensorService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SensorAddFragment extends Fragment {
     private Spinner typeSpinner;
@@ -64,8 +71,16 @@ public class SensorAddFragment extends Fragment {
                 transaction.commit();
             }
         });
-
-        final ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<>(getContext(),R.layout.spinner_display_style, Global.getSensorTypeList());
+        Set<String> set=new HashSet<>();
+        for(String i: MainApplication.sensorTypeHashMap.keySet()){
+            set.add(MainApplication.sensorTypeHashMap.get(i).getName());
+        }
+        Object[] tmp=set.toArray();
+        String[] data=new String[tmp.length];
+        for(int i=0;i<data.length;i++){
+            data[i]= (String) tmp[i];
+        }
+        final ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<>(getContext(), R.layout.spinner_display_style, data);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
         getActivity().runOnUiThread(new Runnable() {
             @Override

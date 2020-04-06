@@ -10,7 +10,7 @@ public class SensorAdapter {
         HashMap<String,Object> res=new HashMap<>();
         res.put("ID", sensor.getID());
         res.put("type", sensor.getType());
-        res.put("status", sensor.isConnected());
+        res.put("status", sensor.isConnected()?"已连接":"未连接");
         return res;
     }
 }

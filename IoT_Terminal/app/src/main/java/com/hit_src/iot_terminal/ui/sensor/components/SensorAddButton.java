@@ -31,14 +31,6 @@ public class SensorAddButton extends Button {
     }
 
     private void init(){
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = ((FragmentActivity)getContext()).getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.Sensor_Detailed_Fragment, new SensorAddFragment());
-                transaction.commit();
-            }
-        });
+
     }
 }

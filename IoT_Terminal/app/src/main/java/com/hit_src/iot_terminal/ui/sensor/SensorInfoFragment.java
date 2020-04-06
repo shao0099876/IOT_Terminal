@@ -1,7 +1,8 @@
-package com.hit_src.iot_terminal.ui.sensor.info;
+package com.hit_src.iot_terminal.ui.sensor;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class SensorInfoFragment extends Fragment {
     private TextView sensorLoraAddrTextView;
     private Switch enabledSwitch;
     private Switch realtimeDataSwitch;
-    private DataChart chart;
+    private DataChart chart=new DataChart();
 
     private Timer timer;
     private TimerTask timerTask;
@@ -71,6 +72,23 @@ public class SensorInfoFragment extends Fragment {
                     return;
                 }
                 sensor.setEnabled(isChecked);
+                if(isChecked==false){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            realtimeDataSwitch.setChecked(false);
+                            realtimeDataSwitch.setEnabled(false);
+                        }
+                    });
+                }
+                else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            realtimeDataSwitch.setEnabled(true);
+                        }
+                    });
+                }
                 try {
                     MainApplication.dbService.updateSensor(sensor.getID(),sensor.getType(),sensor.getLoraAddr(),isChecked);
                 } catch (RemoteException e) {
@@ -98,15 +116,23 @@ public class SensorInfoFragment extends Fragment {
                                 return;
                             }
                             chart.addData(dataRecord);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    chart.invalidate();
-                                }
-                            });
+                            try {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        chart.invalidate(true);
+                                    }
+                                });
+                            } catch (NullPointerException e){
+                                timer.cancel();
+                                timerTask.cancel();
+                                timer=null;
+                                timerTask=null;
+                            }
+
                         }
                     };
-                    timer.schedule(timerTask,10,1000);
+                    timer.schedule(timerTask,0,1000);
                 }
                 else{
                     timer.cancel();
@@ -124,8 +150,6 @@ public class SensorInfoFragment extends Fragment {
             e.printStackTrace();
         }
         chart.setData(dataList);
-
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -134,7 +158,7 @@ public class SensorInfoFragment extends Fragment {
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
                 enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);
-                chart.invalidate();
+                chart.invalidate(false);
             }
         });
 
