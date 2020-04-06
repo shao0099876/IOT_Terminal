@@ -1,5 +1,7 @@
 package com.hit_src.iot_terminal.xml;
 
+import android.util.Log;
+
 import com.hit_src.iot_terminal.object.op.Add;
 import com.hit_src.iot_terminal.object.op.Div;
 import com.hit_src.iot_terminal.object.op.Mul;
@@ -38,7 +40,7 @@ public class XML2SensorType extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        super.endElement(uri, localName, qName);
+        Log.d("SRCDEBUG",localName);
         if(localName.equals("name")){
             res.setName(sb.toString().trim());
         }
@@ -61,6 +63,7 @@ public class XML2SensorType extends DefaultHandler {
             res.setOpList(opList);
         }
         sb.setLength(0);
+        super.endElement(uri, localName, qName);
     }
     @Override
     public void endDocument() throws SAXException {
