@@ -184,7 +184,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
 
-                <Button
+                <com.hit_src.iot_terminal.ui.overview.components.AdvanceGuidanceButton
                     android:id="@+id/button4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.hit_src.iot_terminal.ui.sensor;
+package com.hit_src.iot_terminal.ui.sensor.info;
 
 import android.os.Bundle;
 import android.os.RemoteException;
