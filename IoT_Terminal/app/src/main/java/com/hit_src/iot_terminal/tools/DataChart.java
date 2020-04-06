@@ -22,17 +22,23 @@ import java.util.Set;
 
 public class DataChart {
     private LineChart chart;
-    private ArrayList<String> xlineTagList=new ArrayList<>();
     private Map<Integer,LineDataSet> lineDataSetMap=new HashMap<>();
+    private Map<Long,DataRecord> dataRecordMap=new HashMap<>();
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss");
     public void setXAxis(){
         XAxis xAxis=chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.setDragXEnabled(true);
-        chart.setVisibleXRange(10,20);
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xlineTagList.get((int) value);
+                String res="";
+                try{
+                    res=simpleDateFormat.format(dataRecordMap.get((long)value).time);
+                } catch (NullPointerException e){
+                    res="";
+                }
+                return res;
             }
         };
         xAxis.setValueFormatter(formatter);
@@ -41,24 +47,24 @@ public class DataChart {
         chart=lineChart;
         setXAxis();
     }
-
-    public void setData(List<DataRecord> list) {
-        if(list.isEmpty()){
-            return;
-        }
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss");
-        xlineTagList=new ArrayList<>();
+    public void buildLineDataSetMap(List<DataRecord> list){
         lineDataSetMap=new HashMap<>();
-        for(int i=0;i<list.size();i++){
-            DataRecord tmp=list.get(i);
+        for(DataRecord tmp:list){
             if(!lineDataSetMap.containsKey(tmp.sensorID)){
                 ArrayList<Entry> entryArrayList=new ArrayList<>();
                 lineDataSetMap.put(tmp.sensorID,new LineDataSet(entryArrayList,"Sensor#"+tmp.sensorID));
             }
             LineDataSet lineDataSet=lineDataSetMap.get(tmp.sensorID);
-            lineDataSet.addEntry(new Entry(tmp.data,i));
-            xlineTagList.add(simpleDateFormat.format(new Date(tmp.time)));
+            dataRecordMap.put((long) dataRecordMap.size(),tmp);
+            lineDataSet.addEntry(new Entry(dataRecordMap.size(),tmp.data));
         }
+    }
+
+    public void setData(List<DataRecord> list) {
+        if(list.isEmpty()){
+            return;
+        }
+        buildLineDataSetMap(list);
         ArrayList<ILineDataSet> tt=new ArrayList<>();
         Set<Integer> set=lineDataSetMap.keySet();
         for(int i:set){
@@ -66,21 +72,35 @@ public class DataChart {
         }
         LineData lineData=new LineData(tt);
         chart.setData(lineData);
-        chart.moveViewToX(xlineTagList.size());
     }
     public void addData(DataRecord dataRecord){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss");
+        if(dataRecord==null||dataRecord.data==null){
+            return;
+        }
         if(!lineDataSetMap.containsKey(dataRecord.sensorID)){
             ArrayList<Entry> entryArrayList=new ArrayList<>();
             lineDataSetMap.put(dataRecord.sensorID,new LineDataSet(entryArrayList,"Sensor#"+dataRecord.sensorID));
         }
         LineDataSet lineDataSet=lineDataSetMap.get(dataRecord.sensorID);
-        lineDataSet.addEntry(new Entry(dataRecord.data,xlineTagList.size()));
-        xlineTagList.add(simpleDateFormat.format(new Date(dataRecord.time)));
-        chart.moveViewToX(xlineTagList.size());
+        dataRecordMap.put((long) dataRecordMap.size(),dataRecord);
+        lineDataSet.addEntry(new Entry(dataRecordMap.size(),dataRecord.data));
+        ArrayList<ILineDataSet> tt=new ArrayList<>();
+        Set<Integer> set=lineDataSetMap.keySet();
+        for(int i:set){
+            tt.add(lineDataSetMap.get(i));
+        }
+        LineData lineData=new LineData(tt);
+        chart.setData(lineData);
     }
 
-    public void invalidate() {
+    public void invalidate(boolean realtime) {
+        if(realtime){
+            chart.setVisibleXRange(5,10);
+        }
+        else{
+            chart.fitScreen();
+        }
+        chart.moveViewToX(dataRecordMap.size());
         chart.invalidate();
     }
 }

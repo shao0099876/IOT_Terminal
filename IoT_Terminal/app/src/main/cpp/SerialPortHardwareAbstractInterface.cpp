@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <memory.h>
-void makeConfid(termios* ctlStruct){
+void makeConfig(termios* ctlStruct){
     //波特率115200
     cfsetispeed(ctlStruct,B115200);
     cfsetospeed(ctlStruct,B115200);
@@ -17,8 +17,10 @@ void makeConfid(termios* ctlStruct){
     ctlStruct->c_cflag&= ~PARENB;
     ctlStruct->c_cflag &= ~CSTOPB;
     ctlStruct->c_cflag &= ~CSIZE;
-
     cfmakeraw(ctlStruct);
+    ctlStruct->c_cc[VTIME]=30;
+    ctlStruct->c_cc[VMIN]=0;
+
 }
 char* DEV_NAME="/dev/ttyUSB0";
 extern "C"
@@ -28,25 +30,35 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
     jbyteArray res=env->NewByteArray(length);
     jbyte *p=env->GetByteArrayElements(res,NULL);
     int fd=open(DEV_NAME,O_RDWR);
+    bool check=true;
     if(fd==-1){
     }
     else{
         termios ctlStruct;
         tcgetattr(fd,&ctlStruct);
-        makeConfid(&ctlStruct);
+        makeConfig(&ctlStruct);
         int err=tcsetattr(fd,TCSANOW,&ctlStruct);
         if(err!=0){
         }
         else{
             char* buffer=(char*)malloc(length);
             int cnt=read(fd,buffer,length);
-            memcpy(p,buffer,cnt);
+            if(cnt<length){
+                check=false;
+            }else{
+                memcpy(p,buffer,cnt);
+            }
             free(buffer);
         }
         close(fd);
     }
     env->ReleaseByteArrayElements(res,p,0);
-    return res;
+    if(check){
+        return res;
+    }
+    else{
+        return NULL;
+    }
 }
 extern "C"
 JNIEXPORT jint JNICALL
@@ -62,7 +74,7 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_write(JNIEnv *env, jclass cl
     else{
         termios ctlStruct;
         tcgetattr(fd,&ctlStruct);
-        makeConfid(&ctlStruct);
+        makeConfig(&ctlStruct);
         int err=tcsetattr(fd,TCSANOW,&ctlStruct);
         if(err!=0){
             res=-2;
@@ -98,7 +110,7 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_write_1read(JNIEnv *env, jcl
     else{
         termios ctlStruct;
         tcgetattr(fd,&ctlStruct);
-        makeConfid(&ctlStruct);
+        makeConfig(&ctlStruct);
         int err=tcsetattr(fd,TCSANOW,&ctlStruct);
         if(err!=0){
 

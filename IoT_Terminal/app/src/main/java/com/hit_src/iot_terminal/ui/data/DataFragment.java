@@ -18,17 +18,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.Global;
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class DataFragment extends Fragment {
     private ListView dataTypeListView;
 
-    private String selected;
+    private int selectedIndex;
     private Fragment childFragment=null;
+    private ArrayList<String> dataTypeList=new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -45,34 +49,31 @@ public class DataFragment extends Fragment {
         super.onStart();
         View view=getView();
         dataTypeListView=view.findViewById(R.id.Data_ListView);
-        Button backButton=view.findViewById(R.id.Data_Back_Button);
 
         dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                selected= Global.getDataTypeList()[position];
-                childFragment=new DataDetailedFragment(selected);
+                selectedIndex= position;
+                childFragment=new DataDetailedFragment(dataTypeList.get(selectedIndex));
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager=getParentFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                transaction.remove(DataFragment.this);
-                transaction.commit();
-            }
-        });
+        Set<String> SensorTypeStringSet= MainApplication.sensorTypeHashMap.keySet();
+        HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
-        for(String i:Global.getDataTypeList()){
+        for(String i:SensorTypeStringSet) {
+            String t = MainApplication.sensorTypeHashMap.get(i).getDataType();
+            dataTypeSet.add(t);
+        }
+        for(String t:dataTypeSet){
             HashMap<String,Object> map=new HashMap<>();
-            map.put("content",i);
+            map.put("content",t);
             list.add(map);
+            dataTypeList.add(t);
         }
         final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView});
         getActivity().runOnUiThread(new Runnable() {

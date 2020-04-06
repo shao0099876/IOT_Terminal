@@ -39,7 +39,6 @@ host=socket.gethostname()
 port=2020
 s.bind((host,port))
 s.listen(5)
-print("listening")
 while(True):
     sock,addr=s.accept()
     print("connected!")

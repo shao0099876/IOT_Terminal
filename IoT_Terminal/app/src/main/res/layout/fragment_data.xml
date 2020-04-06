@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <com.hit_src.iot_terminal.ui.components.BackButton
                 android:id="@+id/Data_Back_Button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

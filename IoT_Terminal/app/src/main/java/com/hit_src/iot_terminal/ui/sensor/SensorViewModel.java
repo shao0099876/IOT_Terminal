@@ -16,11 +16,7 @@ import java.util.ArrayList;
 public class SensorViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Sensor>> sensorListLiveData=new MutableLiveData<>();
     public SensorViewModel(){
-        try {
-            sensorListLiveData.setValue((ArrayList<Sensor>) MainApplication.dbService.getSensorList());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        sensorListLiveData.setValue(SensorService.sensorList);
         SensorService.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
             @Override
             public void onChanged(ObservableList<Sensor> sender) {
@@ -28,7 +24,7 @@ public class SensorViewModel extends ViewModel {
 
             @Override
             public void onItemRangeChanged(ObservableList<Sensor> sender, int positionStart, int itemCount) {
-
+                sensorListLiveData.postValue(new ArrayList<>(sender.subList(0, sender.size())));
             }
 
             @Override

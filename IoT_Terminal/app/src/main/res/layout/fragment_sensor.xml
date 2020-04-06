@@ -1,122 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/BackgroundColor"
-    tools:context=".ui.sensor.SensorFragment">
+    android:layout_height="match_parent" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <com.hit_src.iot_terminal.ui.components.BackButton
-                android:id="@+id/Sensor_Back_Button"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:background="@drawable/button_shape"
-                android:text="返回"
-                android:textSize="35sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="传感器列表"
-                android:textColor="#FFFFFF"
-                android:textSize="35sp" />
-        </LinearLayout>
+        android:background="@color/BackgroundColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.sensor.SensorFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.hit_src.iot_terminal.ui.components.BackButton
+                    android:id="@+id/Sensor_Back_Button"
+                    style="@style/ButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:text="编号"
-                    android:textSize="30sp" />
+                    android:background="@drawable/button_shape"
+                    android:text="返回"
+                    android:textSize="35sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="类型"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:text="连接状态"
-                    android:textSize="30sp" />
+                    android:text="传感器列表"
+                    android:textColor="#FFFFFF"
+                    android:textSize="35sp" />
             </LinearLayout>
 
-            <com.hit_src.iot_terminal.ui.sensor.components.SensorListView
-                android:id="@+id/Sensor_SensorListView"
-                style="@style/SensorListStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:gravity="center"
+                        android:text="编号"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:gravity="center"
+                        android:text="类型"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:gravity="center"
+                        android:text="连接状态"
+                        android:textSize="30sp" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/Sensor_SensorListView"
+                    style="@style/SensorListStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="horizontal">
+
+                <com.hit_src.iot_terminal.ui.sensor.components.SensorAddButton
+                    android:id="@+id/Sensor_Add_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:text="添加"
+                    android:textColor="#FFFFFF"
+                    android:textSize="35sp" />
+
+                <com.hit_src.iot_terminal.ui.sensor.components.SensorDelButton
+                    android:id="@+id/Sensor_Delete_Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_shape"
+                    android:text="删除"
+                    android:textColor="#FFFFFF"
+                    android:textSize="35sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/Sensor_Detailed_Fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:orientation="horizontal">
-
-            <com.hit_src.iot_terminal.ui.sensor.components.SensorAddButton
-                android:id="@+id/Sensor_Add_Button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:text="添加"
-                android:textColor="#FFFFFF"
-                android:textSize="35sp" />
-
-            <com.hit_src.iot_terminal.ui.sensor.components.SensorDelButton
-                android:id="@+id/Sensor_Delete_Button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape"
-                android:text="删除"
-                android:textColor="#FFFFFF"
-                android:textSize="35sp" />
-        </LinearLayout>
+            android:layout_weight="1" />
 
     </LinearLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/Sensor_Detailed_Fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,29 +38,6 @@ public class SensorDelButton extends Button {
         init();
     }
     private void init(){
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager=((FragmentActivity)getContext()).getSupportFragmentManager();
-                List<Fragment> list=manager.getFragments();
-                Fragment fragment=list.get(1);
-                View view=fragment.getView();
-                ListView listView=view.findViewById(R.id.Sensor_SensorListView);
-                if (!listView.isSelected()) {
-                    Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                try {
-                    MainApplication.dbService.delSensor(((Sensor)listView.getSelectedItem()).getID());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                if(list.size()>2){
-                    FragmentTransaction transaction=manager.beginTransaction();
-                    transaction.remove(list.get(list.size()-1));
-                    transaction.commit();
-                }
-            }
-        });
+
     }
 }
