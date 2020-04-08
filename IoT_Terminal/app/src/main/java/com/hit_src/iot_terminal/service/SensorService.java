@@ -52,6 +52,7 @@ public class SensorService extends AbstractRunningService {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        Log.d("SRCDEBUG","startThread");
         mainThread.start();
     }
     private Thread mainThread=new Thread(new Runnable() {
@@ -78,6 +79,7 @@ public class SensorService extends AbstractRunningService {
                         if(!now.isEnabled()){
                             continue;
                         }
+                        Log.d("SRCDEBUG","begin interact");
                         send(now);
                         if(recv(now)){
                             now.setConnected(true);
