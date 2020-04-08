@@ -1,0 +1,10 @@
+https://blog.csdn.net/simonjay2007/article/details/42103833
+编写脚本文件，放置到~/iTop4412_ICS_git/device/samsung/smdk4x12下
+修改同目录下的device.mk，随便找个位置，填入
+PRODUCT_COPY_FILES += \
+        device/samsung/smdk4x12/iot_terminal.sh:system/bin/iot_terminal.sh
+init.rc文件位置：~/iTop4412_ICS_git/system/core/rootdir
+文件权限位置：~/iTop4412_ICS_git/system/core/include/private
+调用方法：https://blog.csdn.net/moyu123456789/article/details/50946130?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+
+以上方法失败！
