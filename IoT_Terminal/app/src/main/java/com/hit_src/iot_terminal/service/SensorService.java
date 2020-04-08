@@ -113,6 +113,10 @@ public class SensorService extends AbstractRunningService {
         if(raw_data==null){
             return false;
         }
+        for(byte j:raw_data){
+            Log.d("SRCDEBUG", String.valueOf(j));
+        }
+        Log.d("SRCDEBUG","-----");
         int res=i.unpackage(raw_data);
         //invalid data
         if(res>=4500){
