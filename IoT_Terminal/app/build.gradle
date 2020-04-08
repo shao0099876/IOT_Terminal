@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.hit_src.iot_terminal"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
