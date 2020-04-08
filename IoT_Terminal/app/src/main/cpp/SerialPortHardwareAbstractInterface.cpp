@@ -9,6 +9,13 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <memory.h>
+#include <android/log.h>
+#include <ctime>
+
+#define   LOG_TAG    "SRCDEBUG_SERIAL"
+#define   LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define   LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define   LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 void makeConfig(termios* ctlStruct){
     //波特率115200
     cfsetispeed(ctlStruct,B115200);
@@ -41,6 +48,7 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
         if(err!=0){
         }
         else{
+            LOGD("startRead");
             char* buffer=(char*)malloc(length);
             int cnt=read(fd,buffer,length);
             if(cnt<length){

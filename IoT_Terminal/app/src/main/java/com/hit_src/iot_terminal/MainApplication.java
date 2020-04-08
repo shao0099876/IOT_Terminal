@@ -15,9 +15,7 @@ import java.util.HashMap;
 
 public class MainApplication extends Application {
     static {
-        System.loadLibrary("serial-HAI");
-        System.loadLibrary("network-HAI");
-        System.loadLibrary("Global-JNI");
+        System.loadLibrary("JNISO");
     }
     public static HashMap<String, SensorType> sensorTypeHashMap=new HashMap<>();
 
@@ -62,10 +60,6 @@ public class MainApplication extends Application {
         bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
         bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingServiceConnection,BIND_AUTO_CREATE);
         Filesystem.build(this);
-        for(int i=0;i<=10000;i++){
-            int b=1;
-            b*=-1;
-        }
     }
 
     @Override
