@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sensor>
+<name>超声</name>
+<datatype>距离</datatype>
+</sensor>

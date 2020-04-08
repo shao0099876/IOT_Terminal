@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BackgroundColor"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="传感器信息"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="传感器ID："
+                android:textColor="#FFFFFF"
+                android:textSize="35dp" />
+
+            <TextView
+                android:id="@+id/Sensor_ID_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="传感器类型："
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/Sensor_Info_Type_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="LoRa地址"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/Sensor_Info_LoraAddr_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <Switch
+            android:id="@+id/Sensor_Enabled_Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="传感器启用"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <Switch
+            android:id="@+id/Sensor_RealtimeData_Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="实时数据"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/Sensor_Draw_LineChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+    </LinearLayout>
+
+</LinearLayout>
