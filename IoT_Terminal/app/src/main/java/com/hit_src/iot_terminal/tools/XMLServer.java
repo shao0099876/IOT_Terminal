@@ -29,6 +29,7 @@ public class XMLServer {
             BufferedReader reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writer.write("getList"+"\n");
+            writer.flush();
             String s=reader.readLine();
             int n=Integer.valueOf(s);
             for(int i=0;i<n;i++){
