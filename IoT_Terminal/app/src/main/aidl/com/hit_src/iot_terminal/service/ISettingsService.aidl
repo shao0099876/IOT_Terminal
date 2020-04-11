@@ -10,8 +10,13 @@ interface ISettingsService {
      */
     String getUpperServerAddr();
     void setUpperServerAddr(in String addr);
-    int getUpperServerPort();
-    void setUpperServerPort(in int port);
+
+    int getUpperServerModbusPort();
+    void setUpperServerModbusPort(in int port);
+
+    int getUpperServerXMLPort();
+    void setUpperServerXMLPort(in int port);
+
     boolean getSerialQuerySetting();
     void setSerialQuerySetting(in boolean setting);
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="true"
     tools:context=".ui.overview.OverviewFragment">
 
     <LinearLayout
@@ -172,7 +173,7 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
+                <com.hit_src.iot_terminal.ui.overview.components.SettingsGuidanceButton
                     android:id="@+id/button3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

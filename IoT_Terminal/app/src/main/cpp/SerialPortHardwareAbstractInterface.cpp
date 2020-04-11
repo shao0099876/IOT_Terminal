@@ -49,7 +49,6 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
         if(err!=0){
         }
         else{
-            LOGD("startRead");
             int cnt=read(fd,p,length);
             if(cnt<length){
                 check=false;

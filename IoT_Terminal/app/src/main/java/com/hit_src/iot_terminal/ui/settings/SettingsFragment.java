@@ -1,4 +1,4 @@
-package com.hit_src.iot_terminal.ui.advance;
+package com.hit_src.iot_terminal.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,16 +9,18 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.R;
 
-public class AdvanceFragment extends Fragment {
+public class SettingsFragment extends Fragment {
+    private Fragment childFragment;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_advance, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     @Override
@@ -29,17 +31,16 @@ public class AdvanceFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
-        Button sensorType=view.findViewById(R.id.Advance_SensorType_Button);
-        sensorType.setOnClickListener(new View.OnClickListener() {
+        Button internet=view.findViewById(R.id.Settings_Internet_Button);
+        internet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                childFragment=new SettingsInternetFragment();
                 FragmentManager manager=getFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
-                transaction.replace(R.id.Advance_Fragment,new AdvanceSensorTypeFragment());
+                transaction.replace(R.id.Settings_Fragment,childFragment);
                 transaction.commit();
             }
         });
-
-
     }
 }
