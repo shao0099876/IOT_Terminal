@@ -5,7 +5,7 @@ public class XML {
     public int version;
 
     public XML(String s) {
-        String[] ss=s.split(":");
+        String[] ss=s.split(" ");
         name=ss[0];
         version= Integer.parseInt(ss[1]);
     }

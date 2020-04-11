@@ -7,37 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Document/通信协议/通信协议.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/aidl/com/hit_src/iot_terminal/service/ISettingsService.aidl" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/aidl/com/hit_src/iot_terminal/service/ISettingsService.aidl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/SerialPortHardwareAbstractInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/SerialPortHardwareAbstractInterface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/hardware/EthernetNetworkCard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/DatabaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/DatabaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/InternetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/InternetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/SensorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/SensorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/SettingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/service/SettingsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvanceFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvanceFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/res/layout/fragment_advance.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/res/layout/fragment_advance.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/res/layout/fragment_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/res/layout/fragment_overview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/ModbusServer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/SensorTypeServer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/Activate.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/activate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/activate.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/deactivate.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/python.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/Scripts/pythonw.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TestUpperServer/venv/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLSocket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

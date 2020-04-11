@@ -90,7 +90,7 @@ public class Filesystem {
         File list=getXMLListFile(context);
         try {
             BufferedWriter writer=new BufferedWriter(new FileWriter(list,true));
-            writer.write(selected.name+":"+selected.serverVersion+"\n");
+            writer.write(selected.name+" "+selected.serverVersion+"\n");
             writer.flush();
             writer.close();
         } catch (FileNotFoundException e) {
@@ -122,7 +122,7 @@ public class Filesystem {
                 }
                 XML xml=new XML(s);
                 if(xml.name.equals(selected.name)){
-                    sb.append(selected.name+":"+selected.serverVersion+"\n");
+                    sb.append(selected.name+" "+selected.serverVersion+"\n");
                 } else{
                     sb.append(s);sb.append("\n");
                 }
