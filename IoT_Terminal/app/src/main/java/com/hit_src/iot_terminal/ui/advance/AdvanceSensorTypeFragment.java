@@ -23,6 +23,7 @@ import com.hit_src.iot_terminal.tools.XMLServer;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 import com.hit_src.iot_terminal.xml.XML;
 
+import java.io.File;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,22 +86,40 @@ public class AdvanceSensorTypeFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XMLServer.addXML(getContext(),selected);
-                updateShow();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XMLServer.addXML(getContext(),selected);
+                        updateShow();
+                    }
+                }).start();
+
             }
         });
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XMLServer.updateXML(getContext(),selected);
-                updateShow();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XMLServer.updateXML(getContext(),selected);
+                        updateShow();
+                    }
+                }).start();
+
             }
         });
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XMLServer.delXML(getContext(),selected);
-                updateShow();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        XMLServer.delXML(getContext(),selected);
+                        updateShow();
+                    }
+                }).start();
+
             }
         });
 
@@ -120,31 +139,37 @@ public class AdvanceSensorTypeFragment extends Fragment {
         return new SimpleAdapter(getContext(),list,R.layout.advance_xml_listview_layout,new String[]{"name","local","server"},new int[]{R.id.Advance_XML_Name_TextView,R.id.Advance_XML_LocalVersion_TextView,R.id.Advance_XML_ServerVersion_TextView});
     }
     private void updateShow(){
-        final ArrayList<XML> serverList= XMLServer.getList();
-        final ArrayList<XML> localList= Filesystem.getXMLList(getContext());
-        xmlRecords=new ArrayList<>();
-        for(XML i:serverList){
-            boolean exist=false;
-            for(XML j:localList){
-                if(i.name.equals(j.name)){
-                    exist=true;
-                    xmlRecords.add(new XMLRecord(i.name,j.version,i.version));
-                    break;
-                }
-            }
-            if(!exist){
-                xmlRecords.add(new XMLRecord(i.name,i.version));
-            }
-        }
-        final SimpleAdapter simpleAdapter=product();
-        getActivity().runOnUiThread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                listView.setAdapter(simpleAdapter);
-                addButton.setClickable(false);
-                updateButton.setClickable(false);
-                delButton.setClickable(false);
+                Filesystem.build(getContext());
+                final ArrayList<XML> serverList= XMLServer.getList();
+                final ArrayList<XML> localList= Filesystem.getXMLList(getContext());
+                xmlRecords=new ArrayList<>();
+                for(XML i:serverList){
+                    boolean exist=false;
+                    for(XML j:localList){
+                        if(i.name.equals(j.name)){
+                            exist=true;
+                            xmlRecords.add(new XMLRecord(i.name,j.version,i.version));
+                            break;
+                        }
+                    }
+                    if(!exist){
+                        xmlRecords.add(new XMLRecord(i.name,i.version));
+                    }
+                }
+                final SimpleAdapter simpleAdapter=product();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        listView.setAdapter(simpleAdapter);
+                        addButton.setClickable(false);
+                        updateButton.setClickable(false);
+                        delButton.setClickable(false);
+                    }
+                });
             }
-        });
+        }).start();
     }
 }

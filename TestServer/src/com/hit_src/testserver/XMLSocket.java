@@ -42,7 +42,7 @@ public class XMLSocket {
         return cnt+"\n"+sb.toString();
     }
     private String getFile(String name) throws IOException {
-        File file=new File("./"+name);
+        File file=new File("./"+name+".xml");
         BufferedReader reader=new BufferedReader(new FileReader(file));
         int cnt=0;
         StringBuilder sb=new StringBuilder();
