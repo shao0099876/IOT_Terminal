@@ -32,10 +32,10 @@ public class XMLSocket {
         StringBuilder sb=new StringBuilder();
         while(true){
             String s=reader.readLine();
-            cnt+=1;
             if(s==null){
                 break;
             }
+            cnt+=1;
             sb.append(s);sb.append("\n");
         }
         reader.close();
@@ -48,10 +48,10 @@ public class XMLSocket {
         StringBuilder sb=new StringBuilder();
         while(true){
             String s=reader.readLine();
-            cnt+=1;
             if(s==null){
                 break;
             }
+            cnt+=1;
             sb.append(s);
             sb.append("\n");
         }
