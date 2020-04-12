@@ -6,7 +6,7 @@ public class Add extends OP {
     }
 
     @Override
-    public int calculate(int reg, int[] source) {
+    public int calculate(int reg, byte[] source) {
         if(isMemory){
             return reg+source[value];
         } else{
