@@ -6,23 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/Global.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/Global.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/SensorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/sensortype/SensorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/op/Add.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/sensortype/op/Add.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/op/Div.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/sensortype/op/Div.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/op/Mul.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/sensortype/op/Mul.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/op/Operation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/sensortype/Operation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/XMLServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/XMLServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvanceSensorTypeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvanceSensorTypeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/xml/XML2SensorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/xml/XML2SensorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

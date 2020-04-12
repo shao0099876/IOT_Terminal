@@ -9,7 +9,7 @@ public class SensorAdapter {
     public static Map<String ,Object> toListViewAdapter(Sensor sensor){
         HashMap<String,Object> res=new HashMap<>();
         res.put("ID", sensor.getID());
-        res.put("type", sensor.getType());
+        res.put("type", MainApplication.sensorTypeHashMap.get(sensor.getType()).name);
         res.put("status", sensor.isConnected()?"已连接":"未连接");
         return res;
     }
