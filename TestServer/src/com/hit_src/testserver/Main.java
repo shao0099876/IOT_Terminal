@@ -8,14 +8,14 @@ public class Main {
     public static ModbusSocket modbusSocket=new ModbusSocket();
     public static XMLSocket xmlSocket=new XMLSocket();
     public static void main(String[] args) throws IOException {
-        //ModbusServer modbusServer=new ModbusServer();
+        ModbusServer modbusServer=new ModbusServer();
         XMLServer xmlServer=new XMLServer();
         BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
         while(true){
             String cmd=reader.readLine();
             if(cmd.equals("stop")){
                 Log.d("STOPPING...");
-                //modbusServer.stop();
+                modbusServer.stop();
                 modbusSocket.stop();
                 xmlServer.stop();
                 xmlSocket.stop();
