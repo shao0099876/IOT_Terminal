@@ -28,7 +28,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="SerialService" />
+                <action android:name="SensorService" />
             </intent-filter>
         </service>
         <service
