@@ -60,7 +60,7 @@ public class SensorAddFragment extends Fragment {
                     String datatype= (String) typeSpinner.getSelectedItem();
                     for(int i: MainApplication.sensorTypeHashMap.keySet()){
                         SensorType now=MainApplication.sensorTypeHashMap.get(i);
-                        if(datatype.equals(now.data.name)){
+                        if(datatype.equals(now.name)){
                             MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
                             break;
                         }

@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
 
+import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 import com.hit_src.iot_terminal.tools.Filesystem;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class MainApplication extends Application {
     static {
