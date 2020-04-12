@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Send {
     public int length;
-    public ArrayList<Integer> value;
+    public ArrayList<Byte> value;
 
     public void setLength(String trim) {
         length=Integer.parseInt(trim);
@@ -12,6 +12,6 @@ public class Send {
     }
 
     public void addValue(String trim) {
-        value.add(Integer.parseInt(trim,16));
+        value.add(Byte.parseByte(trim,16));
     }
 }
