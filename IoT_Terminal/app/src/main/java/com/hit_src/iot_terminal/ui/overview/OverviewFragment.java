@@ -4,13 +4,16 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
@@ -85,6 +89,10 @@ public class OverviewFragment extends Fragment {
                 logEditText.setText("");
             }
         });
+        List<Fragment> list=getFragmentManager().getFragments();
+        for(Fragment i:list){
+            Log.d("SRCDEBUG", String.valueOf(i));
+        }
     }
     private void setSensorStatusShow(int connected,int amount){
         if(connected==amount){

@@ -63,11 +63,11 @@ public class DataFragment extends Fragment {
             }
         });
 
-        Set<String> SensorTypeStringSet= MainApplication.sensorTypeHashMap.keySet();
+        Set<Integer> sensorTypeIntegerSet= MainApplication.sensorTypeHashMap.keySet();
         HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
-        for(String i:SensorTypeStringSet) {
-            String t = MainApplication.sensorTypeHashMap.get(i).getDataType();
+        for(int i:sensorTypeIntegerSet) {
+            String t = MainApplication.sensorTypeHashMap.get(i).name;
             dataTypeSet.add(t);
         }
         for(String t:dataTypeSet){

@@ -17,14 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.object.SensorType;
-import com.hit_src.iot_terminal.service.SensorService;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -61,7 +56,13 @@ public class SensorAddFragment extends Fragment {
                     return;
                 }
                 try {
-                    MainApplication.dbService.addSensor((String) typeSpinner.getSelectedItem(),Integer.valueOf(loraAddrEditText.getText().toString()));
+                    String datatype= (String) typeSpinner.getSelectedItem();
+                    for(int i: MainApplication.sensorTypeHashMap.keySet()){
+                        if(datatype.equals(MainApplication.sensorTypeHashMap.get(i).data.name)){
+                            MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
+                            break;
+                        }
+                    }
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -72,8 +73,8 @@ public class SensorAddFragment extends Fragment {
             }
         });
         Set<String> set=new HashSet<>();
-        for(String i: MainApplication.sensorTypeHashMap.keySet()){
-            set.add(MainApplication.sensorTypeHashMap.get(i).getName());
+        for(int i: MainApplication.sensorTypeHashMap.keySet()){
+            set.add(MainApplication.sensorTypeHashMap.get(i).name);
         }
         Object[] tmp=set.toArray();
         String[] data=new String[tmp.length];

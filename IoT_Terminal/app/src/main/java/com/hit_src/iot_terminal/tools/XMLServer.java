@@ -5,9 +5,7 @@ import android.os.RemoteException;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.object.SensorType;
 import com.hit_src.iot_terminal.object.XMLRecord;
-import com.hit_src.iot_terminal.ui.advance.AdvanceSensorTypeFragment;
 import com.hit_src.iot_terminal.xml.XML;
 
 import java.io.BufferedReader;
@@ -108,7 +106,7 @@ public class XMLServer {
         }
     }
 
-    public static void delXML(Context context,XMLRecord selected) {
+    public static void delXML(XMLRecord selected) {
         try {
             List<Sensor> sensors=MainApplication.dbService.getSensorList();
             for(Sensor i:sensors){
@@ -119,6 +117,5 @@ public class XMLServer {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        Filesystem.deleteXMLFile(context,selected);
     }
 }

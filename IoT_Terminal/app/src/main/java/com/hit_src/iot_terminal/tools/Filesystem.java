@@ -5,7 +5,7 @@ import android.util.Log;
 import android.util.Xml;
 
 import com.hit_src.iot_terminal.MainApplication;
-import com.hit_src.iot_terminal.object.SensorType;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.xml.XML;
 import com.hit_src.iot_terminal.xml.XML2SensorType;
@@ -33,8 +33,12 @@ public class Filesystem {
     }
 
     public static void build(Context context) {
+        MainApplication.sensorTypeHashMap.clear();
         File[] files=getSensorTypeDir(context).listFiles();
         for(File i:files){
+            if(i.getName().equals("packageList")){
+                continue;
+            }
             FileInputStream fileInputStream=null;
             try {
                 fileInputStream=new FileInputStream(i);
@@ -50,7 +54,7 @@ public class Filesystem {
                 e.printStackTrace();
             }
             SensorType res=xml2SensorType.getResults();
-            MainApplication.sensorTypeHashMap.put(res.getName(),res);
+            MainApplication.sensorTypeHashMap.put(res.id,res);
         }
     }
     public static File getXMLListFile(Context context){
@@ -74,7 +78,6 @@ public class Filesystem {
                 if(s==null){
                     break;
                 }
-                Log.d("SRCDEBUG",s);
                 XML xml=new XML(s);
                 res.add(xml);
             }
@@ -169,6 +172,10 @@ public class Filesystem {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        String path=context.getFilesDir()+"/SensorType/";
+        File file=new File(path+selected.name+".xml");
+        file.delete();
         build(context);
     }
 }
