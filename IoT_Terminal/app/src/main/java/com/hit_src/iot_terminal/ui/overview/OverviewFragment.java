@@ -89,10 +89,6 @@ public class OverviewFragment extends Fragment {
                 logEditText.setText("");
             }
         });
-        List<Fragment> list=getFragmentManager().getFragments();
-        for(Fragment i:list){
-            Log.d("SRCDEBUG", String.valueOf(i));
-        }
     }
     private void setSensorStatusShow(int connected,int amount){
         if(connected==amount){

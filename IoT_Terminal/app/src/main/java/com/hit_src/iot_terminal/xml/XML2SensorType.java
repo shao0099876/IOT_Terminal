@@ -37,20 +37,6 @@ public class XML2SensorType extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
-
-        if(localName.equals("data")){
-            data=new Datatype();
-        }
-        if(localName.equals("send")){
-            send=new Send();
-        }
-        if(localName.equals("receive")){
-            receive=new Receive();
-        }
-        if(localName.equals("operation")){
-            operation=new Operation();
-        }
-
     }
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
