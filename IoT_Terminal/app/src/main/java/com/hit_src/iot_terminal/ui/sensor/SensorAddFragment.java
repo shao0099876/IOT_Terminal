@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -58,7 +59,8 @@ public class SensorAddFragment extends Fragment {
                 try {
                     String datatype= (String) typeSpinner.getSelectedItem();
                     for(int i: MainApplication.sensorTypeHashMap.keySet()){
-                        if(datatype.equals(MainApplication.sensorTypeHashMap.get(i).data.name)){
+                        SensorType now=MainApplication.sensorTypeHashMap.get(i);
+                        if(datatype.equals(now.data.name)){
                             MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
                             break;
                         }
@@ -87,6 +89,7 @@ public class SensorAddFragment extends Fragment {
             @Override
             public void run() {
                 typeSpinner.setAdapter(spinnerAdapter);
+                typeSpinner.setSelection(0);
             }
         });
 
