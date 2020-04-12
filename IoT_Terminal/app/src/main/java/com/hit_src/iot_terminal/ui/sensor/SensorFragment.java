@@ -120,7 +120,8 @@ public class SensorFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    sensorListView.setAdapter(makeAdapter((ArrayList<Sensor>) MainApplication.dbService.getSensorList()));
+                    ArrayList<Sensor> list=(ArrayList<Sensor>) MainApplication.dbService.getSensorList();
+                    sensorListView.setAdapter(makeAdapter(list));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

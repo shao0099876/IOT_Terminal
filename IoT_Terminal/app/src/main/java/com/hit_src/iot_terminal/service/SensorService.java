@@ -53,7 +53,6 @@ public class SensorService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId){
         try {
             sensorList.addAll(MainApplication.dbService.getSensorList());
-            Log.e("SRCDEBUG", String.valueOf(sensorList.size()));
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package com.hit_src.iot_terminal.ui.data;
 
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ import java.util.TimerTask;
 
 public class DataDetailedFragment extends Fragment {
     private String Datatype=null;
-    private boolean realtime=false;
     private Timer timer;
     private TimerTask timerTask;
     private ArrayList<Sensor> sensors;
@@ -118,6 +118,10 @@ public class DataDetailedFragment extends Fragment {
         ArrayList<DataRecord> dataRecords=new ArrayList<>();
         for(Sensor i:sensors){
             try {
+                ArrayList<DataRecord> dataRecordArrayList= (ArrayList<DataRecord>) MainApplication.dbService.getDrawPointbySensor(i.getID());
+                for(DataRecord j:dataRecordArrayList){
+                    Log.e("SRCDEBUG", String.valueOf(j));
+                }
                 dataRecords.addAll((ArrayList<DataRecord>) MainApplication.dbService.getDrawPointbySensor(i.getID()));
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -131,8 +135,5 @@ public class DataDetailedFragment extends Fragment {
                 chart.invalidate(false);
             }
         });
-    }
-    public void setRealtime(boolean data){
-
     }
 }

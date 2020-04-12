@@ -93,6 +93,21 @@ public class DatabaseService extends Service {
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
         }
+        @Override
+        public void delSensorByType(int type){
+            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
+            List<Sensor> list=getSensorList();
+            for(Sensor i:list){
+                if(i.getType()==type){
+                    String[] arg=new String[1];
+                    arg[0]=Integer.toString(i.getID());
+                    writeDB.delete("Sensor","sensor_id=?",arg);
+                    writeDB.delete("SensorData","SensorID=?",arg);
+                }
+            }
+            SensorService.sensorList.clear();
+            SensorService.sensorList.addAll(getSensorList());
+        }
 
         @Override
         public void addSensorData(int ID,int data){
