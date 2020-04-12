@@ -1,11 +1,16 @@
 package com.hit_src.iot_terminal.service;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.ObservableBoolean;
 
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.protocol.Modbus;
 import com.hit_src.iot_terminal.ui.overview.OverviewViewModel;
 
@@ -16,9 +21,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Date;
 
+import static com.hit_src.iot_terminal.MainApplication.settingsService;
 import static java.lang.Thread.sleep;
 
-public class InternetService extends AbstractRunningService {
+public class InternetService extends Service {
     public static ObservableBoolean internetConnectionStatus=new ObservableBoolean();
     private Thread mainThread=new Thread(new Runnable() {
         @Override
@@ -28,8 +34,8 @@ public class InternetService extends AbstractRunningService {
                 String hostname = null;
                 int port = -1;
                 try {
-                    hostname=settingsService.getUpperServerAddr();
-                    port=settingsService.getUpperServerModbusPort();
+                    hostname=MainApplication.settingsService.getUpperServerAddr();
+                    port=MainApplication.settingsService.getUpperServerModbusPort();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -72,8 +78,20 @@ public class InternetService extends AbstractRunningService {
     });
 
     @Override
-    protected void runOnReady() {
+    public int onStartCommand(Intent intent, int flags, int startId){
         internetConnectionStatus.set(false);
         mainThread.start();
+        return super.onStartCommand(intent,flags,startId);
+    }
+    @Override
+    public void onDestroy(){
+        mainThread.interrupt();
+        super.onDestroy();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

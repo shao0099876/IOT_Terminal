@@ -23,16 +23,27 @@ public class MainApplication extends Application {
         System.loadLibrary("JNISO");
     }
 
-    boolean runSerialService=false;
+    boolean runSerialService=true;
     boolean runInternetService=true;
 
     public static IDatabaseService dbService;
     public static ISettingsService settingsService;
-
+    private static volatile int serviceReadyCnt=0;
     protected ServiceConnection dbServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             dbService=IDatabaseService.Stub.asInterface(service);
+            synchronized ((Integer)serviceReadyCnt){
+                serviceReadyCnt+=1;
+                if(serviceReadyCnt>=2){
+                    if(runSerialService){
+                        startService(new Intent().setAction("SensorService"));
+                    }
+                    if(runInternetService){
+                        startService(new Intent().setAction("InternetService"));
+                    }
+                }
+            }
         }
 
         @Override
@@ -44,6 +55,17 @@ public class MainApplication extends Application {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             settingsService=ISettingsService.Stub.asInterface(service);
+            synchronized ((Integer)serviceReadyCnt){
+                serviceReadyCnt+=1;
+                if(serviceReadyCnt>=2){
+                    if(runSerialService){
+                        startService(new Intent().setAction("SensorService"));
+                    }
+                    if(runInternetService){
+                        startService(new Intent().setAction("InternetService"));
+                    }
+                }
+            }
         }
 
         @Override
@@ -56,12 +78,6 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(runSerialService){
-            startService(new Intent().setAction("SerialService"));
-        }
-        if(runInternetService){
-            startService(new Intent().setAction("InternetService"));
-        }
         bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"),dbServiceConnection,BIND_AUTO_CREATE);
         bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingServiceConnection,BIND_AUTO_CREATE);
         Filesystem.build(this);

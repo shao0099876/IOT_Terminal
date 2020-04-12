@@ -32,7 +32,7 @@ public class DataFragment extends Fragment {
 
     private int selectedIndex;
     private Fragment childFragment=null;
-    private ArrayList<String> dataTypeList=new ArrayList<>();
+    private ArrayList<Integer> dataTypeList=new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,7 +56,6 @@ public class DataFragment extends Fragment {
                 view.setBackgroundColor(333399);
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                selectedIndex= position;
                 childFragment=new DataDetailedFragment(dataTypeList.get(selectedIndex));
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
