@@ -1,8 +1,12 @@
 package com.hit_src.iot_terminal.service;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
@@ -20,7 +24,7 @@ import java.util.Set;
 
 import static java.lang.Thread.sleep;
 
-public class SensorService extends AbstractRunningService {
+public class SensorService extends Service {
 
     public volatile static ObservableArrayList<Sensor> sensorList=new ObservableArrayList<>();
 
@@ -46,22 +50,34 @@ public class SensorService extends AbstractRunningService {
     }
     private static DataRecord realtimeData;
     @Override
-    protected void runOnReady() {
+    public int onStartCommand(Intent intent, int flags, int startId){
         try {
             sensorList.addAll(MainApplication.dbService.getSensorList());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        Log.d("SRCDEBUG","startThread");
         mainThread.start();
+        return super.onStartCommand(intent,flags,startId);
     }
+    @Override
+    public void onDestroy(){
+        mainThread.interrupt();
+        super.onDestroy();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     private Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
             while(true){
                 boolean serialQueryEnabled=false;
                 try {
-                    serialQueryEnabled=settingsService.getSerialQuerySetting();
+                    serialQueryEnabled=MainApplication.settingsService.getSerialQuerySetting();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -120,7 +136,7 @@ public class SensorService extends AbstractRunningService {
             return true;
         }
         try {
-            dbService.addSensorData(i.getID(),res);
+            MainApplication.dbService.addSensorData(i.getID(),res);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -154,7 +154,7 @@ public class SensorInfoFragment extends Fragment {
             @Override
             public void run() {
                 sensorIDTextView.setText(String.valueOf(sensor.getID()));
-                sensorTypeTextView.setText(sensor.getType());
+                sensorTypeTextView.setText(MainApplication.sensorTypeHashMap.get(sensor.getType()).name);
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
                 enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);

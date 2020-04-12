@@ -9,7 +9,7 @@ public class Sensor{
 
     //database attribute
     private int ID;
-    private String type;
+    private int type;
     private int loraAddr;
     //setting&db attribute
     private int enabled;
@@ -24,7 +24,7 @@ public class Sensor{
     public int getID(){
         return ID;
     }
-    public String getType(){
+    public int getType(){
         return type;
     }
     public int getLoraAddr(){
@@ -40,7 +40,7 @@ public class Sensor{
     public void setID(int p){
         ID=p;
     }
-    public void setType(String p){
+    public void setType(int p){
         type=p;
     }
     public void setLoraAddr(int p){
