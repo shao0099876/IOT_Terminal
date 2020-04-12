@@ -17,8 +17,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.object.SensorType;
-import com.hit_src.iot_terminal.service.DatabaseService;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.DataChart;
 
@@ -112,7 +111,7 @@ public class DataDetailedFragment extends Fragment {
         sensors=new ArrayList<>();
         for(Sensor i:sensorArrayList){
             SensorType sensorType=MainApplication.sensorTypeHashMap.get(i.getType());
-            if(sensorType.getDataType().equals(Datatype)){
+            if(sensorType.data.name.equals(Datatype)){
                 sensors.add(i);
             }
         }

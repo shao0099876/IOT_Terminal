@@ -115,7 +115,8 @@ public class AdvanceSensorTypeFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XMLServer.delXML(getContext(),selected);
+                        XMLServer.delXML(selected);
+                        Filesystem.deleteXMLFile(getContext(),selected);
                         updateShow();
                     }
                 }).start();

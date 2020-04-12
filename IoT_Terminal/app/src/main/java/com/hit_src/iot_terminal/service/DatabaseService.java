@@ -31,7 +31,7 @@ public class DatabaseService extends Service {
             while(cursor.moveToNext()){
                 Sensor sensor=new Sensor();
                 sensor.setID(cursor.getInt(0));
-                sensor.setType(cursor.getString(1));
+                sensor.setType(cursor.getInt(1));
                 sensor.setLoraAddr(cursor.getInt(2));
                 sensor.setEnabled(cursor.getInt(3) != 0);
                 res.add(sensor);
@@ -51,7 +51,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void addSensor(String type,int loraAddr) {
+        public void addSensor(int type,int loraAddr) {
             ArrayList<Sensor> list= (ArrayList<Sensor>) getSensorList();
             int id=0;
             for(Sensor i:list){
@@ -71,7 +71,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void updateSensor(int ID, String type,int loraAddr,boolean enabled) {
+        public void updateSensor(int ID, int type,int loraAddr,boolean enabled) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put("sensor_type",type);
@@ -131,7 +131,7 @@ public class DatabaseService extends Service {
         return new DatabaseServiceImpl();
     }
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
-        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type text NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
+        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
                                                  "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
         DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);

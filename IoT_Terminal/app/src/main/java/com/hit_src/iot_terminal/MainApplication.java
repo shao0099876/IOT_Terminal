@@ -4,23 +4,20 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 
-import com.hit_src.iot_terminal.object.SensorType;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 import com.hit_src.iot_terminal.tools.Filesystem;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class MainApplication extends Application {
     static {
         System.loadLibrary("JNISO");
     }
-    public static HashMap<String, SensorType> sensorTypeHashMap=new HashMap<>();
 
     boolean runSerialService=false;
     boolean runInternetService=true;
@@ -50,6 +47,7 @@ public class MainApplication extends Application {
 
         }
     };
+    public static HashMap<Integer, SensorType> sensorTypeHashMap=new HashMap<>();
 
     @Override
     public void onCreate() {
