@@ -10,12 +10,15 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.XMLRecord;
+import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 import com.hit_src.iot_terminal.tools.Filesystem;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class MainApplication extends Application {
@@ -74,6 +77,7 @@ public class MainApplication extends Application {
         }
     };
     public static HashMap<Integer, SensorType> sensorTypeHashMap=new HashMap<>();
+    public static HashMap<String, Integer> xmlRecordHashMap=new HashMap<>();
 
     @Override
     public void onCreate() {

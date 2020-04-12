@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Xml;
 
 import com.hit_src.iot_terminal.MainApplication;
+import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.xml.XML;
@@ -20,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Filesystem {
@@ -34,11 +36,10 @@ public class Filesystem {
 
     public static void build(Context context) {
         MainApplication.sensorTypeHashMap.clear();
-        File[] files=getSensorTypeDir(context).listFiles();
-        for(File i:files){
-            if(i.getName().equals("packageList")){
-                continue;
-            }
+        MainApplication.xmlRecordHashMap.clear();
+        ArrayList<XML> xmls=getXMLList(context);
+        for(XML j:xmls){
+            File i=new File(context.getFilesDir()+"/SensorType/"+j.name+".xml");
             FileInputStream fileInputStream=null;
             try {
                 fileInputStream=new FileInputStream(i);
@@ -55,6 +56,7 @@ public class Filesystem {
             }
             SensorType res=xml2SensorType.getResults();
             MainApplication.sensorTypeHashMap.put(res.id,res);
+            MainApplication.xmlRecordHashMap.put(j.name,res.id);
         }
     }
     public static File getXMLListFile(Context context){

@@ -105,17 +105,4 @@ public class XMLServer {
             e.printStackTrace();
         }
     }
-
-    public static void delXML(XMLRecord selected) {
-        try {
-            List<Sensor> sensors=MainApplication.dbService.getSensorList();
-            for(Sensor i:sensors){
-                if(selected.name.equals(i.getType())){
-                    MainApplication.dbService.delSensor(i.getID());
-                }
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -3,6 +3,7 @@ package com.hit_src.iot_terminal.ui.advance;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.tools.Filesystem;
@@ -115,7 +117,12 @@ public class AdvanceSensorTypeFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XMLServer.delXML(selected);
+                        int id= MainApplication.xmlRecordHashMap.get(selected.name);
+                        try {
+                            MainApplication.dbService.delSensorByType(id);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
                         Filesystem.deleteXMLFile(getContext(),selected);
                         updateShow();
                     }
