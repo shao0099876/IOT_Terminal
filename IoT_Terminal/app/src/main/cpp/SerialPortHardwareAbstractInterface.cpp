@@ -39,6 +39,7 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
     int fd=open(DEV_NAME,O_RDWR);
     bool check=true;
     if(fd==-1){
+        LOGD("OPENFAILED");
     }
     else{
         termios ctlStruct;
@@ -48,15 +49,10 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
         if(err!=0){
         }
         else{
-            LOGD("startRead");
-            char* buffer=(char*)malloc(length);
-            int cnt=read(fd,buffer,length);
+            int cnt=read(fd,p,length);
             if(cnt<length){
                 check=false;
-            }else{
-                memcpy(p,buffer,cnt);
             }
-            free(buffer);
         }
         close(fd);
     }

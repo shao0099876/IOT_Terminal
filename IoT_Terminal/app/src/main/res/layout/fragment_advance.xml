@@ -2,25 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/BackgroundColor">
+    android:background="@color/BackgroundColor"
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="1.5"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:text="传感器类型缓存管理"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:orientation="horizontal">
+
+            <com.hit_src.iot_terminal.ui.components.BackButton
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="返回" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="高级"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:showDividers="middle">
+
+            <Button
+                android:id="@+id/Advance_SensorType_Button"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="传感器类型缓存管理"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/Advance_Fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

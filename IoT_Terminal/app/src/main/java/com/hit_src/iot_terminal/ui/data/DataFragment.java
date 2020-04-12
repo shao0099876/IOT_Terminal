@@ -30,7 +30,6 @@ import java.util.Set;
 public class DataFragment extends Fragment {
     private ListView dataTypeListView;
 
-    private int selectedIndex;
     private Fragment childFragment=null;
     private ArrayList<String> dataTypeList=new ArrayList<>();
 
@@ -53,21 +52,20 @@ public class DataFragment extends Fragment {
         dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setBackgroundColor(333399);
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                selectedIndex= position;
-                childFragment=new DataDetailedFragment(dataTypeList.get(selectedIndex));
+                childFragment=new DataDetailedFragment(dataTypeList.get(position));
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
             }
         });
 
-        Set<String> SensorTypeStringSet= MainApplication.sensorTypeHashMap.keySet();
+        Set<Integer> sensorTypeIntegerSet= MainApplication.sensorTypeHashMap.keySet();
         HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
-        for(String i:SensorTypeStringSet) {
-            String t = MainApplication.sensorTypeHashMap.get(i).getDataType();
-            dataTypeSet.add(t);
+        for(int i:sensorTypeIntegerSet) {
+            dataTypeSet.add(MainApplication.sensorTypeHashMap.get(i).data.name);
         }
         for(String t:dataTypeSet){
             HashMap<String,Object> map=new HashMap<>();

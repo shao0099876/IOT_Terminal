@@ -92,6 +92,7 @@ public class SensorFragment extends Fragment {
         sensorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setBackgroundColor(333399);
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected=position;
@@ -119,7 +120,8 @@ public class SensorFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    sensorListView.setAdapter(makeAdapter((ArrayList<Sensor>) MainApplication.dbService.getSensorList()));
+                    ArrayList<Sensor> list=(ArrayList<Sensor>) MainApplication.dbService.getSensorList();
+                    sensorListView.setAdapter(makeAdapter(list));
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

@@ -10,66 +10,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class SettingsService extends Service {
     private SharedPreferences settingsFile;
-
-    private class CMDStruct{
-        int cmd;
-        ArrayList<Object> args;
-
-        static final int setUpperServerAddr=0;
-        static final int setUpperServerPort=1;
-        static final int setSerialQuerySetting=2;
-
-        CMDStruct(int cmd){
-            this.cmd=cmd;
-            args=new ArrayList<>();
-        }
-        void put(Object arg){
-            args.add(arg);
-        }
-    }
-    private LinkedBlockingQueue<CMDStruct> blockingQueue=new LinkedBlockingQueue<>();
-    private Thread mainThread=new Thread(new Runnable() {
-        @Override
-        public void run() {
-            while(true){
-                CMDStruct cmd= null;
-                try {
-                    cmd = blockingQueue.take();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                assert cmd != null;
-                switch(cmd.cmd){
-                    case CMDStruct.setUpperServerAddr:{
-                        String addr= (String) cmd.args.get(0);
-                        SharedPreferences.Editor editor=settingsFile.edit();
-                        editor.putString("UpperServerAddr",addr);
-                        editor.apply();
-                        break;
-                    }
-                    case CMDStruct.setUpperServerPort:{
-                        int port= (int) cmd.args.get(0);
-                        SharedPreferences.Editor editor=settingsFile.edit();
-                        editor.putInt("UpperServerPort",port);
-                        editor.apply();
-                        break;
-                    }
-                    case CMDStruct.setSerialQuerySetting:{
-                        boolean setting= (boolean) cmd.args.get(0);
-                        SharedPreferences.Editor editor=settingsFile.edit();
-                        editor.putBoolean("SerialQuerySetting",setting);
-                        editor.apply();
-                        break;
-                    }
-                }
-            }
-        }
-    });
     @Override
     public void onCreate(){
         super.onCreate();
         settingsFile=getSharedPreferences("settings",MODE_PRIVATE);
-        mainThread.start();
     }
     public class SettingsServiceImpl extends ISettingsService.Stub {
 
@@ -80,29 +24,33 @@ public class SettingsService extends Service {
 
         @Override
         public void setUpperServerAddr(String addr) {
-            CMDStruct cmdStruct=new CMDStruct(CMDStruct.setUpperServerAddr);
-            cmdStruct.put(addr);
-            try {
-                blockingQueue.put(cmdStruct);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SharedPreferences.Editor editor=settingsFile.edit();
+            editor.putString("UpperServerAddr",addr);
+            editor.commit();
         }
 
         @Override
-        public int getUpperServerPort() {
-            return settingsFile.getInt("UpperServerPort",-1);
+        public int getUpperServerModbusPort() {
+            return settingsFile.getInt("UpperServerModbusPort",-1);
         }
 
         @Override
-        public void setUpperServerPort(int port) {
-            CMDStruct cmdStruct=new CMDStruct(CMDStruct.setUpperServerPort);
-            cmdStruct.put(port);
-            try {
-                blockingQueue.put(cmdStruct);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        public void setUpperServerModbusPort(int port) {
+            SharedPreferences.Editor editor=settingsFile.edit();
+            editor.putInt("UpperServerModbusPort",port);
+            editor.commit();
+        }
+
+        @Override
+        public int getUpperServerXMLPort() {
+            return settingsFile.getInt("UpperServerXMLPort",-1);
+        }
+
+        @Override
+        public void setUpperServerXMLPort(int port) {
+            SharedPreferences.Editor editor=settingsFile.edit();
+            editor.putInt("UpperServerXMLPort",port);
+            editor.commit();
         }
 
         @Override
@@ -112,13 +60,9 @@ public class SettingsService extends Service {
 
         @Override
         public void setSerialQuerySetting(boolean setting) {
-            CMDStruct cmdStruct=new CMDStruct(CMDStruct.setSerialQuerySetting);
-            cmdStruct.put(setting);
-            try {
-                blockingQueue.put(cmdStruct);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            SharedPreferences.Editor editor=settingsFile.edit();
+            editor.putBoolean("SerialQuerySetting",setting);
+            editor.commit();
         }
     }
 
