@@ -67,6 +67,9 @@ public class InternetService extends Service {
                         byte[] cmd=new byte[8];
                         inputStream.read(cmd);
                         byte[] rep= Modbus.exec(cmd);
+                        if(rep==null){
+                            break;
+                        }
                         outputStream.write(rep);
                         outputStream.flush();
                     }
