@@ -35,6 +35,7 @@ public class Filesystem {
     }
 
     public static void build(Context context) {
+        getSensorTypeDir(context);
         MainApplication.sensorTypeHashMap.clear();
         MainApplication.xmlRecordHashMap.clear();
         ArrayList<XML> xmls=getXMLList(context);

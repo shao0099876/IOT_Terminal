@@ -3,6 +3,14 @@ package com.hit_src.iot_terminal.object;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hit_src.iot_terminal.MainApplication;
+import com.hit_src.iot_terminal.object.sensortype.Datatype;
+import com.hit_src.iot_terminal.object.sensortype.Operation;
+import com.hit_src.iot_terminal.object.sensortype.Receive;
+import com.hit_src.iot_terminal.object.sensortype.Send;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.object.sensortype.op.OP;
+
 import java.nio.ByteBuffer;
 
 public class Sensor{
@@ -58,27 +66,28 @@ public class Sensor{
         connected=p;
     }
 
-
-    public int sendLength=1;
-    public int replyLength=2;
-
-
     public byte[] packageCMD() {
-        ByteBuffer buffer=ByteBuffer.allocate(3+sendLength);
+        SensorType sensorType= MainApplication.sensorTypeHashMap.get(type);
+        Send send=sensorType.send;
+        ByteBuffer buffer=ByteBuffer.allocate(3+send.length);
         buffer.put((byte)((loraAddr>>=4)&15));
         buffer.put((byte)(loraAddr&15));
         buffer.put((byte)0x01);
-        buffer.put((byte)0x55);
+        for(int i=0;i<send.length;i++){
+            buffer.put((byte)(send.value.get(i)));
+        }
         return buffer.array();
     }
 
     public int unpackage(byte[] raw_data) {
-        int res=0;
-        int high=raw_data[0]<<8;
-        high&=0x0FFFF;
-        int low=raw_data[1];
-        low&=0x0FFFF;
-        res=high|low;
-        return res;
+        SensorType sensorType=MainApplication.sensorTypeHashMap.get(type);
+        Receive recv=sensorType.recv;
+        int reg=0;
+        Operation operation=recv.operation;
+        for(OP i:operation.OPList){
+            reg=i.calculate(reg,raw_data);
+            reg&=0x0FFFF;
+        }
+        return reg;
     }
 }
