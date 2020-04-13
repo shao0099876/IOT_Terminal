@@ -3,6 +3,7 @@ package com.hit_src.iot_terminal.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,6 +17,7 @@ public class LogoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_logo);
         AlphaAnimation alphaAnimation= (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.logo);
         ImageView imageView=findViewById(R.id.Main_logo_ImageView);

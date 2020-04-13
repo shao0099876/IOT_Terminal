@@ -14,5 +14,5 @@ public abstract class OP {
         }
         value=Integer.parseInt(tmp);
     }
-    public abstract int calculate(int reg,int[] source);
+    public abstract int calculate(int reg,byte[] source);
 }

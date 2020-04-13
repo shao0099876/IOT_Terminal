@@ -1,68 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundColor"
     android:orientation="vertical">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="添加传感器"
-        android:textColor="#FFFFFF"
-        android:textSize="35sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="传感器类型"
-            android:textColor="#FFFFFF"
-            android:textSize="35sp" />
-
-        <Spinner
-            android:id="@+id/Sensor_Type_Spinner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:spinnerMode="dropdown" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="LoRa地址"
+            android:text="添加传感器"
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
-        <EditText
-            android:id="@+id/Sensor_Add_LoraAddr_EditText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="传感器类型"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+            <Spinner
+                android:id="@+id/Sensor_Type_Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="LoRa地址"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
+
+            <EditText
+                android:id="@+id/Sensor_Add_LoraAddr_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:inputType="number"
+                android:textSize="35sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Sensor_Add_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:text="添加"
+            android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/Sensor_Add_Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_shape"
-        android:text="添加"
-        android:textColor="#FFFFFF"
-        android:textSize="35sp" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
