@@ -33,6 +33,9 @@ public class Modbus {
                 data[0]=0x10;
                 break;
         }
+        if(data==null){
+            return null;
+        }
         byte[] reply=new byte[2+data.length+2];
         reply[0]=addr;
         reply[1]=func;
