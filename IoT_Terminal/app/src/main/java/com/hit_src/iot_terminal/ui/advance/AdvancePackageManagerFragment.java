@@ -13,18 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.tools.PackageManager;
-import com.hit_src.iot_terminal.tools.XMLServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AdvancePackageManagerFragment extends Fragment {
+class AdvancePackageManagerFragment extends Fragment {
     private int selectedIndex=-1;
     private Button addButton;
     private Button updateButton;
@@ -45,22 +45,27 @@ public class AdvancePackageManagerFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
+        assert view != null;
         listView=view.findViewById(R.id.Advance_SensorType_ListView);
         addButton=view.findViewById(R.id.Advance_XMLAdd_Button);
         updateButton=view.findViewById(R.id.Advance_XMLUpdate_Button);
         delButton=view.findViewById(R.id.Advance_XMLDelete_Button);
-        viewModel= ViewModelProviders.of(this).get(AdvancePackageManagerViewModel.class);
+        viewModel=new ViewModelProvider(this).get(AdvancePackageManagerViewModel.class);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                view.setBackgroundColor(333399);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        view.setBackgroundColor(333399);
                         selectedIndex=position;
-                        final XMLRecord selected=viewModel.packageListViewModel.getValue().get(position);
-                        getActivity().runOnUiThread(new Runnable() {
+                        ArrayList<XMLRecord> tmp=viewModel.packageListViewModel.getValue();
+                        if(tmp==null){
+                            return;
+                        }
+                        final XMLRecord selected=tmp.get(position);
+                        MainActivity.self.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if(selected.localExists()){
@@ -91,9 +96,12 @@ public class AdvancePackageManagerFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XMLRecord xmlRecord=viewModel.packageListViewModel.getValue().get(selectedIndex);
-                        String content=XMLServer.addXML(xmlRecord);
-                        PackageManager.addLocalXMLFile(xmlRecord.name,xmlRecord.serverVersion,content);
+                        ArrayList<XMLRecord> tmp=viewModel.packageListViewModel.getValue();
+                        if(tmp==null){
+                            return;
+                        }
+                        XMLRecord xmlRecord=tmp.get(selectedIndex);
+                        PackageManager.pull(xmlRecord.name,xmlRecord.serverVersion);
                     }
                 }).start();
             }
@@ -104,8 +112,12 @@ public class AdvancePackageManagerFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XMLRecord xmlRecord=viewModel.packageListViewModel.getValue().get(selectedIndex);
-                        PackageManager.updateLocalXMLFile(xmlRecord.name,xmlRecord.serverVersion,XMLServer.addXML(xmlRecord));
+                        ArrayList<XMLRecord> tmp=viewModel.packageListViewModel.getValue();
+                        if(tmp==null){
+                            return;
+                        }
+                        XMLRecord xmlRecord=tmp.get(selectedIndex);
+                        PackageManager.pull(xmlRecord.name,xmlRecord.serverVersion);
                     }
                 }).start();
 
@@ -117,8 +129,12 @@ public class AdvancePackageManagerFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        XMLRecord xmlRecord=viewModel.packageListViewModel.getValue().get(selectedIndex);
-                        PackageManager.delLocalXMLFile(xmlRecord.name);
+                        ArrayList<XMLRecord> tmp=viewModel.packageListViewModel.getValue();
+                        if(tmp==null){
+                            return;
+                        }
+                        XMLRecord xmlRecord=tmp.get(selectedIndex);
+                        PackageManager.delete(xmlRecord.name);
                     }
                 }).start();
 
@@ -127,14 +143,24 @@ public class AdvancePackageManagerFragment extends Fragment {
 
         viewModel.packageListViewModel.observe(getViewLifecycleOwner(), new Observer<ArrayList<XMLRecord>>() {
             @Override
-            public void onChanged(ArrayList<XMLRecord> xmlRecords) {
-                updateListViewShow(xmlRecords);
+            public void onChanged(final ArrayList<XMLRecord> xmlRecords) {
+                MainActivity.self.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateListViewShow(xmlRecords);
+                    }
+                });
             }
         });
-        updateListViewShow(viewModel.packageListViewModel.getValue());
-        getActivity().runOnUiThread(new Runnable() {
+        PackageManager.fetch();
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ArrayList<XMLRecord> tmp=viewModel.packageListViewModel.getValue();
+                if(tmp==null){
+                    return;
+                }
+                updateListViewShow(tmp);
                 addButton.setEnabled(false);
                 updateButton.setEnabled(false);
                 delButton.setEnabled(false);
@@ -146,16 +172,11 @@ public class AdvancePackageManagerFragment extends Fragment {
         for(XMLRecord i:xmlRecords){
             HashMap<String,Object> hashMap=new HashMap<>();
             hashMap.put("name",i.name);
-            hashMap.put("localVersion",i.localVersion);
-            hashMap.put("serverVersion",i.serverVersion);
+            hashMap.put("localVersion",i.getLocalVersion());
+            hashMap.put("serverVersion",i.getServerVersion());
             list.add(hashMap);
         }
-        final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.advance_packagemanager_listview_layout,new String[]{"name","localVersion","serverVersion"},new int[]{R.id.Advance_PackageManager_Name_TextView,R.id.Advance_PackageManager_LocalVersion_TextView,R.id.Advance_PackageManager_ServerVersion_TextView});
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                listView.setAdapter(simpleAdapter);
-            }
-        });
+        SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.advance_packagemanager_listview_layout,new String[]{"name","localVersion","serverVersion"},new int[]{R.id.Advance_PackageManager_Name_TextView,R.id.Advance_PackageManager_LocalVersion_TextView,R.id.Advance_PackageManager_ServerVersion_TextView});
+        listView.setAdapter(simpleAdapter);
     }
 }

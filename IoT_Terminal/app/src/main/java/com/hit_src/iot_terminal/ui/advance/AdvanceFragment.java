@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 
 public class AdvanceFragment extends Fragment {
@@ -29,11 +30,12 @@ public class AdvanceFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
+        assert view != null;
         Button sensorType=view.findViewById(R.id.Advance_SensorType_Button);
         sensorType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager=getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
                 transaction.replace(R.id.Advance_Fragment,new AdvancePackageManagerFragment());
                 transaction.commit();

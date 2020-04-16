@@ -11,17 +11,24 @@ public class XMLRecord {
         serverVersion=server;
     }
 
-    public XMLRecord(String s) {
-        String[] ss=s.split(" ");
-        name=ss[0];
-        localVersion=null;
-        serverVersion= Integer.valueOf(ss[1]);
-    }
-
     public boolean localExists(){
         return localVersion!=null;
     }
     public boolean isOutDated(){
         return localVersion < serverVersion;
+    }
+
+    public String getLocalVersion() {
+        if(localVersion==null){
+            return "-";
+        }
+        return String.valueOf(localVersion);
+    }
+
+    public String getServerVersion() {
+        if(serverVersion==null){
+            return "-";
+        }
+        return String.valueOf(serverVersion);
     }
 }

@@ -59,8 +59,8 @@ public class SensorAddFragment extends Fragment {
                 }
                 try {
                     String datatype= (String) typeSpinner.getSelectedItem();
-                    for(int i: GlobalVar.sensorTypeHashMap.keySet()){
-                        SensorType now=GlobalVar.sensorTypeHashMap.get(i);
+                    for(int i: GlobalVar.sensorTypeMap.keySet()){
+                        SensorType now=GlobalVar.sensorTypeMap.get(i);
                         if(datatype.equals(now.name)){
                             MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
                             break;
@@ -76,8 +76,8 @@ public class SensorAddFragment extends Fragment {
             }
         });
         Set<String> set=new HashSet<>();
-        for(int i: GlobalVar.sensorTypeHashMap.keySet()){
-            set.add(GlobalVar.sensorTypeHashMap.get(i).name);
+        for(int i: GlobalVar.sensorTypeMap.keySet()){
+            set.add(GlobalVar.sensorTypeMap.get(i).name);
         }
         Object[] tmp=set.toArray();
         String[] data=new String[tmp.length];

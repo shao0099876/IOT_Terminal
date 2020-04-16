@@ -1,13 +1,15 @@
 package com.hit_src.iot_terminal.tools;
 
+import android.os.RemoteException;
+import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
+import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
-import com.hit_src.iot_terminal.ui.overview.OverviewViewModel;
 import com.hit_src.iot_terminal.xml.XML2SensorType;
 
 import org.xml.sax.SAXException;
@@ -16,58 +18,53 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class PackageManager {
-    public static File getLocalXMLListFile(){
+    private static File getLocalXMLListFile(){
         String path=MainApplication.self.getFilesDir()+"/SensorType/packageList";
         File res=new File(path);
-        boolean tmp;
         try {
-            tmp = res.createNewFile();
+            res.createNewFile();
         } catch (IOException e) {
-            Toast.makeText(MainApplication.self, "致命错误：创建包管理器文件失败", Toast.LENGTH_SHORT).show();
             return null;
-        }
-        if(tmp){
-            GlobalVar.addLogLiveData("已创建包管理器列表文件");
-        }
-        else{
-            GlobalVar.addLogLiveData("已存在包管理器列表文件");
         }
         return res;
     }
-    public static void addToLocalXMLListFile(String name,int version){
+    private static void addToLocalXMLListFile(String name, int version){
         File listFile=getLocalXMLListFile();
-        FileWriter fileWriter= null;
         try {
-            fileWriter = new FileWriter(listFile,true);
-        } catch (IOException e) {
-            Toast.makeText(MainApplication.self, "致命错误：包管理器列表文件写入失败", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
-        StringBuffer stringBuffer=new StringBuffer();
-        stringBuffer.append(name);stringBuffer.append(" ");
-        stringBuffer.append(version);stringBuffer.append("\n");
-        try {
-            bufferedWriter.write(stringBuffer.toString());
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            fileWriter.close();
+            BufferedReader reader=new BufferedReader(new FileReader(listFile));
+            StringBuilder sb=new StringBuilder();
+            while(true){
+                String s=reader.readLine();
+                if(s==null){
+                    break;
+                }
+                String[] ss=s.split(" ");
+                if(ss[0].equals(name)){
+                    continue;
+                }
+                sb.append(s);sb.append("\n");
+            }
+            reader.close();
+            sb.append(name);sb.append(" ");
+            sb.append(version);sb.append("\n");
+            BufferedWriter writer=new BufferedWriter(new FileWriter(getLocalXMLListFile()));
+            writer.write(sb.toString());
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void delFromLocalXMLListFile(String name){
+    private static void delFromLocalXMLListFile(String name){
         File listFile=getLocalXMLListFile();
         try {
             FileReader fileReader=new FileReader(listFile);
@@ -97,133 +94,198 @@ public class PackageManager {
             e.printStackTrace();
         }
     }
-    public static ArrayList<XMLRecord> getLocalXMLList(){
+
+
+    private static File getLocalXMLFile(String name){
+        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
+        return new File(path);
+    }
+    private static void addLocalXMLFile(String name, int version, String content){
+        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
+        File file=new File(path);
+        try {
+            file.createNewFile();
+            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write(content);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void testPackageListDir() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String path=MainApplication.self.getFilesDir()+"/SensorType";
+                File file=new File(path);
+                file.mkdir();
+            }
+        }).start();
+    }
+    public static ArrayList<XMLRecord> readLocalXMLList(){
         ArrayList<XMLRecord> res=new ArrayList<>();
-        File listFile=getLocalXMLListFile();
-        FileReader fileReader= null;
         try {
-            fileReader = new FileReader(listFile);
-        } catch (FileNotFoundException e) {
-            Toast.makeText(MainApplication.self,"致命错误：包管理器列表文件不存在",Toast.LENGTH_LONG).show();
-        }
-        if(fileReader==null){
-            return res;
-        }
-        BufferedReader reader=new BufferedReader(fileReader);
-        while(true){
-            String s= null;
-            try {
-                s = reader.readLine();
-            } catch (IOException e) {
-                Toast.makeText(MainApplication.self,"致命错误：读文件出错",Toast.LENGTH_LONG).show();
+            BufferedReader reader=new BufferedReader(new FileReader(getLocalXMLListFile()));
+            while(true){
+                String s=reader.readLine();
+                if(s==null){
+                    break;
+                }
+                String[] ss=s.split(" ");
+                String name=ss[0];
+                int localVersion= Integer.parseInt(ss[1]);
+                res.add(new XMLRecord(name,localVersion,null));
             }
-            if(s==null){
-                break;
-            }
-            String[] ss=s.split(" ");
-            String name=ss[0];
-            int localVersion= Integer.parseInt(ss[1]);
-            res.add(new XMLRecord(name,localVersion,null));
-        }
-        try {
             reader.close();
-            fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return res;
     }
-    public static void build(){
-        ArrayList<XMLRecord> localList=getLocalXMLList();
-        Map<String,XMLRecord> xmlRecordMap=new HashMap<>();
-        for(XMLRecord i: localList){
-            xmlRecordMap.put(i.name,i);
-            String path=MainApplication.self.getFilesDir()+"/SensorType/"+i.name+".xml";
-            File file=new File(path);
-            FileInputStream fileInputStream= null;
-            try {
-                fileInputStream = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                Toast.makeText(MainApplication.self,"致命错误：无法找到传感器配置文件", Toast.LENGTH_SHORT).show();
-                continue;
-            }
-            XML2SensorType xml2SensorType=new XML2SensorType();
-            try {
-                Xml.parse(fileInputStream, Xml.Encoding.UTF_8,xml2SensorType);
-            } catch (IOException e) {
-                Toast.makeText(MainApplication.self, "致命错误：传感器配置文件解析错误", Toast.LENGTH_SHORT).show();
-            } catch (SAXException e) {
-                Toast.makeText(MainApplication.self, "致命错误：传感器配置文件解析错误", Toast.LENGTH_SHORT).show();
-            }
-            SensorType sensorType=xml2SensorType.getResults();
-            GlobalVar.sensorTypeHashMap.put(sensorType.id,sensorType);
+    private static ArrayList<XMLRecord> readRemoteXMLList(){
+        String addr= null;
+        int port = -1;
+        try {
+            addr = MainApplication.settingsService.getUpperServerAddr();
+            port=MainApplication.settingsService.getUpperServerXMLPort();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        if(addr.isEmpty()||port==-1){
+            Toast.makeText(MainApplication.self, "网络配置不正确", Toast.LENGTH_SHORT).show();
+            return new ArrayList<>();
         }
         ArrayList<XMLRecord> res=new ArrayList<>();
-        ArrayList<XMLRecord> serverList=XMLServer.getList();
-        if(serverList==null){
-            for(XMLRecord i:localList){
-                GlobalVar.xmlRecords.add(i);
-            }
-        } else{
-            for(XMLRecord i:serverList){
-                if(xmlRecordMap.containsKey(i.name)){
-                    XMLRecord xmlRecord=xmlRecordMap.get(i.name);
-                    res.add(new XMLRecord(i.name,xmlRecord.localVersion,i.serverVersion));
-                }
-                else{
-                    res.add(new XMLRecord(i.name,null,i.serverVersion));
-                }
-            }
-            GlobalVar.xmlRecords.addAll(res);
-        }
-    }
-    public static File getLocalXMLFile(String name){
-        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
-        return new File(path);
-    }
-    public static void addLocalXMLFile(String name,int version,String content){
-        addToLocalXMLListFile(name,version);
-        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
-        File file=new File(path);
         try {
-            file.createNewFile();
-            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(file));
-            bufferedWriter.write(content);
-            bufferedWriter.flush();
-            bufferedWriter.close();
+            Socket socket=new Socket(MainApplication.settingsService.getUpperServerAddr(),MainApplication.settingsService.getUpperServerXMLPort());
+            BufferedReader reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            writer.write("getList"+"\n");
+            writer.flush();
+            String s=reader.readLine();
+            int n=Integer.valueOf(s);
+            for(int i=0;i<n;i++){
+                s=reader.readLine();
+                Log.e("SRCDEBUG",s);
+                String[] ss=s.split(" ");
+                Integer remoteVersion= Integer.valueOf(ss[1]);
+                res.add(new XMLRecord(ss[0],null,remoteVersion));
+            }
+            reader.close();
+            writer.close();
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        build();
-    }
-    public static void updateLocalXMLFile(String name, Integer serverVersion, String content) {
-        delFromLocalXMLListFile(name);
-        addToLocalXMLListFile(name,serverVersion);
-        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
-        File file=new File(path);
-        try {
-            file.createNewFile();
-            BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(file));
-            bufferedWriter.write(content);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-        } catch (IOException e) {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
-        build();
-    }
-    public static void delLocalXMLFile(String name){
-        delFromLocalXMLListFile(name);
-        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
-        File file=new File(path);
-        file.delete();
-        build();
+        return res;
     }
 
+    public static void fetch() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<XMLRecord> localList=readLocalXMLList();
+                ArrayList<XMLRecord> remoteList=readRemoteXMLList();
+                GlobalVar.xmlRecords.clear();
+                for(XMLRecord i:remoteList){
+                    for(XMLRecord j:localList){
+                        if(i.name.equals(j.name)){
+                            i.localVersion=j.localVersion;
+                            break;
+                        }
+                    }
+                    GlobalVar.xmlRecords.add(i);
+                }
+            }
+        }).start();
+    }
+    public static void pull(final String name, final int version){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Socket socket=new Socket(MainApplication.settingsService.getUpperServerAddr(),MainApplication.settingsService.getUpperServerXMLPort());
+                    BufferedReader reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    StringBuilder sb=new StringBuilder();
+                    sb.append("add");sb.append("\n");
+                    sb.append(name);sb.append("\n");
+                    writer.write(sb.toString());
+                    writer.flush();
+                    String s=reader.readLine();
+                    int n= Integer.parseInt(s);
+                    sb=new StringBuilder();
+                    for(int i=0;i<n;i++){
+                        sb.append(reader.readLine()+"\n");
+                    }
+                    String content=sb.toString();
+                    reader.close();
+                    writer.close();
+                    socket.close();
+                    addToLocalXMLListFile(name,version);
+                    addLocalXMLFile(name,version,content);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                fetch();
+                build();
+            }
+        }).start();
 
-    public static void testPackageListDir() {
-        String path=MainApplication.self.getFilesDir()+"/SensorType";
-        File file=new File(path);
-        file.mkdir();
+    }
+    public static void build(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(XMLRecord i: GlobalVar.xmlRecords){
+                    try {
+                        FileInputStream fileInputStream=new FileInputStream(getLocalXMLFile(i.name));
+                        XML2SensorType xml2SensorType=new XML2SensorType();
+                        Xml.parse(fileInputStream,Xml.Encoding.UTF_8,xml2SensorType);
+                        SensorType sensorType=xml2SensorType.getResults();
+                        GlobalVar.sensorTypeMap.put(sensorType.id,sensorType);
+                        GlobalVar.xmlRecordtoSensorTypeMap.put(i.name,sensorType.id);
+                    } catch (SAXException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public static void delete(final String name) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                XMLRecord xmlRecord = null;
+                for(XMLRecord i:GlobalVar.xmlRecords){
+                    if(i.name.equals(name)){
+                        xmlRecord=i;
+                        GlobalVar.xmlRecords.remove(i);
+                        break;
+                    }
+                }
+                int sensorType=GlobalVar.xmlRecordtoSensorTypeMap.get(xmlRecord.name);
+                try {
+                    MainApplication.dbService.delSensorByType(sensorType);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                delFromLocalXMLListFile(name);
+                String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
+                File file=new File(path);
+                file.delete();
+                fetch();
+                build();
+            }
+        }).start();
     }
 }
