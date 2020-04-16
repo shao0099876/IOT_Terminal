@@ -26,7 +26,7 @@ public class GuidanceButton extends Button {
     public GuidanceButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-    protected void init(final Fragment targetFragment){
+    void init(final Fragment targetFragment){
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

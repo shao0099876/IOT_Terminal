@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +74,12 @@ public class OverviewFragment extends Fragment {
         MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setSensorStatusShow(viewModel.sensorConnectedLiveData.getValue(),viewModel.sensorAmountLiveData.getValue());
+                Integer connected=viewModel.sensorConnectedLiveData.getValue();
+                Integer amount=viewModel.sensorAmountLiveData.getValue();
+                if(connected==null||amount==null){
+                    return;
+                }
+                setSensorStatusShow(connected,amount);
                 setInternetStatusShow(viewModel.internetConnectionLiveData.getValue());
                 logEditText.setText("");
             }
@@ -90,7 +94,7 @@ public class OverviewFragment extends Fragment {
             sensorStatusLinearLayout.setYellow();
         }
         final String s=connected+"/"+amount;
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 sensorStatusTextView.setText(s);
@@ -108,18 +112,21 @@ public class OverviewFragment extends Fragment {
             s="未连接";
         }
         final String final_s=s;
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 internetStatusTextView.setText(final_s);
             }
         });
     }
-    private Observer<Integer> sensorStatusObserver=new Observer<Integer>() {
+    private final Observer<Integer> sensorStatusObserver=new Observer<Integer>() {
         @Override
         public void onChanged(Integer integer) {
-            int connected=viewModel.sensorConnectedLiveData.getValue();
-            int amount=viewModel.sensorAmountLiveData.getValue();
+            Integer connected=viewModel.sensorConnectedLiveData.getValue();
+            Integer amount=viewModel.sensorAmountLiveData.getValue();
+            if(connected==null||amount==null){
+                return;
+            }
             setSensorStatusShow(connected,amount);
         }
     };

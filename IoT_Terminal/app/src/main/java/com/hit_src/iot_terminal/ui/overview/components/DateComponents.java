@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,7 +35,7 @@ public class DateComponents extends TextView {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日");
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日",Locale.CHINA);
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
                 final String s=simpleDateFormat.format(new Date());
                 ((Activity)getContext()).runOnUiThread(new Runnable() {

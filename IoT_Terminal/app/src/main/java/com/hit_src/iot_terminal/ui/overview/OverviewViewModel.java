@@ -1,34 +1,20 @@
 package com.hit_src.iot_terminal.ui.overview;
 
-import android.os.RemoteException;
-import android.provider.ContactsContract;
-import android.util.Log;
-
 import androidx.databinding.Observable;
 import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 import androidx.databinding.ObservableMap;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hit_src.iot_terminal.GlobalVar;
-import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.service.InternetService;
-import com.hit_src.iot_terminal.service.SensorService;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 
 public class OverviewViewModel extends ViewModel {
-    public MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
-    public MutableLiveData<Integer> sensorAmountLiveData=new MutableLiveData<>();
-    public MutableLiveData<Boolean> internetConnectionLiveData=new MutableLiveData<>();
-    public MutableLiveData<String> logLiveData=new MutableLiveData<>();
+    public final MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
+    public final MutableLiveData<Integer> sensorAmountLiveData=new MutableLiveData<>();
+    public final MutableLiveData<Boolean> internetConnectionLiveData=new MutableLiveData<>();
+    public final MutableLiveData<String> logLiveData=new MutableLiveData<>();
     public OverviewViewModel(){
         sensorAmountLiveData.setValue(GlobalVar.sensorMap.size());
         int connected=0;

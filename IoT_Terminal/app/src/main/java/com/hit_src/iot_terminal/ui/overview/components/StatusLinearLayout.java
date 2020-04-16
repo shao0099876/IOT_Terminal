@@ -2,7 +2,6 @@ package com.hit_src.iot_terminal.ui.overview.components;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
@@ -12,9 +11,9 @@ import com.hit_src.iot_terminal.R;
 
 public class StatusLinearLayout extends LinearLayout {
 
-    private int red= R.color.Overview_Status_Red;
-    private int yellow=R.color.Overview_Status_Yellow;
-    private int green=R.color.Overview_Status_Green;
+    private final int red= R.color.Overview_Status_Red;
+    private final int yellow=R.color.Overview_Status_Yellow;
+    private final int green=R.color.Overview_Status_Green;
 
     public StatusLinearLayout(Context context) {
         super(context);
