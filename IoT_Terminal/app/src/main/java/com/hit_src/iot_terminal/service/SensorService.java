@@ -11,6 +11,7 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableInt;
 import androidx.databinding.ObservableList;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.DataRecord;
@@ -25,8 +26,6 @@ import java.util.Set;
 import static java.lang.Thread.sleep;
 
 public class SensorService extends Service {
-
-    public volatile static ObservableArrayList<Sensor> sensorList=new ObservableArrayList<>();
 
     public static DataRecord getRealtimeData(int id) {
         if(realtimeData.sensorID==id){
@@ -51,10 +50,14 @@ public class SensorService extends Service {
     private static DataRecord realtimeData;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
+        List<Sensor> sensorList=null;
         try {
-            sensorList.addAll(MainApplication.dbService.getSensorList());
+            sensorList=MainApplication.dbService.getSensorList();
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+        for(Sensor i:sensorList){
+            GlobalVar.sensorMap.put(i.getID(),i);
         }
         mainThread.start();
         return super.onStartCommand(intent,flags,startId);
@@ -89,28 +92,27 @@ public class SensorService extends Service {
                     }
                     continue;
                 }
-                try{
-                    for(int i=0;i<sensorList.size();i++){
-                        Sensor now=sensorList.get(i);
-                        if(!now.isEnabled()){
-                            continue;
-                        }
-                        Log.d("SRCDEBUG","begin interact");
-                        send(now);
-                        if(recv(now)){
-                            now.setConnected(true);
-                            OverviewViewModel.addLogLiveData(now.getID()+"号传感器交互成功");
-                        }
-                        else{
-                            now.setConnected(false);
-                            OverviewViewModel.addLogLiveData(now.getID()+"号传感器交互失败");
-                        }
-                        sensorList.set(i,now);
-                    }
-                }catch (IndexOutOfBoundsException e){
-
+                Set<Integer> sensorIDSet=GlobalVar.sensorMap.keySet();
+                ArrayList<Sensor> sensorList=new ArrayList<>();
+                for(Integer i:sensorIDSet){
+                    sensorList.add(GlobalVar.sensorMap.get(i));
                 }
-
+                for(int i=0;i<sensorList.size();i++){
+                    Sensor now=sensorList.get(i);
+                    if(!now.isEnabled()){
+                        continue;
+                    }
+                    send(now);
+                    if(recv(now)){
+                        now.setConnected(true);
+                        GlobalVar.addLogLiveData(now.getID()+"号传感器交互成功");
+                    }
+                    else{
+                        now.setConnected(false);
+                        GlobalVar.addLogLiveData(now.getID()+"号传感器交互失败");
+                    }
+                    GlobalVar.sensorMap.setValueAt(i,now);
+                }
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {
@@ -125,7 +127,7 @@ public class SensorService extends Service {
         SerialPort.write(cmd);
     }
     private boolean recv(Sensor i){
-        byte[] raw_data=SerialPort.read(MainApplication.sensorTypeHashMap.get(i.getType()).recv.length);
+        byte[] raw_data=SerialPort.read(GlobalVar.sensorTypeHashMap.get(i.getType()).recv.length);
         if(raw_data==null){
             return false;
         }

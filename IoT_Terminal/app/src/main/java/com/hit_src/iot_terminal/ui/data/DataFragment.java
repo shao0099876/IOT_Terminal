@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.Global;
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
@@ -61,11 +62,11 @@ public class DataFragment extends Fragment {
             }
         });
 
-        Set<Integer> sensorTypeIntegerSet= MainApplication.sensorTypeHashMap.keySet();
+        Set<Integer> sensorTypeIntegerSet= GlobalVar.sensorTypeHashMap.keySet();
         HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
         for(int i:sensorTypeIntegerSet) {
-            dataTypeSet.add(MainApplication.sensorTypeHashMap.get(i).data.name);
+            dataTypeSet.add(GlobalVar.sensorTypeHashMap.get(i).data.name);
         }
         for(String t:dataTypeSet){
             HashMap<String,Object> map=new HashMap<>();

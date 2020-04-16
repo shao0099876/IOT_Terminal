@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
@@ -77,7 +78,7 @@ public class SensorFragment extends Fragment {
                     return;
                 }
                 try {
-                    MainApplication.dbService.delSensor(SensorService.sensorList.get(selected).getID());
+                    MainApplication.dbService.delSensor(viewModel.sensorListLiveData.getValue().get(selected).getID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +97,7 @@ public class SensorFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected=position;
-                childFragment=new SensorInfoFragment(SensorService.sensorList.get(position));
+                childFragment=new SensorInfoFragment(viewModel.sensorListLiveData.getValue().get(position));
                 transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }
@@ -107,7 +108,7 @@ public class SensorFragment extends Fragment {
         viewModel.sensorListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<Sensor>>() {
             @Override
             public void onChanged(final ArrayList<Sensor> sensors) {
-                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         sensorListView.setAdapter(makeAdapter(sensors));
@@ -116,15 +117,10 @@ public class SensorFragment extends Fragment {
             }
         });
 
-        ((Activity)getContext()).runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    ArrayList<Sensor> list=(ArrayList<Sensor>) MainApplication.dbService.getSensorList();
-                    sensorListView.setAdapter(makeAdapter(list));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                sensorListView.setAdapter(makeAdapter(viewModel.sensorListLiveData.getValue()));
             }
         });
     }

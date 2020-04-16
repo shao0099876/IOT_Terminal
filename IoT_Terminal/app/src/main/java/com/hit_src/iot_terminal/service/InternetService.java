@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.ObservableBoolean;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.protocol.Modbus;
 import com.hit_src.iot_terminal.ui.overview.OverviewViewModel;
@@ -25,7 +26,6 @@ import static com.hit_src.iot_terminal.MainApplication.settingsService;
 import static java.lang.Thread.sleep;
 
 public class InternetService extends Service {
-    public static ObservableBoolean internetConnectionStatus=new ObservableBoolean();
     private Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
@@ -40,7 +40,7 @@ public class InternetService extends Service {
                     e.printStackTrace();
                 }
                 if(hostname==null||port==-1){
-                    OverviewViewModel.addLogLiveData("网络连接设置错误！");
+                    GlobalVar.addLogLiveData("网络连接设置错误！");
                     try {
                         sleep(3000);
                     } catch (InterruptedException e) {
@@ -51,7 +51,7 @@ public class InternetService extends Service {
                 try {
                     socket.connect(new InetSocketAddress(hostname,port),5000);
                 } catch (IOException e) {//无法上联到服务器
-                    internetConnectionStatus.set(false);
+                    GlobalVar.internetStatus.set(false);
                     try {
                         sleep(3000);
                     } catch (InterruptedException ex) {
@@ -59,7 +59,7 @@ public class InternetService extends Service {
                     }
                     continue;
                 }
-                internetConnectionStatus.set(true);
+                GlobalVar.internetStatus.set(true);
                 try {
                     InputStream inputStream = socket.getInputStream();
                     OutputStream outputStream=socket.getOutputStream();
@@ -82,7 +82,7 @@ public class InternetService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        internetConnectionStatus.set(false);
+        GlobalVar.internetStatus.set(false);
         mainThread.start();
         return super.onStartCommand(intent,flags,startId);
     }

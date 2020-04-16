@@ -35,7 +35,7 @@ public class AdvanceFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager=getFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
-                transaction.replace(R.id.Advance_Fragment,new AdvanceSensorTypeFragment());
+                transaction.replace(R.id.Advance_Fragment,new AdvancePackageManagerFragment());
                 transaction.commit();
             }
         });

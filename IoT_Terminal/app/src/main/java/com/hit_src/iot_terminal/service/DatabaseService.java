@@ -66,8 +66,6 @@ public class DatabaseService extends Service {
             contentValues.put("sensor_addr",loraAddr);
             contentValues.put("sensor_enabled",1);
             writeDB.insert("Sensor",null,contentValues);
-            SensorService.sensorList.clear();
-            SensorService.sensorList.addAll(getSensorList());
         }
 
         @Override
@@ -79,8 +77,6 @@ public class DatabaseService extends Service {
             contentValues.put("sensor_enabled",enabled);
             writeDB.update("Sensor",contentValues,"sensor_id=?",
                     new String[]{Integer.toString(ID)});
-            SensorService.sensorList.clear();
-            SensorService.sensorList.addAll(getSensorList());
         }
 
         @Override
@@ -90,8 +86,6 @@ public class DatabaseService extends Service {
             arg[0]=Integer.toString(ID);
             writeDB.delete("Sensor","sensor_id=?",arg);
             writeDB.delete("SensorData","SensorID=?",arg);
-            SensorService.sensorList.clear();
-            SensorService.sensorList.addAll(getSensorList());
         }
         @Override
         public void delSensorByType(int type){
@@ -105,8 +99,6 @@ public class DatabaseService extends Service {
                     writeDB.delete("SensorData","SensorID=?",arg);
                 }
             }
-            SensorService.sensorList.clear();
-            SensorService.sensorList.addAll(getSensorList());
         }
 
         @Override

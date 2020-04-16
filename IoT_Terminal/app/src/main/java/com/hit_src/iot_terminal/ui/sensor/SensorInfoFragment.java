@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
@@ -154,7 +155,7 @@ public class SensorInfoFragment extends Fragment {
             @Override
             public void run() {
                 sensorIDTextView.setText(String.valueOf(sensor.getID()));
-                sensorTypeTextView.setText(MainApplication.sensorTypeHashMap.get(sensor.getType()).name);
+                sensorTypeTextView.setText(GlobalVar.sensorTypeHashMap.get(sensor.getType()).name);
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
                 enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);

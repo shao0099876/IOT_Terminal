@@ -4,24 +4,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
@@ -48,13 +44,14 @@ public class OverviewFragment extends Fragment {
         super.onStart();
 
         View view=getView();
+        assert view != null;
         sensorStatusLinearLayout=view.findViewById(R.id.Overview_SensorStatus_LinearLayout);
         sensorStatusTextView=view.findViewById(R.id.Overview_SensorStatus_TextView);
         internetStatusLinearLayout=view.findViewById(R.id.Overview_InternetConnectionStatus_LinearLayout);
         internetStatusTextView=view.findViewById(R.id.Overview_InternetStatus_TextView);
         logEditText=view.findViewById(R.id.Overview_Log_EditText);
 
-        viewModel=ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
+        viewModel= new ViewModelProvider(this).get(OverviewViewModel.class);
         viewModel.sensorConnectedLiveData.observe(getViewLifecycleOwner(),sensorStatusObserver);
         viewModel.sensorAmountLiveData.observe(getViewLifecycleOwner(),sensorStatusObserver);
         viewModel.internetConnectionLiveData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -63,16 +60,10 @@ public class OverviewFragment extends Fragment {
                 setInternetStatusShow(newStatus);
             }
         });
-        viewModel.logLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+        viewModel.logLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(ArrayList<String> strings) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:strings){
-                    sb.append(i);
-                    sb.append("\n");
-                }
-                final String s=sb.toString();
-                getActivity().runOnUiThread(new Runnable() {
+            public void onChanged(final String s) {
+                MainActivity.self.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         logEditText.setText(s);
@@ -81,7 +72,7 @@ public class OverviewFragment extends Fragment {
                 });
             }
         });
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 setSensorStatusShow(viewModel.sensorConnectedLiveData.getValue(),viewModel.sensorAmountLiveData.getValue());

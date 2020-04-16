@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#01579B">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/Advance_XML_Name_TextView"
+        android:id="@+id/Advance_PackageManager_Name_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -13,7 +12,7 @@
         android:textSize="35sp" />
 
     <TextView
-        android:id="@+id/Advance_XML_LocalVersion_TextView"
+        android:id="@+id/Advance_PackageManager_LocalVersion_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -21,7 +20,7 @@
         android:textSize="35sp" />
 
     <TextView
-        android:id="@+id/Advance_XML_ServerVersion_TextView"
+        android:id="@+id/Advance_PackageManager_ServerVersion_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

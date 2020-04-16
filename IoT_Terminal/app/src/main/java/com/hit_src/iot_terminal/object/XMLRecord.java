@@ -1,39 +1,27 @@
 package com.hit_src.iot_terminal.object;
 
 public class XMLRecord {
-    private int status;
     public String name;
-    public String localVersion;
-    public String serverVersion;
+    public Integer localVersion;
+    public Integer serverVersion;
 
-    public XMLRecord(String name, int version, int version1) {
+    public XMLRecord(String name, Integer local, Integer server) {
         this.name=name;
-        localVersion= String.valueOf(version);
-        serverVersion= String.valueOf(version1);
-        if(version==version1){
-            status=0;
-        }
-        else{
-            status=1;
-        }
+        localVersion=local;
+        serverVersion=server;
     }
 
-    public XMLRecord(String name, int version) {
-        this.name=name;
-        localVersion="-";
-        serverVersion= String.valueOf(version);
-        status=2;
+    public XMLRecord(String s) {
+        String[] ss=s.split(" ");
+        name=ss[0];
+        localVersion=null;
+        serverVersion= Integer.valueOf(ss[1]);
     }
+
     public boolean localExists(){
-        if(status==2){
-            return false;
-        }
-        return true;
+        return localVersion!=null;
     }
     public boolean isOutDated(){
-        if(status==1){
-            return true;
-        }
-        return false;
+        return localVersion < serverVersion;
     }
 }
