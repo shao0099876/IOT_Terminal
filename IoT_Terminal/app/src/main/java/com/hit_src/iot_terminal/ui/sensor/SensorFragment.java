@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.RemoteException;
@@ -23,6 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
@@ -47,20 +49,17 @@ public class SensorFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
     public void onStart() {
         super.onStart();
 
         View view = getView();
+        assert view != null;
         sensorListView = view.findViewById(R.id.Sensor_SensorListView);
         Button addButton=view.findViewById(R.id.Sensor_Add_Button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected=null;
                 childFragment=new SensorAddFragment();
@@ -72,7 +71,7 @@ public class SensorFragment extends Fragment {
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 if (selected==null) {
                     Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
                     return;
@@ -94,7 +93,7 @@ public class SensorFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setBackgroundColor(333399);
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected=position;
                 childFragment=new SensorInfoFragment(viewModel.sensorListLiveData.getValue().get(position));
@@ -104,11 +103,11 @@ public class SensorFragment extends Fragment {
         });
         sensorListView.setDivider(getResources().getDrawable(R.drawable.sensorlist_divider_shape));
 
-        viewModel = ViewModelProviders.of(getActivity()).get(SensorViewModel.class);
+        viewModel=new ViewModelProvider(this).get(SensorViewModel.class);
         viewModel.sensorListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<Sensor>>() {
             @Override
             public void onChanged(final ArrayList<Sensor> sensors) {
-                getActivity().runOnUiThread(new Runnable() {
+                MainActivity.self.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         sensorListView.setAdapter(makeAdapter(sensors));
@@ -117,7 +116,7 @@ public class SensorFragment extends Fragment {
             }
         });
 
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 sensorListView.setAdapter(makeAdapter(viewModel.sensorListLiveData.getValue()));
