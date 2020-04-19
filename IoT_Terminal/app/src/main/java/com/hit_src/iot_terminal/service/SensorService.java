@@ -4,19 +4,14 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.databinding.ObservableArrayList;
-import androidx.databinding.ObservableInt;
-import androidx.databinding.ObservableList;
 
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.ui.overview.OverviewViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;

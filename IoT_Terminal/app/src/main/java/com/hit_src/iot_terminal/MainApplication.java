@@ -10,6 +10,7 @@ import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
 import com.hit_src.iot_terminal.tools.PackageManager;
 
+
 public class MainApplication extends Application {
     static {
         System.loadLibrary("JNISO");
