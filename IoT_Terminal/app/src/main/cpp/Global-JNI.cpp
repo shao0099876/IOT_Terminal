@@ -21,7 +21,7 @@ Java_com_hit_1src_iot_1terminal_Global_CRC(JNIEnv *env, jclass clazz, jbyteArray
         //3)	CRC校验寄存器内容右移1位，检查寄存器最低位，如果为1，则与0xA001异或；如果为0，无需异或。
         for(int j=0;j<8;j++){//4)	重复步骤3，直到右移8次。
             crc<<=1;
-            if(crc&1==1){
+            if(crc != 0){
                 crc^=0xA001;
             }
         }

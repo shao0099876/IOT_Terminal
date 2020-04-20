@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="#01579B"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
 
                     <com.hit_src.iot_terminal.ui.overview.components.ClockComponents
                         android:layout_width="wrap_content"

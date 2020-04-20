@@ -29,7 +29,7 @@ void makeConfig(termios* ctlStruct){
     ctlStruct->c_cc[VMIN]=0;
 
 }
-char* DEV_NAME="/dev/ttyUSB0";
+const char *DEV_NAME= "/dev/ttyUSB0";
 extern "C"
 JNIEXPORT jbyteArray JNICALL
 Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass clazz, jint length) {
