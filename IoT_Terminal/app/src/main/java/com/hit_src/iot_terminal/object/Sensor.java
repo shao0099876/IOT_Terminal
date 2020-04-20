@@ -64,6 +64,7 @@ public class Sensor{
 
     public byte[] packageCMD() {
         SensorType sensorType= GlobalVar.sensorTypeMap.get(type);
+        assert sensorType != null;
         Send send=sensorType.send;
         ByteBuffer buffer=ByteBuffer.allocate(3+send.length);
         buffer.put((byte)((loraAddr>>=4)&15));
@@ -77,6 +78,7 @@ public class Sensor{
 
     public int unpackage(byte[] raw_data) {
         SensorType sensorType=GlobalVar.sensorTypeMap.get(type);
+        assert sensorType != null;
         Receive recv=sensorType.recv;
         int reg=0;
         Operation operation=recv.operation;

@@ -10,6 +10,7 @@ import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.tools.PackageManager;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -27,7 +28,9 @@ public class GlobalVar {
     }
     private GlobalVar(){
         internetStatus.set(false);
-        xmlRecords.addAll(PackageManager.readLocalXMLList());
+        ArrayList<XMLRecord> list=PackageManager.readLocalXMLList();
+        assert list!=null;
+        xmlRecords.addAll(list);
     }
     public static void addLogLiveData(String p){
         if(logArrayList.size()>10){
