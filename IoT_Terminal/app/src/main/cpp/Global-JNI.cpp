@@ -10,7 +10,7 @@ JNIEXPORT jbyteArray JNICALL
 Java_com_hit_1src_iot_1terminal_Global_CRC(JNIEnv *env, jclass clazz, jbyteArray data) {
     // TODO: implement CRC()
     jbyte* data_p=env->GetByteArrayElements(data, NULL);
-    int data_len=env->GetArrayLength(data);
+    size_t data_len=(size_t)env->GetArrayLength(data);
     unsigned char* a=(unsigned char*)malloc(sizeof(unsigned char)*data_len);
     memcpy(a,data_p,data_len);
     env->ReleaseByteArrayElements(data,data_p,NULL);
@@ -30,7 +30,7 @@ Java_com_hit_1src_iot_1terminal_Global_CRC(JNIEnv *env, jclass clazz, jbyteArray
     //6)	最后得到的CRC寄存器即为CRC码
     jbyteArray res=env->NewByteArray(2);
     jbyte *res_p=env->GetByteArrayElements(res,NULL);
-    res_p[0]=(unsigned char)crc&0xFF;
+    res_p[0]=(jbyte)((unsigned char)crc&0xFF);
     res_p[1]=(unsigned char)((crc&0xFF00)>>8);
     env->ReleaseByteArrayElements(res,res_p,NULL);
     return res;

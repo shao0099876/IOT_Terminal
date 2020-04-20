@@ -49,7 +49,7 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_read(JNIEnv *env, jclass cla
         if(err!=0){
         }
         else{
-            int cnt=read(fd,p,length);
+            int cnt=read(fd,p,(size_t)length);
             if(cnt<length){
                 check=false;
             }
@@ -86,11 +86,11 @@ Java_com_hit_1src_iot_1terminal_hardware_SerialPort_write(JNIEnv *env, jclass cl
         else{
             int length=env->GetArrayLength(content);
             jbyte *p =env->GetByteArrayElements(content,NULL);
-            char* buffer=(char*)malloc(length);
+            char* buffer=(char*)malloc((size_t)length);
             for(int i=0;i<length;i++){
                 buffer[i]=p[i];
             }
-            res=write(fd,buffer,length);
+            res=write(fd,buffer,(size_t)length);
 
             free(buffer);
             env->ReleaseByteArrayElements(content,p,0);
