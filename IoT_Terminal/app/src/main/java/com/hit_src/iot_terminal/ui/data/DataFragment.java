@@ -5,11 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainActivity;
-import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
 import java.util.ArrayList;
@@ -33,7 +28,7 @@ public class DataFragment extends Fragment {
     private ListView dataTypeListView;
 
     private Fragment childFragment=null;
-    private ArrayList<String> dataTypeList=new ArrayList<>();
+    private final ArrayList<String> dataTypeList=new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

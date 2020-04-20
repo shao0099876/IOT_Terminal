@@ -17,13 +17,13 @@ public class MainApplication extends Application {
     }
     public static MainApplication self;
 
-    boolean runSerialService=true;
-    boolean runInternetService=true;
+    private final boolean runSerialService=true;
+    private final boolean runInternetService=true;
 
     public static IDatabaseService dbService;
     public static ISettingsService settingsService;
     private static volatile int serviceReadyCnt=0;
-    protected ServiceConnection dbServiceConnection=new ServiceConnection() {
+    private final ServiceConnection dbServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             dbService=IDatabaseService.Stub.asInterface(service);
@@ -46,7 +46,7 @@ public class MainApplication extends Application {
 
         }
     };
-    protected ServiceConnection settingServiceConnection=new ServiceConnection() {
+    private final ServiceConnection settingServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             settingsService=ISettingsService.Stub.asInterface(service);
@@ -77,7 +77,7 @@ public class MainApplication extends Application {
         bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"),settingServiceConnection,BIND_AUTO_CREATE);
 
     }
-    public void init(){
+    private void init(){
         PackageManager.testPackageListDir();
         PackageManager.build();
     }

@@ -2,7 +2,6 @@ package com.hit_src.iot_terminal.ui.sensor;
 
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.RemoteException;
 import android.view.LayoutInflater;
@@ -23,13 +21,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.service.SensorService;
 
 import java.util.ArrayList;
 import java.util.Map;

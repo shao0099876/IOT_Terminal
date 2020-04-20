@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DatabaseService extends Service {
-    public class DatabaseServiceImpl extends IDatabaseService.Stub{
+    class DatabaseServiceImpl extends IDatabaseService.Stub{
 
         @Override
         public List getSensorList() {
@@ -137,7 +137,7 @@ public class DatabaseService extends Service {
         return new DatabaseServiceImpl();
     }
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
-        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
+        static final String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
                                                  "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
         DatabaseOpenHelper(@Nullable Context context) {
             super(context, "iot", null, 1);

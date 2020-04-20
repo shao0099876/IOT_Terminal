@@ -2,7 +2,7 @@ package com.hit_src.iot_terminal.object.sensortype;
 
 public class Datatype {
     public String name;
-    public String unit;
+    private String unit;
 
     public void setName(String trim) {
         name=trim;

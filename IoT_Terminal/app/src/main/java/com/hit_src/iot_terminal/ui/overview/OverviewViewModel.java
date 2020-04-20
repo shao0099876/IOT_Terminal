@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.object.Sensor;
 
-public class OverviewViewModel extends ViewModel {
+class OverviewViewModel extends ViewModel {
     public final MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
     public final MutableLiveData<Integer> sensorAmountLiveData=new MutableLiveData<>();
     public final MutableLiveData<Boolean> internetConnectionLiveData=new MutableLiveData<>();

@@ -12,7 +12,7 @@ public class SettingsService extends Service {
         super.onCreate();
         settingsFile=getSharedPreferences("settings",MODE_PRIVATE);
     }
-    public class SettingsServiceImpl extends ISettingsService.Stub {
+    class SettingsServiceImpl extends ISettingsService.Stub {
 
         @Override
         public String getUpperServerAddr() {

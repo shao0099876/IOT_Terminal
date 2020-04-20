@@ -16,16 +16,16 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class GlobalVar {
-    public static ObservableArrayList<XMLRecord> xmlRecords=new ObservableArrayList<>();
-    public static HashMap<String,Integer> xmlRecordtoSensorTypeMap=new HashMap<>();
-    public static ObservableArrayMap<Integer,SensorType> sensorTypeMap=new ObservableArrayMap<>();
-    public static ObservableArrayMap<Integer, Sensor> sensorMap=new ObservableArrayMap<>();
-    public static ObservableBoolean internetStatus=new ObservableBoolean();
-    public static ObservableArrayList<String> logArrayList=new ObservableArrayList<>();
+    public static final ObservableArrayList<XMLRecord> xmlRecords=new ObservableArrayList<>();
+    public static final HashMap<String,Integer> xmlRecordtoSensorTypeMap=new HashMap<>();
+    public static final ObservableArrayMap<Integer,SensorType> sensorTypeMap=new ObservableArrayMap<>();
+    public static final ObservableArrayMap<Integer, Sensor> sensorMap=new ObservableArrayMap<>();
+    public static final ObservableBoolean internetStatus=new ObservableBoolean();
+    public static final ObservableArrayList<String> logArrayList=new ObservableArrayList<>();
     static{
         new GlobalVar();
     }
-    public GlobalVar(){
+    private GlobalVar(){
         internetStatus.set(false);
         xmlRecords.addAll(PackageManager.readLocalXMLList());
     }

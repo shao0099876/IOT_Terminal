@@ -28,14 +28,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DataDetailedFragment extends Fragment {
+class DataDetailedFragment extends Fragment {
     private String Datatype=null;
     private Timer timer;
     private TimerTask timerTask;
     private ArrayList<Sensor> sensors;
 
     private Switch realtimeSwitch;
-    private DataChart chart=new DataChart();
+    private final DataChart chart=new DataChart();
 
     public DataDetailedFragment(){}
     public DataDetailedFragment(String datatype){
