@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
@@ -54,7 +55,7 @@ public class DataFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setBackgroundColor(333399);
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 childFragment=new DataDetailedFragment(dataTypeList.get(position));
                 transaction.replace(R.id.Data_DrawFragment, childFragment);

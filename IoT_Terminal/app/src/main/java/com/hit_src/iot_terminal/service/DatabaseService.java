@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.IBinder;
-import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
 
@@ -130,7 +129,7 @@ public class DatabaseService extends Service {
     @Override
     public void onCreate(){//初始化
         super.onCreate();
-        databaseOpenHelper=new DatabaseOpenHelper(this,"iot",null,1);
+        databaseOpenHelper=new DatabaseOpenHelper(this);
     }
 
     @Override
@@ -140,8 +139,8 @@ public class DatabaseService extends Service {
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
         static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
                                                  "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
-        DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-            super(context, name, factory, version);
+        DatabaseOpenHelper(@Nullable Context context) {
+            super(context, "iot", null, 1);
         }
 
         @Override

@@ -35,6 +35,7 @@ public class SettingsInternetFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
+        assert view != null;
         serverAddrEditText=view.findViewById(R.id.Settings_Internet_ServerAddr_EditText);
         serverModbusPortEditText=view.findViewById(R.id.Settings_Internet_ModbusPort_EditText);
         serverXMLPortEditText=view.findViewById(R.id.Settings_Internet_XMLPort_EditText);
@@ -79,7 +80,7 @@ public class SettingsInternetFragment extends Fragment {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (NumberFormatException e){
-                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,7 +103,7 @@ public class SettingsInternetFragment extends Fragment {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (NumberFormatException e){
-                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT).show();
                 }
             }
         });

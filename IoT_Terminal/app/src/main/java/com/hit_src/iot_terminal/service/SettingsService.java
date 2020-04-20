@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 
-import java.util.ArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
-
 public class SettingsService extends Service {
     private SharedPreferences settingsFile;
     @Override
@@ -26,7 +23,7 @@ public class SettingsService extends Service {
         public void setUpperServerAddr(String addr) {
             SharedPreferences.Editor editor=settingsFile.edit();
             editor.putString("UpperServerAddr",addr);
-            editor.commit();
+            editor.apply();
         }
 
         @Override
@@ -38,7 +35,7 @@ public class SettingsService extends Service {
         public void setUpperServerModbusPort(int port) {
             SharedPreferences.Editor editor=settingsFile.edit();
             editor.putInt("UpperServerModbusPort",port);
-            editor.commit();
+            editor.apply();
         }
 
         @Override
@@ -50,7 +47,7 @@ public class SettingsService extends Service {
         public void setUpperServerXMLPort(int port) {
             SharedPreferences.Editor editor=settingsFile.edit();
             editor.putInt("UpperServerXMLPort",port);
-            editor.commit();
+            editor.apply();
         }
 
         @Override
@@ -62,7 +59,7 @@ public class SettingsService extends Service {
         public void setSerialQuerySetting(boolean setting) {
             SharedPreferences.Editor editor=settingsFile.edit();
             editor.putBoolean("SerialQuerySetting",setting);
-            editor.commit();
+            editor.apply();
         }
     }
 

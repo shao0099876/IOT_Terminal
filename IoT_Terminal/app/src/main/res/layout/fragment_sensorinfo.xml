@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="传感器信息"
+            android:text="@string/SensorInfoFragment_Title"
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
@@ -31,9 +31,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="传感器ID："
+                android:text="@string/SensorInfoFragment_ID_Title"
                 android:textColor="#FFFFFF"
-                android:textSize="35dp" />
+                android:textSize="35sp" />
 
             <TextView
                 android:id="@+id/Sensor_ID_TextView"
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="传感器类型："
+                android:text="@string/SensorInfoFragment_Type_Title"
                 android:textColor="#FFFFFF"
                 android:textSize="35sp" />
 
@@ -75,7 +75,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="LoRa地址"
+                android:text="@string/SensorInfoFragment_Loraaddr_Title"
                 android:textColor="#FFFFFF"
                 android:textSize="35sp" />
 
@@ -92,7 +92,7 @@
             android:id="@+id/Sensor_Enabled_Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="传感器启用"
+            android:text="@string/SensorInfoFragment_Enable_Title"
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
@@ -100,7 +100,7 @@
             android:id="@+id/Sensor_RealtimeData_Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="实时数据"
+            android:text="@string/SensorInfoFragment_RealtimeSwitch_title"
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 

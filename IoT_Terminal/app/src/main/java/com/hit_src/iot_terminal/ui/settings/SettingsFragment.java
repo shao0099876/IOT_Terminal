@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 
 public class SettingsFragment extends Fragment {
@@ -36,7 +37,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 childFragment=new SettingsInternetFragment();
-                FragmentManager manager=getFragmentManager();
+                FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction=manager.beginTransaction();
                 transaction.replace(R.id.Settings_Fragment,childFragment);
                 transaction.commit();

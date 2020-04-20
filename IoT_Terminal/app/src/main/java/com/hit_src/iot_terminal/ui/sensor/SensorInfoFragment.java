@@ -73,7 +73,7 @@ public class SensorInfoFragment extends Fragment {
                     return;
                 }
                 sensor.setEnabled(isChecked);
-                if(isChecked==false){
+                if(!isChecked){
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

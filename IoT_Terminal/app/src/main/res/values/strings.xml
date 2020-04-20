@@ -69,6 +69,55 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="LogoActivity_ImageContentDescription">LOGO</string>
+    <string name="SettingsFragment_InternetFragment_Serveraddr_Title">服务器地址：</string>
+    <string name="SettingsFragment_InternetFragment_Serveraddr_Hint">服务器地址</string>
+    <string name="SettingsFragment_InternetFragment_Serverdataport_title">服务器数据端口：</string>
+    <string name="SettingsFragment_InternetFragment_Serverdataport_hint">服务器数据端口</string>
+    <string name="SettingsFragment_InternetFragment_ServerXMLport_title">服务器文件端口：</string>
+    <string name="SettingsFragment_InternetFragment_ServerXMLport_Hint">服务器文件端口</string>
+    <string name="OverviewFragment_Sensorstatus_Title">传感器连接：</string>
+    <string name="OverviewFragment_Sensorstatus_leftTitle">[已连接/总数]</string>
+    <string name="OverviewFragment_InternetStatus_Title">互联网连接：</string>
+    <string name="OverviewFragment_Log_Hint">log</string>
+    <string name="OverviewFragment_SensorGuidanceButton_Title">传感器</string>
+    <string name="OverviewFragment_DataGuidanceButton_Title">数据</string>
+    <string name="OverviewFragment_SettingsGuidanceButton_Title">设置</string>
+    <string name="OverviewFragment_AdvanceGuidanceButton_Title">高级</string>
+    <string name="SensorInfoFragment_Title">传感器信息</string>
+    <string name="SensorInfoFragment_ID_Title">传感器ID：</string>
+    <string name="SensorInfoFragment_Type_Title">传感器类型：</string>
+    <string name="SensorInfoFragment_Loraaddr_Title">LoRa地址</string>
+    <string name="SensorInfoFragment_Enable_Title">传感器启用</string>
+    <string name="SensorInfoFragment_RealtimeSwitch_title">实时数据</string>
+    <string name="AdvanceFragment_Backbutton_Title">返回</string>
+    <string name="AdvanceFragment_Title">高级</string>
+    <string name="AdvanceFragment_PackageManager_Button">传感器类型缓存管理</string>
+    <string name="AdvanceSensorTypeFragment_List_Name_Title">名称</string>
+    <string name="AdvanceSensorTypeFragment_List_LocalVersion_Title">本地版本</string>
+    <string name="AdvanceSensorTypeFragment_List_RemoteVersion_Title">远端版本</string>
+    <string name="AdvanceSensorTypeFragment_AddButton">增加</string>
+    <string name="AdvanceSensorTypeFragment_UpdateButton">更新</string>
+    <string name="AdvanceSensorTypeFragment_DeleteButton">删除</string>
+    <string name="DataFragment_BackButton">返回</string>
+    <string name="DataFragment_List_Title">参数列表</string>
+    <string name="DataFragment_Chart_Title">数据图表</string>
+    <string name="DataDetailedFragment_Switch_Title">实时数据</string>
+    <string name="SensorFragment_BackButton">返回</string>
+    <string name="SensorFragment_List_Title">传感器列表</string>
+    <string name="SensorFragment_List_ID_Title">编号</string>
+    <string name="SensorFragment_List_Type_Title">类型</string>
+    <string name="SensorFragment_List_Connection_Title">连接状态</string>
+    <string name="SensorFragment_Addbutton">添加</string>
+    <string name="SensorFragment_DeleteButton">删除</string>
+    <string name="SensorAddFragment_Title">添加传感器</string>
+    <string name="SensorAddFragment_Type_Title">传感器类型</string>
+    <string name="SensorAddFragment_Loraaddr_title">LoRa地址</string>
+    <string name="SensorAddFragment_Loraaddr_hint">LoRa地址</string>
+    <string name="SensorAddFragment_Addbutton">添加</string>
+    <string name="SettingsFragment_Backbutton">返回</string>
+    <string name="SettingsFragment_Title">设置</string>
+    <string name="SettingsFragment_InternetSettings_Button">互联网设置</string>
 
 
 </resources>

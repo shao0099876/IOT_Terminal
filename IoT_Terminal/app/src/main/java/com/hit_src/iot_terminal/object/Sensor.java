@@ -40,7 +40,7 @@ public class Sensor{
         return loraAddr;
     }
     public boolean isEnabled(){
-        return enabled==0?false:true;
+        return enabled != 0;
     }
     public boolean isConnected(){
         return connected;

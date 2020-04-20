@@ -1,7 +1,5 @@
 package com.hit_src.iot_terminal.tools;
 
-import android.provider.ContactsContract;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -14,9 +12,9 @@ import com.hit_src.iot_terminal.object.DataRecord;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,17 +22,19 @@ public class DataChart {
     private LineChart chart;
     private Map<Integer,LineDataSet> lineDataSetMap=new HashMap<>();
     private Map<Long,DataRecord> dataRecordMap=new HashMap<>();
-    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss");
-    public void setXAxis(){
+    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss", Locale.CHINA);
+    private void setXAxis(){
         XAxis xAxis=chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.setDragXEnabled(true);
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                String res="";
+                String res;
                 try{
-                    res=simpleDateFormat.format(dataRecordMap.get((long)value).time);
+                    DataRecord dataRecord=dataRecordMap.get((long)value);
+                    assert dataRecord!=null;
+                    res=simpleDateFormat.format(dataRecord.time);
                 } catch (NullPointerException e){
                     res="";
                 }
@@ -47,7 +47,7 @@ public class DataChart {
         chart=lineChart;
         setXAxis();
     }
-    public void buildLineDataSetMap(List<DataRecord> list){
+    private void buildLineDataSetMap(List<DataRecord> list){
         lineDataSetMap=new HashMap<>();
         for(DataRecord tmp:list){
             if(!lineDataSetMap.containsKey(tmp.sensorID)){
@@ -56,6 +56,7 @@ public class DataChart {
             }
             LineDataSet lineDataSet=lineDataSetMap.get(tmp.sensorID);
             dataRecordMap.put((long) dataRecordMap.size(),tmp);
+            assert lineDataSet != null;
             lineDataSet.addEntry(new Entry(dataRecordMap.size(),tmp.data));
         }
     }
@@ -83,6 +84,7 @@ public class DataChart {
         }
         LineDataSet lineDataSet=lineDataSetMap.get(dataRecord.sensorID);
         dataRecordMap.put((long) dataRecordMap.size(),dataRecord);
+        assert lineDataSet != null;
         lineDataSet.addEntry(new Entry(dataRecordMap.size(),dataRecord.data));
         ArrayList<ILineDataSet> tt=new ArrayList<>();
         Set<Integer> set=lineDataSetMap.keySet();

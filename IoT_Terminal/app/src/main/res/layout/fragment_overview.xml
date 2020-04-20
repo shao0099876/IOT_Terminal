@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clickable="true"
-    tools:context=".ui.overview.OverviewFragment">
+    tools:context=".ui.overview.OverviewFragment"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +75,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="传感器连接："
+                        android:text="@string/OverviewFragment_Sensorstatus_Title"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
 
@@ -89,8 +91,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="[已连接/总数]"
+                        android:gravity="end"
+                        android:text="@string/OverviewFragment_Sensorstatus_leftTitle"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
                 </com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout>
@@ -105,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="互联网连接："
+                        android:text="@string/OverviewFragment_InternetStatus_Title"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
 
@@ -124,9 +126,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#000000"
+                    android:hint="@string/OverviewFragment_Log_Hint"
                     android:editable="false"
                     android:ems="10"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:inputType="none"
                     android:scrollbars="vertical"
                     android:singleLine="false"
@@ -155,7 +158,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
                     android:drawableTop="@mipmap/sensor"
-                    android:text="传感器"
+                    android:text="@string/OverviewFragment_SensorGuidanceButton_Title"
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
 
@@ -167,7 +170,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
                     android:drawableTop="@mipmap/database"
-                    android:text="数据"
+                    android:text="@string/OverviewFragment_DataGuidanceButton_Title"
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
             </LinearLayout>
@@ -186,7 +189,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
                     android:drawableTop="@mipmap/settings"
-                    android:text="设置"
+                    android:text="@string/OverviewFragment_SettingsGuidanceButton_Title"
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
 
@@ -198,7 +201,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_shape"
                     android:drawableTop="@mipmap/advance"
-                    android:text="高级"
+                    android:text="@string/OverviewFragment_AdvanceGuidanceButton_Title"
                     android:textColor="#FFFFFF"
                     android:textSize="35sp" />
             </LinearLayout>

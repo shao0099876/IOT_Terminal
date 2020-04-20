@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundColor">
@@ -24,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="服务器地址："
+                android:text="@string/SettingsFragment_InternetFragment_Serveraddr_Title"
                 android:textColor="#FFFFFF"
                 android:textSize="35sp" />
 
@@ -33,8 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/SettingsFragment_InternetFragment_Serveraddr_Hint"
                 android:inputType="textPersonName"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:importantForAutofill="no" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="服务器数据端口："
+                android:text="@string/SettingsFragment_InternetFragment_Serverdataport_title"
                 android:textColor="#FFFFFF"
                 android:textSize="35sp" />
 
@@ -55,8 +56,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/SettingsFragment_InternetFragment_Serverdataport_hint"
                 android:inputType="number"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
 
@@ -69,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="服务器文件端口："
+                android:text="@string/SettingsFragment_InternetFragment_ServerXMLport_title"
                 android:textColor="#FFFFFF"
                 android:textSize="35sp" />
 
@@ -78,8 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:hint="@string/SettingsFragment_InternetFragment_ServerXMLport_Hint"
                 android:inputType="number"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:importantForAutofill="no" />
         </LinearLayout>
 
     </LinearLayout>

@@ -24,28 +24,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="名称"
+                android:text="@string/AdvanceSensorTypeFragment_List_Name_Title"
                 android:textSize="35sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="本地版本"
+                android:text="@string/AdvanceSensorTypeFragment_List_LocalVersion_Title"
                 android:textSize="35sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="远端版本"
+                android:text="@string/AdvanceSensorTypeFragment_List_RemoteVersion_Title"
                 android:textSize="35sp" />
         </LinearLayout>
 
         <ListView
             android:id="@+id/Advance_SensorType_ListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
         </ListView>
@@ -61,21 +61,21 @@
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="增加" />
+                android:text="@string/AdvanceSensorTypeFragment_AddButton" />
 
             <Button
                 android:id="@+id/Advance_XMLUpdate_Button"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="更新" />
+                android:text="@string/AdvanceSensorTypeFragment_UpdateButton" />
 
             <Button
                 android:id="@+id/Advance_XMLDelete_Button"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="删除" />
+                android:text="@string/AdvanceSensorTypeFragment_DeleteButton" />
         </LinearLayout>
 
     </LinearLayout>
