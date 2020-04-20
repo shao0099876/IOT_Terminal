@@ -38,6 +38,9 @@ public class PackageManager {
     }
     private static void addToLocalXMLListFile(String name, int version){
         File listFile=getLocalXMLListFile();
+        if(listFile==null){
+            return;
+        }
         try {
             BufferedReader reader=new BufferedReader(new FileReader(listFile));
             StringBuilder sb=new StringBuilder();
@@ -65,6 +68,9 @@ public class PackageManager {
     }
     private static void delFromLocalXMLListFile(String name){
         File listFile=getLocalXMLListFile();
+        if(listFile==null){
+            return;
+        }
         try {
             FileReader fileReader=new FileReader(listFile);
             BufferedReader bufferedReader=new BufferedReader(fileReader);
@@ -126,7 +132,11 @@ public class PackageManager {
     public static ArrayList<XMLRecord> readLocalXMLList(){
         ArrayList<XMLRecord> res=new ArrayList<>();
         try {
-            BufferedReader reader=new BufferedReader(new FileReader(getLocalXMLListFile()));
+            File localFile=getLocalXMLListFile();
+            if(localFile==null){
+                return null;
+            }
+            BufferedReader reader=new BufferedReader(new FileReader(localFile));
             while(true){
                 String s=reader.readLine();
                 if(s==null){
@@ -152,6 +162,7 @@ public class PackageManager {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        assert addr != null;
         if(addr.isEmpty()||port==-1){
             Toast.makeText(MainApplication.self, "网络配置不正确", Toast.LENGTH_SHORT).show();
             return new ArrayList<>();
@@ -191,6 +202,7 @@ public class PackageManager {
                 ArrayList<XMLRecord> remoteList=readRemoteXMLList();
                 GlobalVar.xmlRecords.clear();
                 for(XMLRecord i:remoteList){
+                    assert localList != null;
                     for(XMLRecord j:localList){
                         if(i.name.equals(j.name)){
                             i.localVersion=j.localVersion;
@@ -272,7 +284,10 @@ public class PackageManager {
                         break;
                     }
                 }
-                int sensorType=GlobalVar.xmlRecordtoSensorTypeMap.get(xmlRecord.name);
+                assert xmlRecord != null;
+                Integer tmp=GlobalVar.xmlRecordtoSensorTypeMap.get(xmlRecord.name);
+                assert tmp!=null;
+                int sensorType= tmp;
                 try {
                     MainApplication.dbService.delSensorByType(sensorType);
                 } catch (RemoteException e) {

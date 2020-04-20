@@ -132,7 +132,7 @@ class DataDetailedFragment extends Fragment {
             }
         }
         chart.setData(dataRecords);
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 realtimeSwitch.setChecked(false);
