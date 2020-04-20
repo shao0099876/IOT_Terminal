@@ -12,6 +12,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +52,7 @@ public class SensorService extends Service {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        assert sensorList != null;
         for(Sensor i:sensorList){
             GlobalVar.sensorMap.put(i.getID(),i);
         }
@@ -122,7 +124,9 @@ public class SensorService extends Service {
         SerialPort.write(cmd);
     }
     private boolean recv(Sensor i){
-        byte[] raw_data=SerialPort.read(GlobalVar.sensorTypeMap.get(i.getType()).recv.length);
+        SensorType sensorType=GlobalVar.sensorTypeMap.get(i.getType());
+        assert sensorType != null;
+        byte[] raw_data=SerialPort.read(sensorType.recv.length);
         if(raw_data==null){
             return false;
         }

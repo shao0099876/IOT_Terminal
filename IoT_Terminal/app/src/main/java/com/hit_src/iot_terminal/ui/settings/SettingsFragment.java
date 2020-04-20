@@ -31,6 +31,7 @@ public class SettingsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
+        assert view != null;
         Button internet=view.findViewById(R.id.Settings_Internet_Button);
         internet.setOnClickListener(new View.OnClickListener() {
             @Override

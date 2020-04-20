@@ -71,7 +71,7 @@ public class Sensor{
         buffer.put((byte)(loraAddr&15));
         buffer.put((byte)0x01);
         for(int i=0;i<send.length;i++){
-            buffer.put((byte)(send.value.get(i)));
+            buffer.put(send.value.get(i));
         }
         return buffer.array();
     }

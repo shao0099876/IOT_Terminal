@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
@@ -122,7 +123,7 @@ class SettingsInternetFragment extends Fragment {
         final String serverAddr_final=serverAddr;
         final String serverModbusPort_final=serverModbusPort;
         final String serverXMLPort_final=serverXMLPort;
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 serverAddrEditText.setText(serverAddr_final);
