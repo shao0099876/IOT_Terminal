@@ -38,7 +38,6 @@
                     android:orientation="vertical">
 
                     <com.hit_src.iot_terminal.ui.overview.components.ClockComponents
-                        android:id="@+id/Overview_Clock_TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
@@ -47,7 +46,6 @@
                         android:typeface="monospace" />
 
                     <com.hit_src.iot_terminal.ui.overview.components.DateComponents
-                        android:id="@+id/Overview_Date_TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -151,7 +149,6 @@
                 android:orientation="horizontal">
 
                 <com.hit_src.iot_terminal.ui.overview.components.SensorGuidanceButton
-                    android:id="@+id/Overview_Sensor_Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
@@ -163,7 +160,6 @@
                     android:textSize="35sp" />
 
                 <com.hit_src.iot_terminal.ui.overview.components.DataGuidanceButton
-                    android:id="@+id/Overview_Data_Button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
@@ -182,7 +178,6 @@
                 android:orientation="horizontal">
 
                 <com.hit_src.iot_terminal.ui.overview.components.SettingsGuidanceButton
-                    android:id="@+id/button3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
@@ -194,7 +189,6 @@
                     android:textSize="35sp" />
 
                 <com.hit_src.iot_terminal.ui.overview.components.AdvanceGuidanceButton
-                    android:id="@+id/button4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
