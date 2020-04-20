@@ -15,10 +15,12 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.DataChart;
 
@@ -39,7 +41,7 @@ class SensorInfoFragment extends Fragment {
     private TimerTask timerTask;
 
     public SensorInfoFragment(){}
-    public SensorInfoFragment(Sensor sensor){
+    SensorInfoFragment(Sensor sensor){
         this.sensor=sensor;
     }
 
@@ -58,6 +60,7 @@ class SensorInfoFragment extends Fragment {
         super.onStart();
 
         View view=getView();
+        assert view != null;
         sensorIDTextView=view.findViewById(R.id.Sensor_ID_TextView);
         sensorTypeTextView=view.findViewById(R.id.Sensor_Info_Type_TextView);
         sensorLoraAddrTextView=view.findViewById(R.id.Sensor_Info_LoraAddr_TextView);
@@ -73,7 +76,7 @@ class SensorInfoFragment extends Fragment {
                 }
                 sensor.setEnabled(isChecked);
                 if(!isChecked){
-                    getActivity().runOnUiThread(new Runnable() {
+                    MainActivity.self.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             realtimeDataSwitch.setChecked(false);
@@ -82,7 +85,7 @@ class SensorInfoFragment extends Fragment {
                     });
                 }
                 else {
-                    getActivity().runOnUiThread(new Runnable() {
+                    MainActivity.self.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             realtimeDataSwitch.setEnabled(true);
@@ -106,6 +109,7 @@ class SensorInfoFragment extends Fragment {
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    assert dataList != null;
                     chart.setData(dataList);
                     timer=new Timer();
                     timerTask=new TimerTask() {
@@ -117,7 +121,7 @@ class SensorInfoFragment extends Fragment {
                             }
                             chart.addData(dataRecord);
                             try {
-                                getActivity().runOnUiThread(new Runnable() {
+                                MainActivity.self.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         chart.invalidate(true);
@@ -149,12 +153,15 @@ class SensorInfoFragment extends Fragment {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        assert dataList != null;
         chart.setData(dataList);
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 sensorIDTextView.setText(String.valueOf(sensor.getID()));
-                sensorTypeTextView.setText(GlobalVar.sensorTypeMap.get(sensor.getType()).name);
+                SensorType sensorType=GlobalVar.sensorTypeMap.get(sensor.getType());
+                assert sensorType != null;
+                sensorTypeTextView.setText(sensorType.name);
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
                 enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);
