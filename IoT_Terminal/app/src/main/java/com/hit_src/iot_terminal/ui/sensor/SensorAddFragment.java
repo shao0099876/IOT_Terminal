@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
@@ -46,6 +47,7 @@ class SensorAddFragment extends Fragment {
         super.onStart();
 
         View view=getView();
+        assert view != null;
         typeSpinner=view.findViewById(R.id.Sensor_Type_Spinner);
         loraAddrEditText=view.findViewById(R.id.Sensor_Add_LoraAddr_EditText);
         Button confirmButton=view.findViewById(R.id.Sensor_Add_Button);
@@ -53,7 +55,8 @@ class SensorAddFragment extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loraAddrEditText.getText().toString()==null||loraAddrEditText.getText().toString().isEmpty()){
+                String loraAddr=loraAddrEditText.getText().toString();
+                if(loraAddr.isEmpty()){
                     Toast.makeText(getContext(),"LoRa地址不能为空",Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -61,6 +64,7 @@ class SensorAddFragment extends Fragment {
                     String datatype= (String) typeSpinner.getSelectedItem();
                     for(int i: GlobalVar.sensorTypeMap.keySet()){
                         SensorType now=GlobalVar.sensorTypeMap.get(i);
+                        assert now != null;
                         if(datatype.equals(now.name)){
                             MainApplication.dbService.addSensor(i,Integer.parseInt(loraAddrEditText.getText().toString()));
                             break;
@@ -77,16 +81,18 @@ class SensorAddFragment extends Fragment {
         });
         Set<String> set=new HashSet<>();
         for(int i: GlobalVar.sensorTypeMap.keySet()){
-            set.add(GlobalVar.sensorTypeMap.get(i).name);
+            SensorType sensorType=GlobalVar.sensorTypeMap.get(i);
+            assert sensorType != null;
+            set.add(sensorType.name);
         }
         Object[] tmp=set.toArray();
         String[] data=new String[tmp.length];
         for(int i=0;i<data.length;i++){
             data[i]= (String) tmp[i];
         }
-        final ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<>(getContext(), R.layout.spinner_display_style, data);
+        final ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<>(MainApplication.self, R.layout.spinner_display_style, data);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 typeSpinner.setAdapter(spinnerAdapter);
