@@ -73,7 +73,9 @@ public class SensorFragment extends Fragment {
                     return;
                 }
                 try {
-                    MainApplication.dbService.delSensor(viewModel.sensorListLiveData.getValue().get(selected).getID());
+                    ArrayList<Sensor> list=viewModel.sensorListLiveData.getValue();
+                    assert list != null;
+                    MainApplication.dbService.delSensor(list.get(selected).getID());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +94,9 @@ public class SensorFragment extends Fragment {
                 FragmentManager manager= MainActivity.self.getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected=position;
-                childFragment=new SensorInfoFragment(viewModel.sensorListLiveData.getValue().get(position));
+                ArrayList<Sensor> list=viewModel.sensorListLiveData.getValue();
+                assert list != null;
+                childFragment=new SensorInfoFragment(list.get(position));
                 transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }
@@ -115,7 +119,9 @@ public class SensorFragment extends Fragment {
         MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sensorListView.setAdapter(makeAdapter(viewModel.sensorListLiveData.getValue()));
+                ArrayList<Sensor> list=viewModel.sensorListLiveData.getValue();
+                assert list != null;
+                sensorListView.setAdapter(makeAdapter(list));
             }
         });
     }
