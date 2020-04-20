@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class DataFragment extends Fragment {
     public void onStart(){
         super.onStart();
         View view=getView();
+        assert view != null;
         dataTypeListView=view.findViewById(R.id.Data_ListView);
 
         dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,7 +64,10 @@ public class DataFragment extends Fragment {
         HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
         for(int i:sensorTypeIntegerSet) {
-            dataTypeSet.add(GlobalVar.sensorTypeMap.get(i).data.name);
+            SensorType sensorType=GlobalVar.sensorTypeMap.get(i);
+            if(sensorType!=null){
+                dataTypeSet.add(sensorType.data.name);
+            }
         }
         for(String t:dataTypeSet){
             HashMap<String,Object> map=new HashMap<>();
@@ -71,7 +76,7 @@ public class DataFragment extends Fragment {
             dataTypeList.add(t);
         }
         final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView});
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 dataTypeListView.setAdapter(simpleAdapter);

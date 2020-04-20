@@ -10,5 +10,5 @@ public class DataRecord {
         this.data=data;
         this.sensorID=sensorID;
     }
-    
+
 }

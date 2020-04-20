@@ -99,7 +99,7 @@ public class PackageManager {
         String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
         return new File(path);
     }
-    private static void addLocalXMLFile(String name, int version, String content){
+    private static void addLocalXMLFile(String name, String content){
         String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
         File file=new File(path);
         try {
@@ -164,7 +164,7 @@ public class PackageManager {
             writer.write("getList"+"\n");
             writer.flush();
             String s=reader.readLine();
-            int n=Integer.valueOf(s);
+            int n=Integer.parseInt(s);
             for(int i=0;i<n;i++){
                 s=reader.readLine();
                 Log.e("SRCDEBUG",s);
@@ -219,14 +219,14 @@ public class PackageManager {
                     int n= Integer.parseInt(s);
                     sb=new StringBuilder();
                     for(int i=0;i<n;i++){
-                        sb.append(reader.readLine()+"\n");
+                        sb.append(reader.readLine()).append("\n");
                     }
                     String content=sb.toString();
                     reader.close();
                     writer.close();
                     socket.close();
                     addToLocalXMLListFile(name,version);
-                    addLocalXMLFile(name,version,content);
+                    addLocalXMLFile(name, content);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (RemoteException e) {

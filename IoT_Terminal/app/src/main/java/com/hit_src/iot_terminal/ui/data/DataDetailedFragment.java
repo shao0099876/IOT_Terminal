@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
@@ -38,7 +39,7 @@ class DataDetailedFragment extends Fragment {
     private final DataChart chart=new DataChart();
 
     public DataDetailedFragment(){}
-    public DataDetailedFragment(String datatype){
+    DataDetailedFragment(String datatype){
         Datatype=datatype;
     }
     @Override
@@ -55,6 +56,7 @@ class DataDetailedFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view=getView();
+        assert view != null;
         realtimeSwitch=view.findViewById(R.id.Data_Realtime_Switch);
         chart.setComponent((LineChart) view.findViewById(R.id.Data_Draw_LineChart));
 
@@ -81,7 +83,7 @@ class DataDetailedFragment extends Fragment {
                             }
                             chart.addData(dataRecord);
                             try{
-                                getActivity().runOnUiThread(new Runnable() {
+                                MainActivity.self.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         chart.invalidate(true);
@@ -112,6 +114,7 @@ class DataDetailedFragment extends Fragment {
         sensors=new ArrayList<>();
         for(Sensor i:sensorArrayList){
             SensorType sensorType= GlobalVar.sensorTypeMap.get(i.getType());
+            assert sensorType != null;
             if(sensorType.data.name.equals(Datatype)){
                 sensors.add(i);
             }

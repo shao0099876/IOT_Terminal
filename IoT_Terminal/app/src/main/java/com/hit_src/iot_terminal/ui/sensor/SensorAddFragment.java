@@ -62,7 +62,7 @@ class SensorAddFragment extends Fragment {
                     for(int i: GlobalVar.sensorTypeMap.keySet()){
                         SensorType now=GlobalVar.sensorTypeMap.get(i);
                         if(datatype.equals(now.name)){
-                            MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
+                            MainApplication.dbService.addSensor(i,Integer.parseInt(loraAddrEditText.getText().toString()));
                             break;
                         }
                     }
