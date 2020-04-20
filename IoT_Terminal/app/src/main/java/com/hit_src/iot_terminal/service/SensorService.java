@@ -94,22 +94,27 @@ public class SensorService extends Service {
                 for(Integer i:sensorIDSet){
                     sensorList.add(GlobalVar.sensorMap.get(i));
                 }
-                for(int i=0;i<sensorList.size();i++){
-                    Sensor now=sensorList.get(i);
-                    if(!now.isEnabled()){
-                        continue;
+                try{
+                    for(int i=0;i<sensorList.size();i++){
+                        Sensor now=sensorList.get(i);
+                        if(!now.isEnabled()){
+                            continue;
+                        }
+                        send(now);
+                        if(recv(now)){
+                            now.setConnected(true);
+                            GlobalVar.addLogLiveData(now.getID()+"号传感器交互成功");
+                        }
+                        else{
+                            now.setConnected(false);
+                            GlobalVar.addLogLiveData(now.getID()+"号传感器交互失败");
+                        }
+                        GlobalVar.sensorMap.setValueAt(i,now);
                     }
-                    send(now);
-                    if(recv(now)){
-                        now.setConnected(true);
-                        GlobalVar.addLogLiveData(now.getID()+"号传感器交互成功");
-                    }
-                    else{
-                        now.setConnected(false);
-                        GlobalVar.addLogLiveData(now.getID()+"号传感器交互失败");
-                    }
-                    GlobalVar.sensorMap.setValueAt(i,now);
+                } catch (NullPointerException e){
+
                 }
+
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {

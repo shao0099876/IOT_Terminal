@@ -45,6 +45,6 @@ public class ClockComponents extends TextView {
                     }
                 });
             }
-        },10,1000);
+        },0,1000);
     }
 }
