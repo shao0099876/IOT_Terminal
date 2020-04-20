@@ -21,8 +21,8 @@ import java.util.Set;
 public class DataChart {
     private LineChart chart;
     private Map<Integer,LineDataSet> lineDataSetMap=new HashMap<>();
-    private Map<Long,DataRecord> dataRecordMap=new HashMap<>();
-    private SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss", Locale.CHINA);
+    private final Map<Long,DataRecord> dataRecordMap=new HashMap<>();
+    private final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM/dd HH:mm:ss", Locale.CHINA);
     private void setXAxis(){
         XAxis xAxis=chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);

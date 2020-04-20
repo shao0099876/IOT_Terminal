@@ -5,7 +5,6 @@ import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
 
-import com.hit_src.iot_terminal.Global;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.XMLRecord;

@@ -13,15 +13,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.List;
-
 public class XML2SensorType extends DefaultHandler {
     private SensorType res;
     private Datatype data;
     private Send send;
     private Receive receive;
     private Operation operation;
-    private StringBuilder sb=new StringBuilder();
+    private final StringBuilder sb=new StringBuilder();
     public SensorType getResults(){
         return res;
     }
@@ -90,9 +88,5 @@ public class XML2SensorType extends DefaultHandler {
         }
         sb.setLength(0);
         super.endElement(uri, localName, qName);
-    }
-    @Override
-    public void endDocument() throws SAXException {
-        super.endDocument();
     }
 }

@@ -2,7 +2,6 @@ package com.hit_src.iot_terminal.ui.sensor;
 
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +26,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SensorInfoFragment extends Fragment {
-    public Sensor sensor=null;
+class SensorInfoFragment extends Fragment {
+    private Sensor sensor=null;
     private TextView sensorIDTextView;
     private TextView sensorTypeTextView;
     private TextView sensorLoraAddrTextView;
     private Switch enabledSwitch;
     private Switch realtimeDataSwitch;
-    private DataChart chart=new DataChart();
+    private final DataChart chart=new DataChart();
 
     private Timer timer;
     private TimerTask timerTask;

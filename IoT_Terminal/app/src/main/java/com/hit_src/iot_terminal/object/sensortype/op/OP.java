@@ -1,9 +1,9 @@
 package com.hit_src.iot_terminal.object.sensortype.op;
 
 public abstract class OP {
-    public boolean isMemory;
-    public int value;
-    public OP(String trim){
+    boolean isMemory;
+    final int value;
+    OP(String trim){
         String tmp;
         if(trim.charAt(0)=='['){
             isMemory=true;

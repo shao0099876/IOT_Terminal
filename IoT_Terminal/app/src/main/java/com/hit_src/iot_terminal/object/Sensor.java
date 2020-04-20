@@ -1,11 +1,6 @@
 package com.hit_src.iot_terminal.object;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.hit_src.iot_terminal.GlobalVar;
-import com.hit_src.iot_terminal.MainApplication;
-import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.Operation;
 import com.hit_src.iot_terminal.object.sensortype.Receive;
 import com.hit_src.iot_terminal.object.sensortype.Send;

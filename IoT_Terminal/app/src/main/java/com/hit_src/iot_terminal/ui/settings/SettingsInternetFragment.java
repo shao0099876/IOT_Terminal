@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
-public class SettingsInternetFragment extends Fragment {
+class SettingsInternetFragment extends Fragment {
     private EditText serverAddrEditText;
     private EditText serverModbusPortEditText;
     private EditText serverXMLPortEditText;

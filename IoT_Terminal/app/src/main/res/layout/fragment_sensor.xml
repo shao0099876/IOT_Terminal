@@ -97,22 +97,22 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.hit_src.iot_terminal.ui.sensor.components.SensorAddButton
+                    <Button
                         android:id="@+id/Sensor_Add_Button"
+                        style="@style/ButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/button_shape"
                         android:text="@string/SensorFragment_Addbutton"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
 
-                    <com.hit_src.iot_terminal.ui.sensor.components.SensorDelButton
+                    <Button
                         android:id="@+id/Sensor_Delete_Button"
+                        style="@style/ButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/button_shape"
                         android:text="@string/SensorFragment_DeleteButton"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />

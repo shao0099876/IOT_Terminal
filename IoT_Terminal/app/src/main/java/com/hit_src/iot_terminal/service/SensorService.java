@@ -69,7 +69,7 @@ public class SensorService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    private Thread mainThread=new Thread(new Runnable() {
+    private final Thread mainThread=new Thread(new Runnable() {
         @Override
         public void run() {
             while(true){

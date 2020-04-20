@@ -25,7 +25,7 @@ import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SensorAddFragment extends Fragment {
+class SensorAddFragment extends Fragment {
     private Spinner typeSpinner;
     private EditText loraAddrEditText;
 

@@ -18,7 +18,7 @@ import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 
-public class OverviewFragment extends Fragment {
+class OverviewFragment extends Fragment {
 
     private OverviewViewModel viewModel;
 

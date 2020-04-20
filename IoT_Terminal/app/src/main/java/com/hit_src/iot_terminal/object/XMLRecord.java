@@ -1,9 +1,9 @@
 package com.hit_src.iot_terminal.object;
 
 public class XMLRecord {
-    public String name;
+    public final String name;
     public Integer localVersion;
-    public Integer serverVersion;
+    public final Integer serverVersion;
 
     public XMLRecord(String name, Integer local, Integer server) {
         this.name=name;
