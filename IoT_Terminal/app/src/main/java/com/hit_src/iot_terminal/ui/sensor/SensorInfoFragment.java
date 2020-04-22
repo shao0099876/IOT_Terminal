@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class SensorInfoFragment extends Fragment {
+public class SensorInfoFragment extends Fragment {
     private Sensor sensor=null;
     private TextView sensorIDTextView;
     private TextView sensorTypeTextView;
@@ -159,7 +159,13 @@ class SensorInfoFragment extends Fragment {
             @Override
             public void run() {
                 sensorIDTextView.setText(String.valueOf(sensor.getID()));
-                SensorType sensorType=GlobalVar.sensorTypeMap.get(sensor.getType());
+                SensorType sensorType=null;
+                for(SensorType i:GlobalVar.sensorTypes){
+                    if(i.id==sensor.getType()){
+                        sensorType=i;
+                        break;
+                    }
+                }
                 assert sensorType != null;
                 sensorTypeTextView.setText(sensorType.name);
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));

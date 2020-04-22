@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class DataDetailedFragment extends Fragment {
+public class DataDetailedFragment extends Fragment {
     private String Datatype=null;
     private Timer timer;
     private TimerTask timerTask;
@@ -110,13 +110,19 @@ class DataDetailedFragment extends Fragment {
         });
 
         //根据Datatype找Sensor
-        List<Sensor> sensorArrayList= (List<Sensor>) GlobalVar.sensorMap.values();
         sensors=new ArrayList<>();
-        for(Sensor i:sensorArrayList){
-            SensorType sensorType= GlobalVar.sensorTypeMap.get(i.getType());
+        for(Sensor j:GlobalVar.sensors){
+            int type=j.getType();
+            SensorType sensorType=null;
+            for(SensorType i:GlobalVar.sensorTypes){
+                if(i.id==type){
+                    sensorType=i;
+                    break;
+                }
+            }
             assert sensorType != null;
             if(sensorType.data.name.equals(Datatype)){
-                sensors.add(i);
+                sensors.add(j);
             }
         }
         ArrayList<DataRecord> dataRecords=new ArrayList<>();

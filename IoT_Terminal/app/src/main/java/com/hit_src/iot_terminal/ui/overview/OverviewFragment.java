@@ -18,7 +18,7 @@ import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 
-class OverviewFragment extends Fragment {
+public class OverviewFragment extends Fragment {
 
     private OverviewViewModel viewModel;
 
@@ -27,17 +27,12 @@ class OverviewFragment extends Fragment {
     private StatusLinearLayout internetStatusLinearLayout;
     private TextView internetStatusTextView;
     private EditText logEditText;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_overview, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
     @Override
     public void onStart(){
         super.onStart();

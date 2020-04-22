@@ -63,7 +63,13 @@ public class Sensor{
     }
 
     public byte[] packageCMD() {
-        SensorType sensorType= GlobalVar.sensorTypeMap.get(type);
+        SensorType sensorType=null;
+        for(SensorType i:GlobalVar.sensorTypes){
+            if(i.id==type){
+                sensorType=i;
+                break;
+            }
+        }
         assert sensorType != null;
         Send send=sensorType.send;
         ByteBuffer buffer=ByteBuffer.allocate(3+send.length);
@@ -77,7 +83,14 @@ public class Sensor{
     }
 
     public int unpackage(byte[] raw_data) {
-        SensorType sensorType=GlobalVar.sensorTypeMap.get(type);
+
+        SensorType sensorType=null;
+        for(SensorType i:GlobalVar.sensorTypes){
+            if(i.id==type){
+                sensorType=i;
+                break;
+            }
+        }
         assert sensorType != null;
         Receive recv=sensorType.recv;
         int reg=0;

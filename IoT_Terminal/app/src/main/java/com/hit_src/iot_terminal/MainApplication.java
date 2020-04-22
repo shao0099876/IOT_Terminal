@@ -8,7 +8,7 @@ import android.os.IBinder;
 
 import com.hit_src.iot_terminal.service.IDatabaseService;
 import com.hit_src.iot_terminal.service.ISettingsService;
-import com.hit_src.iot_terminal.tools.PackageManager;
+import com.hit_src.iot_terminal.tools.pm.PackageManager;
 
 
 public class MainApplication extends Application {
@@ -30,13 +30,13 @@ public class MainApplication extends Application {
             synchronized ((Integer)serviceReadyCnt){
                 serviceReadyCnt+=1;
                 if(serviceReadyCnt>=2){
+                    init();
                     if(runSerialService){
                         startService(new Intent().setAction("SensorService"));
                     }
                     if(runInternetService){
                         startService(new Intent().setAction("InternetService"));
                     }
-                    init();
                 }
             }
         }
@@ -53,13 +53,13 @@ public class MainApplication extends Application {
             synchronized ((Integer)serviceReadyCnt){
                 serviceReadyCnt+=1;
                 if(serviceReadyCnt>=2){
+                    init();
                     if(runSerialService){
                         startService(new Intent().setAction("SensorService"));
                     }
                     if(runInternetService){
                         startService(new Intent().setAction("InternetService"));
                     }
-                    init();
                 }
             }
         }
@@ -79,7 +79,7 @@ public class MainApplication extends Application {
     }
     private void init(){
         PackageManager.testPackageListDir();
-        PackageManager.build();
+        GlobalVar.createInstance();
     }
 
     @Override

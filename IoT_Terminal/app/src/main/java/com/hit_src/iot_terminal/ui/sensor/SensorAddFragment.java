@@ -26,7 +26,7 @@ import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import java.util.HashSet;
 import java.util.Set;
 
-class SensorAddFragment extends Fragment {
+public class SensorAddFragment extends Fragment {
     private Spinner typeSpinner;
     private EditText loraAddrEditText;
 
@@ -62,11 +62,9 @@ class SensorAddFragment extends Fragment {
                 }
                 try {
                     String datatype= (String) typeSpinner.getSelectedItem();
-                    for(int i: GlobalVar.sensorTypeMap.keySet()){
-                        SensorType now=GlobalVar.sensorTypeMap.get(i);
-                        assert now != null;
-                        if(datatype.equals(now.name)){
-                            MainApplication.dbService.addSensor(i,Integer.parseInt(loraAddrEditText.getText().toString()));
+                    for(SensorType i:GlobalVar.sensorTypes){
+                        if(datatype.equals(i.name)){
+                            MainApplication.dbService.addSensor(i.id,Integer.parseInt(loraAddrEditText.getText().toString()));
                             break;
                         }
                     }
@@ -80,10 +78,8 @@ class SensorAddFragment extends Fragment {
             }
         });
         Set<String> set=new HashSet<>();
-        for(int i: GlobalVar.sensorTypeMap.keySet()){
-            SensorType sensorType=GlobalVar.sensorTypeMap.get(i);
-            assert sensorType != null;
-            set.add(sensorType.name);
+        for(SensorType i:GlobalVar.sensorTypes){
+            set.add(i.name);
         }
         Object[] tmp=set.toArray();
         String[] data=new String[tmp.length];

@@ -9,7 +9,7 @@ import com.hit_src.iot_terminal.object.XMLRecord;
 
 import java.util.ArrayList;
 
-class AdvancePackageManagerViewModel extends ViewModel {
+public class AdvancePackageManagerViewModel extends ViewModel {
     public final MutableLiveData<ArrayList<XMLRecord>> packageListViewModel=new MutableLiveData<>();
     public AdvancePackageManagerViewModel(){
         packageListViewModel.setValue(new ArrayList<XMLRecord>());

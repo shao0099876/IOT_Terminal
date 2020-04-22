@@ -1,4 +1,4 @@
-package com.hit_src.iot_terminal.tools;
+package com.hit_src.iot_terminal.tools.pm;
 
 import android.os.RemoteException;
 import android.util.Log;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
+import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.xml.XML2SensorType;
@@ -24,86 +25,65 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PackageManager {
-    private static File getLocalXMLListFile(){
-        String path=MainApplication.self.getFilesDir()+"/SensorType/packageList";
-        File res=new File(path);
-        try {
-            res.createNewFile();
-        } catch (IOException e) {
-            return null;
+    private String path;
+    private static PackageManager packageManager=null;
+    public static PackageManager getInstance(){
+        if(packageManager==null){
+            packageManager=new PackageManager();
         }
-        return res;
+        return packageManager;
     }
-    private static void addToLocalXMLListFile(String name, int version){
-        File listFile=getLocalXMLListFile();
-        if(listFile==null){
-            return;
+    private PackageManager(){
+        path= MainApplication.self.getFilesDir()+"/SensorType/packageList";
+        File file=new File(path);
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+    public ArrayList<XMLRecord> buildXMLRecords() {
+        ArrayList<XMLRecord> res=new ArrayList<>();
         try {
-            BufferedReader reader=new BufferedReader(new FileReader(listFile));
-            StringBuilder sb=new StringBuilder();
+            BufferedReader reader=new BufferedReader(new FileReader(new File(path)));
             while(true){
                 String s=reader.readLine();
                 if(s==null){
                     break;
                 }
                 String[] ss=s.split(" ");
-                if(ss[0].equals(name)){
-                    continue;
-                }
-                sb.append(s);sb.append("\n");
+                res.add(new XMLRecord(ss[0],Integer.parseInt(ss[1]),null));
             }
             reader.close();
-            sb.append(name);sb.append(" ");
-            sb.append(version);sb.append("\n");
-            BufferedWriter writer=new BufferedWriter(new FileWriter(getLocalXMLListFile()));
-            writer.write(sb.toString());
-            writer.flush();
-            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return res;
     }
-    private static void delFromLocalXMLListFile(String name){
-        File listFile=getLocalXMLListFile();
-        if(listFile==null){
-            return;
-        }
-        try {
-            FileReader fileReader=new FileReader(listFile);
-            BufferedReader bufferedReader=new BufferedReader(fileReader);
-            StringBuilder stringBuilder=new StringBuilder();
-            while(true){
-                String s=bufferedReader.readLine();
-                if(s==null){
-                    break;
-                }
-                String[] ss=s.split(" ");
-                if(ss[0].equals(name)){
-                    continue;
-                }
-                stringBuilder.append(s);
-                stringBuilder.append("\n");
+    public ArrayList<SensorType> buildSensorTypes() {
+        ArrayList<SensorType> res=new ArrayList<>();
+        for(XMLRecord i:GlobalVar.xmlRecords){
+            File file=new File(MainApplication.self.getFilesDir()+"/SensorType/"+i.name+".xml");
+            try {
+                FileInputStream fileInputStream=new FileInputStream(file);
+                XML2SensorType xml2SensorType=new XML2SensorType();
+                Xml.parse(fileInputStream,Xml.Encoding.UTF_8,xml2SensorType);
+                SensorType sensorType=xml2SensorType.getResults();
+                res.add(sensorType);
+                i.setSensorTypeID(sensorType.id);
+            } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            bufferedReader.close();
-            fileReader.close();
-            FileWriter fileWriter=new FileWriter(listFile);
-            BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
-            bufferedWriter.write(stringBuilder.toString());
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-
-
-    private static File getLocalXMLFile(String name){
-        String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
-        return new File(path);
+        return res;
     }
     private static void addLocalXMLFile(String name, String content){
         String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
@@ -120,38 +100,9 @@ public class PackageManager {
     }
 
     public static void testPackageListDir() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String path=MainApplication.self.getFilesDir()+"/SensorType";
-                File file=new File(path);
-                file.mkdir();
-            }
-        }).start();
-    }
-    public static ArrayList<XMLRecord> readLocalXMLList(){
-        ArrayList<XMLRecord> res=new ArrayList<>();
-        try {
-            File localFile=getLocalXMLListFile();
-            if(localFile==null){
-                return null;
-            }
-            BufferedReader reader=new BufferedReader(new FileReader(localFile));
-            while(true){
-                String s=reader.readLine();
-                if(s==null){
-                    break;
-                }
-                String[] ss=s.split(" ");
-                String name=ss[0];
-                int localVersion= Integer.parseInt(ss[1]);
-                res.add(new XMLRecord(name,localVersion,null));
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
+        String path=MainApplication.self.getFilesDir()+"/SensorType";
+        File file=new File(path);
+        file.mkdir();
     }
     private static ArrayList<XMLRecord> readRemoteXMLList(){
         String addr= null;
@@ -198,18 +149,20 @@ public class PackageManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<XMLRecord> localList=readLocalXMLList();
                 ArrayList<XMLRecord> remoteList=readRemoteXMLList();
                 GlobalVar.xmlRecords.clear();
                 for(XMLRecord i:remoteList){
-                    assert localList != null;
-                    for(XMLRecord j:localList){
+                    boolean exists=false;
+                    for(XMLRecord j:GlobalVar.xmlRecords){
                         if(i.name.equals(j.name)){
-                            i.localVersion=j.localVersion;
+                            j.setServerVersion(i.serverVersion);
+                            exists=true;
                             break;
                         }
                     }
-                    GlobalVar.xmlRecords.add(i);
+                    if(!exists){
+                        GlobalVar.xmlRecords.add(new XMLRecord(i.name,null,i.serverVersion));
+                    }
                 }
             }
         }).start();
@@ -237,68 +190,36 @@ public class PackageManager {
                     reader.close();
                     writer.close();
                     socket.close();
-                    addToLocalXMLListFile(name,version);
+
+                    for(XMLRecord i:GlobalVar.xmlRecords){
+                        if(i.name.equals(name)){
+                            i.setLocalVersion(version);
+                        }
+                    }
                     addLocalXMLFile(name, content);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                fetch();
-                build();
             }
         }).start();
 
-    }
-    public static void build(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(XMLRecord i: GlobalVar.xmlRecords){
-                    try {
-                        FileInputStream fileInputStream=new FileInputStream(getLocalXMLFile(i.name));
-                        XML2SensorType xml2SensorType=new XML2SensorType();
-                        Xml.parse(fileInputStream,Xml.Encoding.UTF_8,xml2SensorType);
-                        SensorType sensorType=xml2SensorType.getResults();
-                        GlobalVar.sensorTypeMap.put(sensorType.id,sensorType);
-                        GlobalVar.xmlRecordtoSensorTypeMap.put(i.name,sensorType.id);
-                    } catch (SAXException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
     }
 
     public static void delete(final String name) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                XMLRecord xmlRecord = null;
                 for(XMLRecord i:GlobalVar.xmlRecords){
                     if(i.name.equals(name)){
-                        xmlRecord=i;
                         GlobalVar.xmlRecords.remove(i);
                         break;
                     }
                 }
-                assert xmlRecord != null;
-                Integer tmp=GlobalVar.xmlRecordtoSensorTypeMap.get(xmlRecord.name);
-                assert tmp!=null;
-                int sensorType= tmp;
-                try {
-                    MainApplication.dbService.delSensorByType(sensorType);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                delFromLocalXMLListFile(name);
                 String path=MainApplication.self.getFilesDir()+"/SensorType/"+name+".xml";
                 File file=new File(path);
                 file.delete();
-                fetch();
-                build();
             }
         }).start();
     }

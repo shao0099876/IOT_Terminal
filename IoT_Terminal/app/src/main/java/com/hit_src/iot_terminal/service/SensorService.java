@@ -46,16 +46,6 @@ public class SensorService extends Service {
     private static DataRecord realtimeData;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        List<Sensor> sensorList=null;
-        try {
-            sensorList=MainApplication.dbService.getSensorList();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        assert sensorList != null;
-        for(Sensor i:sensorList){
-            GlobalVar.sensorMap.put(i.getID(),i);
-        }
         mainThread.start();
         return super.onStartCommand(intent,flags,startId);
     }
@@ -89,14 +79,9 @@ public class SensorService extends Service {
                     }
                     continue;
                 }
-                Set<Integer> sensorIDSet=GlobalVar.sensorMap.keySet();
-                ArrayList<Sensor> sensorList=new ArrayList<>();
-                for(Integer i:sensorIDSet){
-                    sensorList.add(GlobalVar.sensorMap.get(i));
-                }
                 try{
-                    for(int i=0;i<sensorList.size();i++){
-                        Sensor now=sensorList.get(i);
+                    for(int i=0;i<GlobalVar.sensors.size();i++){
+                        Sensor now=GlobalVar.sensors.get(i);
                         if(!now.isEnabled()){
                             continue;
                         }
@@ -109,7 +94,8 @@ public class SensorService extends Service {
                             now.setConnected(false);
                             GlobalVar.addLogLiveData(now.getID()+"号传感器交互失败");
                         }
-                        GlobalVar.sensorMap.setValueAt(i,now);
+
+                        GlobalVar.sensors.set(i,now);
                     }
                 } catch (NullPointerException e){
 
@@ -129,7 +115,13 @@ public class SensorService extends Service {
         SerialPort.write(cmd);
     }
     private boolean recv(Sensor i){
-        SensorType sensorType=GlobalVar.sensorTypeMap.get(i.getType());
+        SensorType sensorType=null;
+        for(SensorType j:GlobalVar.sensorTypes){
+            if(j.id==i.getType()){
+                sensorType=j;
+                break;
+            }
+        }
         assert sensorType != null;
         byte[] raw_data=SerialPort.read(sensorType.recv.length);
         if(raw_data==null){

@@ -18,7 +18,7 @@ import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 
-class SettingsInternetFragment extends Fragment {
+public class SettingsInternetFragment extends Fragment {
     private EditText serverAddrEditText;
     private EditText serverModbusPortEditText;
     private EditText serverXMLPortEditText;

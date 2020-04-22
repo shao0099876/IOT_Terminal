@@ -9,15 +9,15 @@ import com.hit_src.iot_terminal.object.Sensor;
 
 import java.util.ArrayList;
 
-class SensorViewModel extends ViewModel {
+public class SensorViewModel extends ViewModel {
     public final MutableLiveData<ArrayList<Sensor>> sensorListLiveData=new MutableLiveData<>();
     public SensorViewModel(){
-        sensorListLiveData.setValue((ArrayList<Sensor>) GlobalVar.sensorMap.values());
-        GlobalVar.sensorMap.addOnMapChangedCallback(new ObservableMap.OnMapChangedCallback<ObservableMap<Integer, Sensor>, Integer, Sensor>() {
+        sensorListLiveData.setValue(new ArrayList<Sensor>(GlobalVar.sensors.subList(0,GlobalVar.sensors.size())));
+        /*GlobalVar.sensorMap.addOnMapChangedCallback(new ObservableMap.OnMapChangedCallback<ObservableMap<Integer, Sensor>, Integer, Sensor>() {
             @Override
             public void onMapChanged(ObservableMap<Integer, Sensor> sender, Integer key) {
-                sensorListLiveData.postValue((ArrayList<Sensor>) sender.values());
+                sensorListLiveData.postValue(new ArrayList<>(sender.values()));
             }
-        });
+        });*/
     }
 }

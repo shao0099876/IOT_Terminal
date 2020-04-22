@@ -10,20 +10,21 @@ import androidx.lifecycle.ViewModel;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.object.Sensor;
 
-class OverviewViewModel extends ViewModel {
+public class OverviewViewModel extends ViewModel {
     public final MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
     public final MutableLiveData<Integer> sensorAmountLiveData=new MutableLiveData<>();
     public final MutableLiveData<Boolean> internetConnectionLiveData=new MutableLiveData<>();
     public final MutableLiveData<String> logLiveData=new MutableLiveData<>();
     public OverviewViewModel(){
-        sensorAmountLiveData.setValue(GlobalVar.sensorMap.size());
+        sensorAmountLiveData.setValue(GlobalVar.sensors.size());
         int connected=0;
-        for(Sensor i:GlobalVar.sensorMap.values()){
+        for(Sensor i:GlobalVar.sensors){
             if(i.isConnected()){
                 connected+=1;
             }
         }
         sensorConnectedLiveData.setValue(connected);
+        /*
         GlobalVar.sensorMap.addOnMapChangedCallback(new ObservableMap.OnMapChangedCallback<ObservableMap<Integer, Sensor>, Integer, Sensor>() {
             @Override
             public void onMapChanged(ObservableMap<Integer, Sensor> sender, Integer key) {
@@ -36,7 +37,7 @@ class OverviewViewModel extends ViewModel {
                 }
                 sensorConnectedLiveData.postValue(connected);
             }
-        });
+        });*/
 
         internetConnectionLiveData.setValue(GlobalVar.internetStatus.get());
         GlobalVar.internetStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {

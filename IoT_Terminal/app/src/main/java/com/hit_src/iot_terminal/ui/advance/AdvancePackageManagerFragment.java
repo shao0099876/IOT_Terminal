@@ -18,13 +18,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.XMLRecord;
-import com.hit_src.iot_terminal.tools.PackageManager;
+import com.hit_src.iot_terminal.tools.pm.PackageManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-class AdvancePackageManagerFragment extends Fragment {
+public class AdvancePackageManagerFragment extends Fragment {
     private int selectedIndex=-1;
     private Button addButton;
     private Button updateButton;

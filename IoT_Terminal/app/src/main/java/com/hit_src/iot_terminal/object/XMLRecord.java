@@ -1,9 +1,10 @@
 package com.hit_src.iot_terminal.object;
 
 public class XMLRecord {
-    public final String name;
+    public String name;
     public Integer localVersion;
-    public final Integer serverVersion;
+    public Integer serverVersion;
+    public Integer sensorTypeID;
 
     public XMLRecord(String name, Integer local, Integer server) {
         this.name=name;
@@ -30,5 +31,17 @@ public class XMLRecord {
             return "-";
         }
         return String.valueOf(serverVersion);
+    }
+
+    public void setSensorTypeID(int id) {
+        sensorTypeID=id;
+    }
+
+    public void setServerVersion(int serverVersion) {
+        this.serverVersion=serverVersion;
+    }
+
+    public void setLocalVersion(int version) {
+        this.localVersion=version;
     }
 }

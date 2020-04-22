@@ -60,14 +60,10 @@ public class DataFragment extends Fragment {
             }
         });
 
-        Set<Integer> sensorTypeIntegerSet= GlobalVar.sensorTypeMap.keySet();
         HashSet<String> dataTypeSet =new HashSet<>();
         ArrayList<Map<String,Object>> list=new ArrayList<>();
-        for(int i:sensorTypeIntegerSet) {
-            SensorType sensorType=GlobalVar.sensorTypeMap.get(i);
-            if(sensorType!=null){
-                dataTypeSet.add(sensorType.data.name);
-            }
+        for(SensorType i:GlobalVar.sensorTypes) {
+            dataTypeSet.add(i.data.name);
         }
         for(String t:dataTypeSet){
             HashMap<String,Object> map=new HashMap<>();

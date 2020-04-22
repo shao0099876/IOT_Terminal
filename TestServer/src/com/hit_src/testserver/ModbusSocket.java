@@ -38,7 +38,7 @@ public class ModbusSocket {
         try {
             outputStream.write(cmd.toByteArray());
             outputStream.flush();
-            byte[] reply=new byte[6];
+            byte[] reply=new byte[8];
             inputStream.read(reply);
             StringBuilder stringBuilder=new StringBuilder();
             for(byte i:reply){
@@ -50,10 +50,12 @@ public class ModbusSocket {
             Log.d("从机地址："+reply[0]);
             Log.d("功能码："+reply[1]);
             Log.d("功能：读设备数量");
-            Terminal.DevCnt=0;
-            Terminal.DevCnt+=reply[3];
-            Terminal.DevCnt+=reply[4]*256;
-            Log.d(Terminal.toLog());
+            int devCnt=0;
+            for(int i=0;i<4;i++){
+                devCnt+=((int)reply[3+i])<<8*i;
+            }
+            Log.d("结果：设备数量为"+devCnt);
+            Log.d("------------------------");
         } catch (IOException e) {
             e.printStackTrace();
         }
