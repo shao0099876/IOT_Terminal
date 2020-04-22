@@ -3,7 +3,7 @@ package com.hit_src.testserver;
 import java.io.*;
 import java.net.Socket;
 
-public class XMLSocket {
+public class PackageSocket {
     private Thread thread=new Thread(new Runnable() {
         @Override
         public void run() {
@@ -59,11 +59,11 @@ public class XMLSocket {
         return cnt+"\n"+sb.toString();
     }
     private Socket mainSocket=null;
-    public XMLSocket(Socket socket){
+    public PackageSocket(Socket socket){
         mainSocket=socket;
         thread.start();
     }
-    public XMLSocket(){}
+    public PackageSocket(){}
     public void stop() throws IOException {
         if(mainSocket!=null){
             mainSocket.close();
