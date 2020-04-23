@@ -62,6 +62,9 @@ public class Sensor{
         connected=p;
     }
 
+    public boolean equals(Sensor p){
+        return false;
+    }
     public byte[] packageCMD() {
         SensorType sensorType=null;
         for(SensorType i:GlobalVar.sensorTypes){

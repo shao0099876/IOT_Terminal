@@ -50,11 +50,6 @@ public class SensorInfoFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sensorinfo, container, false);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
     @Override
     public void onStart(){
         super.onStart();
@@ -92,10 +87,13 @@ public class SensorInfoFragment extends Fragment {
                         }
                     });
                 }
-                try {
-                    MainApplication.dbService.updateSensor(sensor.getID(),sensor.getType(),sensor.getLoraAddr(),isChecked);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+                for(int i=0;i<GlobalVar.sensors.size();i++){
+                    Sensor now=GlobalVar.sensors.get(i);
+                    if(now.getID()==sensor.getID()){
+                        now.setEnabled(isChecked);
+                        GlobalVar.sensors.set(i,now);
+                        break;
+                    }
                 }
             }
         });

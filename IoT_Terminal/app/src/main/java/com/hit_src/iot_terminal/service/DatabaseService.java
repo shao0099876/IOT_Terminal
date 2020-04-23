@@ -50,14 +50,7 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void addSensor(int type,int loraAddr) {
-            ArrayList<Sensor> list= (ArrayList<Sensor>) getSensorList();
-            int id=0;
-            for(Sensor i:list){
-                if(i.getID()>=id){
-                    id=i.getID()+1;
-                }
-            }
+        public void addSensor(int id,int type,int loraAddr) {
             SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
             ContentValues contentValues=new ContentValues();
             contentValues.put("sensor_id",id);
