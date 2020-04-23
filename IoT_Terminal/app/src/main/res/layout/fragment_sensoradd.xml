@@ -37,7 +37,7 @@
                 android:textSize="35sp" />
 
             <Spinner
-                android:id="@+id/Sensor_Type_Spinner"
+                android:id="@+id/SensorAdd_TypeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:spinnerMode="dropdown" />
@@ -57,7 +57,7 @@
                 android:textSize="35sp" />
 
             <EditText
-                android:id="@+id/Sensor_Add_LoraAddr_EditText"
+                android:id="@+id/SensorAdd_LoraAddrEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
@@ -68,7 +68,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/Sensor_Add_Button"
+            android:id="@+id/SensorAdd_ConfirmButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_shape"

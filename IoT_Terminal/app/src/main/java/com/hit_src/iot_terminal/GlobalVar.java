@@ -36,6 +36,40 @@ public class GlobalVar {
             xmlRecords.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<XMLRecord>>() {
                 private void work(ObservableList<XMLRecord> sender){
                     PackageManager.write(sender);
+                    ArrayList<SensorType> tmp=PackageManager.buildSensorTypes();
+                    if(tmp.size()>sensorTypes.size()){
+                        for(SensorType i:tmp){
+                            boolean exists=false;
+                            for(int j=0;j<sensorTypes.size();j++){
+                                SensorType now=sensorTypes.get(j);
+                                if(now.id==i.id){
+                                    sensorTypes.set(j,i);
+                                    exists=true;
+                                    break;
+                                }
+                            }
+                            if(!exists){
+                                sensorTypes.add(i);
+                            }
+                        }
+                    } else{
+                        int i=0;
+                        for(SensorType now:sensorTypes){
+                            boolean exists=false;
+                            for(SensorType j:tmp){
+                                if(now.id==j.id){
+                                    sensorTypes.set(i,j);
+                                    exists=true;
+                                    break;
+                                }
+                            }
+                            if(!exists){
+                                sensorTypes.remove(i);
+                            }
+                            i+=1;
+                        }
+                    }
+
                 }
                 @Override
                 public void onChanged(ObservableList<XMLRecord> sender) {

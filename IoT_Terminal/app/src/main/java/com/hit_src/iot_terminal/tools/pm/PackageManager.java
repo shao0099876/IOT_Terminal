@@ -152,9 +152,11 @@ public class PackageManager {
                 ArrayList<XMLRecord> remoteList=readRemoteXMLList();
                 for(XMLRecord i:remoteList){
                     boolean exists=false;
-                    for(XMLRecord j:GlobalVar.xmlRecords){
-                        if(i.name.equals(j.name)){
-                            j.setRemoteVersion(i.remoteVersion);
+                    for(int j=0;j<GlobalVar.xmlRecords.size();j++){
+                        XMLRecord now=GlobalVar.xmlRecords.get(j);
+                        if(i.name.equals(now.name)){
+                            now.setRemoteVersion(i.remoteVersion);
+                            GlobalVar.xmlRecords.set(j,now);
                             exists=true;
                             break;
                         }

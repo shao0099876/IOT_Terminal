@@ -41,7 +41,7 @@ public class SensorInfoFragment extends Fragment {
     private TimerTask timerTask;
 
     public SensorInfoFragment(){}
-    SensorInfoFragment(Sensor sensor){
+    public SensorInfoFragment(Sensor sensor){
         this.sensor=sensor;
     }
 

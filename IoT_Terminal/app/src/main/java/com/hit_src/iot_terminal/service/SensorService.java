@@ -65,21 +65,21 @@ public class SensorService extends Service {
         @Override
         public void run() {
             while(true){
-                boolean serialQueryEnabled=false;
-                try {
-                    serialQueryEnabled=MainApplication.settingsService.getSerialQuerySetting();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                if(!serialQueryEnabled){
+                try{
+                    boolean serialQueryEnabled=false;
                     try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
+                        serialQueryEnabled=MainApplication.settingsService.getSerialQuerySetting();
+                    } catch (RemoteException e) {
                         e.printStackTrace();
                     }
-                    continue;
-                }
-                try{
+                    if(!serialQueryEnabled){
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        continue;
+                    }
                     for(int i=0;i<GlobalVar.sensors.size();i++){
                         Sensor now=GlobalVar.sensors.get(i);
                         if(!now.isEnabled()){
@@ -97,15 +97,11 @@ public class SensorService extends Service {
 
                         GlobalVar.sensors.set(i,now);
                     }
-                } catch (NullPointerException e){
-
-                }
-
-                try {
                     sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (Exception ignored){
+
                 }
+
             }
         }
     });
