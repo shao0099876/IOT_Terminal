@@ -3,99 +3,177 @@ package com.hit_src.iot_terminal.ui.overview;
 import androidx.databinding.Observable;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableList;
-import androidx.databinding.ObservableMap;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainApplication;
+import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.Sensor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import static java.lang.Thread.sleep;
+
 public class OverviewViewModel extends ViewModel {
-    public final MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
-    public final MutableLiveData<Integer> sensorAmountLiveData=new MutableLiveData<>();
-    public final MutableLiveData<Boolean> internetConnectionLiveData=new MutableLiveData<>();
-    public final MutableLiveData<String> logLiveData=new MutableLiveData<>();
+    MutableLiveData<String> timeLiveData=new MutableLiveData<>();
+    MutableLiveData<String> dateLiveData=new MutableLiveData<>();
+    MutableLiveData<Integer> sensorStatusColorLiveData=new MutableLiveData<>();
+    MutableLiveData<String> sensorStatusTextLiveData=new MutableLiveData<>();
+    MutableLiveData<Integer> internetStatusColorLiveData=new MutableLiveData<>();
+    MutableLiveData<String> internetStatusTextLiveData=new MutableLiveData<>();
+    MutableLiveData<String> logLiveData=new MutableLiveData<>();
     public OverviewViewModel(){
-        sensorAmountLiveData.setValue(GlobalVar.sensors.size());
-        int connected=0;
-        for(Sensor i:GlobalVar.sensors){
-            if(i.isConnected()){
-                connected+=1;
-            }
-        }
-        sensorConnectedLiveData.setValue(connected);
-        /*
-        GlobalVar.sensorMap.addOnMapChangedCallback(new ObservableMap.OnMapChangedCallback<ObservableMap<Integer, Sensor>, Integer, Sensor>() {
-            @Override
-            public void onMapChanged(ObservableMap<Integer, Sensor> sender, Integer key) {
-                sensorAmountLiveData.postValue(sender.size());
-                int connected=0;
-                for(Sensor i:sender.values()){
-                    if(i.isConnected()){
-                        connected+=1;
+        //日期时间
+        {
+            //初始化
+            timeLiveData.setValue("");
+            dateLiveData.setValue("");
+            //数据来源
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    while (MainApplication.self != null) {
+                        {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+                            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                            timeLiveData.postValue(simpleDateFormat.format(new Date()));
+                        }
+                        {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA);
+                            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                            dateLiveData.postValue(simpleDateFormat.format(new Date()));
+                        }
+
+                        try {
+                            sleep(999);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-                sensorConnectedLiveData.postValue(connected);
-            }
-        });*/
-
-        internetConnectionLiveData.setValue(GlobalVar.internetStatus.get());
-        GlobalVar.internetStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                internetConnectionLiveData.postValue(((ObservableBoolean)sender).get());
-            }
-        });
-        StringBuilder sb=new StringBuilder();
-        for(String i:GlobalVar.logArrayList){
-            sb.append(i);
+            }).start();
         }
-        logLiveData.setValue(sb.toString());
-        GlobalVar.logArrayList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<String>>() {
-            @Override
-            public void onChanged(ObservableList<String> sender) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:GlobalVar.logArrayList){
-                    sb.append(i);
+        //传感器状态
+        {
+            //初始化
+            sensorStatusTextLiveData.setValue("0/0");
+            sensorStatusColorLiveData.setValue(R.color.Overview_Status_Green);
+            //数据来源
+            GlobalVar.sensors.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
+                private void work(ObservableList<Sensor> sender){
+                    int amount=sender.size();
+                    int connected=0;
+                    for(Sensor i:sender){
+                        if(i.isConnected()){
+                            connected+=1;
+                        }
+                    }
+                    int color;
+                    if(connected==amount){
+                        color=R.color.Overview_Status_Green;
+                    }
+                    else if(connected==0){
+                        color=R.color.Overview_Status_Red;
+                    }
+                    else {
+                        color=R.color.Overview_Status_Yellow;
+                    }
+                    String stringBuilder = connected +
+                            "/" +
+                            amount;
+                    sensorStatusTextLiveData.postValue(stringBuilder);
+                    sensorStatusColorLiveData.postValue(color);
                 }
-                logLiveData.postValue(sb.toString());
-            }
+                @Override
+                public void onChanged(ObservableList<Sensor> sender) {
+                    work(sender);
+                }
 
-            @Override
-            public void onItemRangeChanged(ObservableList<String> sender, int positionStart, int itemCount) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:GlobalVar.logArrayList){
-                    sb.append(i);
+                @Override
+                public void onItemRangeChanged(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+                    work(sender);
                 }
-                logLiveData.postValue(sb.toString());
-            }
 
-            @Override
-            public void onItemRangeInserted(ObservableList<String> sender, int positionStart, int itemCount) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:GlobalVar.logArrayList){
-                    sb.append(i);
+                @Override
+                public void onItemRangeInserted(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+                    work(sender);
                 }
-                logLiveData.postValue(sb.toString());
-            }
 
-            @Override
-            public void onItemRangeMoved(ObservableList<String> sender, int fromPosition, int toPosition, int itemCount) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:GlobalVar.logArrayList){
-                    sb.append(i);
+                @Override
+                public void onItemRangeMoved(ObservableList<Sensor> sender, int fromPosition, int toPosition, int itemCount) {
+                    work(sender);
                 }
-                logLiveData.postValue(sb.toString());
-            }
 
-            @Override
-            public void onItemRangeRemoved(ObservableList<String> sender, int positionStart, int itemCount) {
-                StringBuilder sb=new StringBuilder();
-                for(String i:GlobalVar.logArrayList){
-                    sb.append(i);
+                @Override
+                public void onItemRangeRemoved(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+                    work(sender);
                 }
-                logLiveData.postValue(sb.toString());
+            });
+        }
+        //网络状态
+        {
+            //初始化
+            internetStatusTextLiveData.setValue("未连接");
+            internetStatusColorLiveData.setValue(R.color.Overview_Status_Red);
+            //数据来源
+            GlobalVar.internetStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+                @Override
+                public void onPropertyChanged(Observable sender, int propertyId) {
+                    boolean status=((ObservableBoolean)sender).get();
+                    if(status){
+                        internetStatusColorLiveData.postValue(R.color.Overview_Status_Green);
+                        internetStatusTextLiveData.postValue("已连接");
+                    } else{
+                        internetStatusColorLiveData.postValue(R.color.Overview_Status_Red);
+                        internetStatusTextLiveData.postValue("未连接");
+                    }
+                }
+            });
+        }
+        //日志
+        {
+            StringBuilder sb=new StringBuilder();
+            for(String i:GlobalVar.logArrayList){
+                sb.append(i);
             }
-        });
+            logLiveData.setValue(sb.toString());
+            GlobalVar.logArrayList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<String>>() {
+                private void work(){
+                    StringBuilder sb=new StringBuilder();
+                    for(String i:GlobalVar.logArrayList){
+                        sb.append(i);
+                    }
+                    logLiveData.postValue(sb.toString());
+                }
+                @Override
+                public void onChanged(ObservableList<String> sender) {
+                    work();
+                }
+
+                @Override
+                public void onItemRangeChanged(ObservableList<String> sender, int positionStart, int itemCount) {
+                    work();
+                }
+
+                @Override
+                public void onItemRangeInserted(ObservableList<String> sender, int positionStart, int itemCount) {
+                    work();
+                }
+
+                @Override
+                public void onItemRangeMoved(ObservableList<String> sender, int fromPosition, int toPosition, int itemCount) {
+                    work();
+                }
+
+                @Override
+                public void onItemRangeRemoved(ObservableList<String> sender, int positionStart, int itemCount) {
+                    work();
+                }
+            });
+        }
     }
 }

@@ -17,13 +17,13 @@ public class MainApplication extends Application {
     }
     public static MainApplication self;
 
-    private final boolean runSerialService=true;
-    private final boolean runInternetService=true;
+    private boolean runSerialService=true;
+    private boolean runInternetService=true;
 
     public static IDatabaseService dbService;
     public static ISettingsService settingsService;
     private static volatile int serviceReadyCnt=0;
-    private final ServiceConnection dbServiceConnection=new ServiceConnection() {
+    private ServiceConnection dbServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             dbService=IDatabaseService.Stub.asInterface(service);
@@ -46,7 +46,7 @@ public class MainApplication extends Application {
 
         }
     };
-    private final ServiceConnection settingServiceConnection=new ServiceConnection() {
+    private ServiceConnection settingServiceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             settingsService=ISettingsService.Stub.asInterface(service);
