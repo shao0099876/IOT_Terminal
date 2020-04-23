@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#01579B">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/Sensor_ListView_No"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp" />
-
-    <TextView
-        android:id="@+id/Sensor_ListView_Type"
-        android:layout_width="wrap_content"
+        android:id="@+id/PackageManager_NameTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="35sp" />
 
     <TextView
-        android:id="@+id/Sensor_ListView_ConnectionStatus"
-        android:layout_width="wrap_content"
+        android:id="@+id/PackageManager_LocalVersionTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/PackageManager_RemoteVersionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp" />
 </LinearLayout>

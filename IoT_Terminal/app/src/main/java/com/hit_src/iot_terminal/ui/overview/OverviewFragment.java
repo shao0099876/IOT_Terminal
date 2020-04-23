@@ -167,6 +167,9 @@ public class OverviewFragment extends Fragment {
                     });
                 }
             });
+        }
+        //初始化显示
+        {
             MainActivity.self.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -184,7 +187,7 @@ public class OverviewFragment extends Fragment {
                     ((TextView) (view.findViewById(R.id.Overview_InternetStatusTextView))).setText(viewModel.internetStatusTextLiveData.getValue());
                 }
             });
-
         }
+
     }
 }

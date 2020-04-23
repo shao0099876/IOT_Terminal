@@ -79,6 +79,7 @@ public class MainApplication extends Application {
     }
     private void init(){
         PackageManager.testPackageListDir();
+        PackageManager.createInstance();
         GlobalVar.createInstance();
     }
 

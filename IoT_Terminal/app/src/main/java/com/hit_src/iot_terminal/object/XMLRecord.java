@@ -3,20 +3,20 @@ package com.hit_src.iot_terminal.object;
 public class XMLRecord {
     public String name;
     public Integer localVersion;
-    public Integer serverVersion;
+    public Integer remoteVersion;
     public Integer sensorTypeID;
 
     public XMLRecord(String name, Integer local, Integer server) {
         this.name=name;
         localVersion=local;
-        serverVersion=server;
+        remoteVersion=server;
     }
 
     public boolean localExists(){
         return localVersion!=null;
     }
     public boolean isOutDated(){
-        return localVersion < serverVersion;
+        return localVersion < remoteVersion;
     }
 
     public String getLocalVersion() {
@@ -26,19 +26,19 @@ public class XMLRecord {
         return String.valueOf(localVersion);
     }
 
-    public String getServerVersion() {
-        if(serverVersion==null){
+    public String getRemoteVersion() {
+        if(remoteVersion==null){
             return "-";
         }
-        return String.valueOf(serverVersion);
+        return String.valueOf(remoteVersion);
     }
 
     public void setSensorTypeID(int id) {
         sensorTypeID=id;
     }
 
-    public void setServerVersion(int serverVersion) {
-        this.serverVersion=serverVersion;
+    public void setRemoteVersion(int remoteVersion) {
+        this.remoteVersion=remoteVersion;
     }
 
     public void setLocalVersion(int version) {

@@ -60,8 +60,30 @@ public class OverviewViewModel extends ViewModel {
         //传感器状态
         {
             //初始化
-            sensorStatusTextLiveData.setValue("0/0");
-            sensorStatusColorLiveData.setValue(R.color.Overview_Status_Green);
+            {
+                int amount=GlobalVar.sensors.size();
+                int connected=0;
+                for(Sensor i:GlobalVar.sensors){
+                    if(i.isConnected()){
+                        connected+=1;
+                    }
+                }
+                int color;
+                if(connected==amount){
+                    color=R.color.Overview_Status_Green;
+                }
+                else if(connected==0){
+                    color=R.color.Overview_Status_Red;
+                }
+                else {
+                    color=R.color.Overview_Status_Yellow;
+                }
+                String stringBuilder = connected +
+                        "/" +
+                        amount;
+                sensorStatusTextLiveData.setValue(stringBuilder);
+                sensorStatusColorLiveData.setValue(color);
+            }
             //数据来源
             GlobalVar.sensors.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
                 private void work(ObservableList<Sensor> sender){
@@ -117,8 +139,16 @@ public class OverviewViewModel extends ViewModel {
         //网络状态
         {
             //初始化
-            internetStatusTextLiveData.setValue("未连接");
-            internetStatusColorLiveData.setValue(R.color.Overview_Status_Red);
+            {
+                boolean status=GlobalVar.internetStatus.get();
+                if(status){
+                    internetStatusColorLiveData.setValue(R.color.Overview_Status_Green);
+                    internetStatusTextLiveData.setValue("已连接");
+                } else{
+                    internetStatusColorLiveData.setValue(R.color.Overview_Status_Red);
+                    internetStatusTextLiveData.setValue("未连接");
+                }
+            }
             //数据来源
             GlobalVar.internetStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
                 @Override

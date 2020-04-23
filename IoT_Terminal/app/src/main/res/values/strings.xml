@@ -37,7 +37,7 @@
     <string name="AdvanceSensorTypeFragment_List_Name_Title">名称</string>
     <string name="AdvanceSensorTypeFragment_List_LocalVersion_Title">本地版本</string>
     <string name="AdvanceSensorTypeFragment_List_RemoteVersion_Title">远端版本</string>
-    <string name="AdvanceSensorTypeFragment_AddButton">增加</string>
+    <string name="AdvanceSensorTypeFragment_AddButton">拉取</string>
     <string name="AdvanceSensorTypeFragment_UpdateButton">更新</string>
     <string name="AdvanceSensorTypeFragment_DeleteButton">删除</string>
     <string name="DataFragment_BackButton">返回</string>

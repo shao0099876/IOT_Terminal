@@ -43,7 +43,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/Advance_SensorType_ListView"
+            android:id="@+id/Advance_PackageManagerListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -57,21 +57,14 @@
             android:showDividers="middle">
 
             <Button
-                android:id="@+id/Advance_XMLAdd_Button"
+                android:id="@+id/PackageManager_PullButton"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/AdvanceSensorTypeFragment_AddButton" />
 
             <Button
-                android:id="@+id/Advance_XMLUpdate_Button"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/AdvanceSensorTypeFragment_UpdateButton" />
-
-            <Button
-                android:id="@+id/Advance_XMLDelete_Button"
+                android:id="@+id/PackageManager_DeleteButton"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

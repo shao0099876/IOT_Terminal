@@ -5,6 +5,7 @@ import android.os.RemoteException;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableArrayMap;
 import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableList;
 import androidx.databinding.ObservableMap;
 
 import com.hit_src.iot_terminal.object.Sensor;
@@ -30,9 +31,40 @@ public class GlobalVar {
     private static GlobalVar self=null;
     private GlobalVar(){
         //xmlRecords
-        xmlRecords.addAll(PackageManager.getInstance().buildXMLRecords());
+        {
+            xmlRecords.addAll(PackageManager.buildXMLRecords());
+            xmlRecords.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<XMLRecord>>() {
+                private void work(ObservableList<XMLRecord> sender){
+                    PackageManager.write(sender);
+                }
+                @Override
+                public void onChanged(ObservableList<XMLRecord> sender) {
+                    work(sender);
+                }
+
+                @Override
+                public void onItemRangeChanged(ObservableList<XMLRecord> sender, int positionStart, int itemCount) {
+                    work(sender);
+                }
+
+                @Override
+                public void onItemRangeInserted(ObservableList<XMLRecord> sender, int positionStart, int itemCount) {
+                    work(sender);
+                }
+
+                @Override
+                public void onItemRangeMoved(ObservableList<XMLRecord> sender, int fromPosition, int toPosition, int itemCount) {
+                    work(sender);
+                }
+
+                @Override
+                public void onItemRangeRemoved(ObservableList<XMLRecord> sender, int positionStart, int itemCount) {
+                    work(sender);
+                }
+            });
+        }
         //sensorTypes
-        sensorTypes.addAll(PackageManager.getInstance().buildSensorTypes());
+        sensorTypes.addAll(PackageManager.buildSensorTypes());
         //sensors
         try {
             sensors.addAll(MainApplication.dbService.getSensorList());

@@ -26,16 +26,16 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PackageManager {
-    private String path;
+    private static String path;
     private static PackageManager packageManager=null;
-    public static PackageManager getInstance(){
+    public static void createInstance(){
         if(packageManager==null){
             packageManager=new PackageManager();
         }
-        return packageManager;
     }
     private PackageManager(){
         path= MainApplication.self.getFilesDir()+"/SensorType/packageList";
@@ -48,7 +48,7 @@ public class PackageManager {
             }
         }
     }
-    public ArrayList<XMLRecord> buildXMLRecords() {
+    public static ArrayList<XMLRecord> buildXMLRecords() {
         ArrayList<XMLRecord> res=new ArrayList<>();
         try {
             BufferedReader reader=new BufferedReader(new FileReader(new File(path)));
@@ -66,7 +66,7 @@ public class PackageManager {
         }
         return res;
     }
-    public ArrayList<SensorType> buildSensorTypes() {
+    public static ArrayList<SensorType> buildSensorTypes() {
         ArrayList<SensorType> res=new ArrayList<>();
         for(XMLRecord i:GlobalVar.xmlRecords){
             File file=new File(MainApplication.self.getFilesDir()+"/SensorType/"+i.name+".xml");
@@ -150,18 +150,17 @@ public class PackageManager {
             @Override
             public void run() {
                 ArrayList<XMLRecord> remoteList=readRemoteXMLList();
-                GlobalVar.xmlRecords.clear();
                 for(XMLRecord i:remoteList){
                     boolean exists=false;
                     for(XMLRecord j:GlobalVar.xmlRecords){
                         if(i.name.equals(j.name)){
-                            j.setServerVersion(i.serverVersion);
+                            j.setRemoteVersion(i.remoteVersion);
                             exists=true;
                             break;
                         }
                     }
                     if(!exists){
-                        GlobalVar.xmlRecords.add(new XMLRecord(i.name,null,i.serverVersion));
+                        GlobalVar.xmlRecords.add(new XMLRecord(i.name,null,i.remoteVersion));
                     }
                 }
             }
@@ -191,9 +190,12 @@ public class PackageManager {
                     writer.close();
                     socket.close();
 
-                    for(XMLRecord i:GlobalVar.xmlRecords){
-                        if(i.name.equals(name)){
-                            i.setLocalVersion(version);
+                    for(int i=0;i<GlobalVar.xmlRecords.size();i++){
+                        XMLRecord record=GlobalVar.xmlRecords.get(i);
+                        if(record.name.equals(name)){
+                            record.setLocalVersion(version);
+                            GlobalVar.xmlRecords.set(i,record);
+                            break;
                         }
                     }
                     addLocalXMLFile(name, content);
@@ -222,5 +224,23 @@ public class PackageManager {
                 file.delete();
             }
         }).start();
+    }
+    public static void write(List<XMLRecord> list){
+        try {
+            BufferedWriter writer=new BufferedWriter(new FileWriter(new File(path)));
+            StringBuilder stringBuilder=new StringBuilder();
+            for(XMLRecord i:list){
+                if(i.localVersion==null){
+                    continue;
+                }
+                stringBuilder.append(i.name);stringBuilder.append(" ");
+                stringBuilder.append(i.localVersion);stringBuilder.append("\n");
+            }
+            writer.write(stringBuilder.toString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

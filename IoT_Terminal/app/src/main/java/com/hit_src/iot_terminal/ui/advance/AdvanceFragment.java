@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.ui.advance.packagemanager.AdvancePackageManagerFragment;
 
 public class AdvanceFragment extends Fragment {
     @Override
@@ -21,18 +21,13 @@ public class AdvanceFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_advance, container, false);
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
     @Override
     public void onStart() {
         super.onStart();
         View view=getView();
         assert view != null;
-        Button sensorType=view.findViewById(R.id.Advance_SensorType_Button);
-        sensorType.setOnClickListener(new View.OnClickListener() {
+        //需要响应的控件代码
+        view.findViewById(R.id.Advance_PackageManagerButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager= MainActivity.self.getSupportFragmentManager();
