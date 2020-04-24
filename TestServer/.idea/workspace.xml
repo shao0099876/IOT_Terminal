@@ -7,7 +7,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/Filesystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/Global-JNI.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/Global.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/GlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/GlobalVar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/XMLRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/XMLRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/PackageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/pm/PackageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorInfoFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorInfoFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/settings/SettingsInternetFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/settings/SettingsInternetFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/Terminal.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +49,18 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.hit_src.testserver" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -74,29 +97,45 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="464" y="238" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.860@0.0.1440.860" timestamp="1586570555727" />
+    <state x="477" y="143" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1587531946763">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="477" y="143" key="#com.intellij.ide.macro.MacrosDialog/0.0.1440.860@0.0.1440.860" timestamp="1587531946763" />
     <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586414267093">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1440.860@0.0.1440.860" timestamp="1586414267093" />
-    <state width="1397" height="222" key="GridCell.Tab.0.bottom" timestamp="1586434947004">
+    <state x="450" y="176" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587544988675">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1586434947004" />
-    <state width="1397" height="222" key="GridCell.Tab.0.center" timestamp="1586434947003">
+    <state x="450" y="176" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.860@0.0.1440.860" timestamp="1587544988675" />
+    <state x="450" y="176" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1587539875102">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1586434947003" />
-    <state width="1397" height="222" key="GridCell.Tab.0.left" timestamp="1586434947003">
+    <state x="450" y="176" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1440.860@0.0.1440.860" timestamp="1587539875102" />
+    <state x="462" y="209" width="470" height="452" key="#com.intellij.tools.ToolEditorDialog" timestamp="1587532247423">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1586434947003" />
-    <state width="1397" height="222" key="GridCell.Tab.0.right" timestamp="1586434947004">
+    <state x="462" y="209" width="470" height="452" key="#com.intellij.tools.ToolEditorDialog/0.0.1440.860@0.0.1440.860" timestamp="1587532247423" />
+    <state width="1397" height="222" key="GridCell.Tab.0.bottom" timestamp="1587561025498">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1586434947004" />
-    <state x="200" y="7" key="SettingsEditor" timestamp="1586434839667">
+    <state width="1397" height="222" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
+    <state width="1397" height="222" key="GridCell.Tab.0.center" timestamp="1587561025498">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state x="200" y="7" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1586434839667" />
+    <state width="1397" height="222" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
+    <state width="1397" height="222" key="GridCell.Tab.0.left" timestamp="1587561025498">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="222" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
+    <state width="1397" height="222" key="GridCell.Tab.0.right" timestamp="1587561025498">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="222" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
+    <state x="274" y="149" key="SettingsEditor" timestamp="1587533480203">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="274" y="149" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1587533480203" />
   </component>
 </project>
