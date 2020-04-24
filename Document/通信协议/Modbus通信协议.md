@@ -1,4 +1,4 @@
-1. readDevNum
+1. readDeviceCnt
 - 功能：读设备数量
 - 功能码：0X03
 - 功能描述：读单寄存器0xFFFF
