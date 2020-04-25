@@ -16,5 +16,7 @@ interface IDatabaseService {
     void delSensorByType(in int type);
 
     void addSensorData(in int sensorID,in int data);
+    List getDataRecordbyAmount(in int amount);
+    void delDataRecordbyTime(in long time);
     List getDrawPointbySensor(in int sensorID);
 }

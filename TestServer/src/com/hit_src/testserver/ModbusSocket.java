@@ -4,6 +4,11 @@ import com.hit_src.testserver.tools.BitOperation;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
+import java.util.logging.SimpleFormatter;
 
 import static com.hit_src.testserver.tools.BitOperation.*;
 
@@ -42,13 +47,22 @@ public class ModbusSocket {
             outputStream.flush();
             byte[] reply=new byte[8];
             inputStream.read(reply);
-            StringBuilder stringBuilder=new StringBuilder();
-            for(byte i:reply){
-                stringBuilder.append(i);
-                stringBuilder.append(" ");
-            }
-            Log.d(stringBuilder.toString());
             Log.d("-----Modbus数据包解析-----");
+            byte[] crc_local=CRC(subArray(reply,0,reply.length-2));
+            byte[] crc_remote=subArray(reply,reply.length-2,2);
+            boolean crccheck=true;
+            for(int i=0;i<2;i++){
+                if(crc_local[i]!=crc_remote[i]){
+                    crccheck=false;
+                    break;
+                }
+            }
+            if(crccheck){
+                Log.d("CRC校验成功");
+            }else{
+                Log.d("CRC校验失败");
+                return;
+            }
             Log.d("从机地址："+reply[0]);
             Log.d("功能码："+reply[1]);
             Log.d("功能：读设备数量");
@@ -69,13 +83,22 @@ public class ModbusSocket {
             outputStream.flush();
             byte[] reply=new byte[4+12*len];
             inputStream.read(reply);
-            StringBuilder stringBuilder=new StringBuilder();
-            for(byte i:reply){
-                stringBuilder.append(i);
-                stringBuilder.append(" ");
-            }
-            Log.d(stringBuilder.toString());
             Log.d("-----Modbus数据包解析-----");
+            byte[] crc_local=CRC(subArray(reply,0,reply.length-2));
+            byte[] crc_remote=subArray(reply,reply.length-2,2);
+            boolean crccheck=true;
+            for(int i=0;i<2;i++){
+                if(crc_local[i]!=crc_remote[i]){
+                    crccheck=false;
+                    break;
+                }
+            }
+            if(crccheck){
+                Log.d("CRC校验成功");
+            }else{
+                Log.d("CRC校验失败");
+                return;
+            }
             Log.d("从机地址："+reply[0]);
             Log.d("功能码："+reply[1]);
             Log.d("功能：读设备信息");
@@ -92,6 +115,86 @@ public class ModbusSocket {
                 Log.d("设备启用状态："+(enabledStatus?"已启用":"未启用"));
                 boolean connection=BytestoInteger(subArray(reply,l+11,1))==1;
                 Log.d("设备连接状态："+(connection?"已连接":"未连接"));
+            }
+            Log.d("------------------------");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readDeviceDataCnt(){
+        CMD cmd=new CMD();
+        cmd.addr=0x01;
+        cmd.func=0x04;
+        cmd.data=catArray(IntegertoBytes(0xFFFF,2), IntegertoBytes(1,2));
+        cmd.crc=CRC(cmd.toCRCRaw());
+        try{
+            outputStream.write(cmd.toByteArray());
+            outputStream.flush();
+            byte[] reply=new byte[4+4];
+            inputStream.read(reply);
+            Log.d("-----Modbus数据包解析-----");
+            byte[] crc_local=CRC(subArray(reply,0,reply.length-2));
+            byte[] crc_remote=subArray(reply,reply.length-2,2);
+            boolean crccheck=true;
+            for(int i=0;i<2;i++){
+                if(crc_local[i]!=crc_remote[i]){
+                    crccheck=false;
+                    break;
+                }
+            }
+            if(crccheck){
+                Log.d("CRC校验成功");
+            }else{
+                Log.d("CRC校验失败");
+                return;
+            }
+            Log.d("从机地址："+reply[0]);
+            Log.d("功能码："+reply[1]);
+            Log.d("功能：读设备数据数量");
+            Log.d("设备数据条数："+BytestoInteger(subArray(reply,2,4)));
+            Log.d("------------------------");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void readDeviceData(int len){
+        CMD cmd=new CMD();
+        cmd.addr=0x01;
+        cmd.func=0x04;
+        cmd.data=catArray(IntegertoBytes(0x0,2), IntegertoBytes(len,2));
+        cmd.crc=CRC(cmd.toCRCRaw());
+        try{
+            outputStream.write(cmd.toByteArray());
+            outputStream.flush();
+            byte[] reply=new byte[4+16*len];
+            inputStream.read(reply);
+            Log.d("-----Modbus数据包解析-----");
+            byte[] crc_local=CRC(subArray(reply,0,reply.length-2));
+            byte[] crc_remote=subArray(reply,reply.length-2,2);
+            boolean crccheck=true;
+            for(int i=0;i<2;i++){
+                if(crc_local[i]!=crc_remote[i]){
+                    crccheck=false;
+                    break;
+                }
+            }
+            if(crccheck){
+                Log.d("CRC校验成功");
+            }else{
+                Log.d("CRC校验失败");
+                return;
+            }
+            Log.d("从机地址："+reply[0]);
+            Log.d("功能码："+reply[1]);
+            Log.d("功能：读设备数据");
+            for(int i=0;i<len;i++){
+                Log.d("-----");
+                int l=2+16*i;
+                Log.d("设备ID："+BytestoInteger(subArray(reply,l,4)));
+                Log.d("数据值"+BytestoInteger(subArray(reply,l+4,4)));
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+                Log.d("时间"+simpleDateFormat.format(new Date(BytestoLong(subArray(reply,l+8,8)))));
             }
             Log.d("------------------------");
         } catch (IOException e) {
