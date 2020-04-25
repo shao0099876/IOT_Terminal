@@ -1,10 +1,15 @@
 package com.hit_src.iot_terminal.protocol;
 
+import android.os.RemoteException;
 import android.util.Log;
 
+import com.hit_src.iot_terminal.MainApplication;
+import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.CMD;
+
+import java.util.List;
 
 import static com.hit_src.iot_terminal.tools.BitOperation.*;
 
@@ -25,11 +30,18 @@ public class Modbus {
         }
         byte[] data=null;
         switch(func){
-            case 0x03:
+            case 0x03:{
                 int off= BytestoInteger(subArray(upper,2,2));
                 int len= BytestoInteger(subArray(upper,4,2));
                 data=work_03(off,len);
                 break;
+            }
+            case 0x04:{
+                int off= BytestoInteger(subArray(upper,2,2));
+                int len= BytestoInteger(subArray(upper,4,2));
+                data=work_04(off,len);
+                break;
+            }
         }
         if(data==null){
             return null;
@@ -54,6 +66,39 @@ public class Modbus {
                 res=catArray(res,IntegertoBytes(now.getLoraAddr(),2));
                 res=catArray(res,IntegertoBytes(now.isEnabled()?1:0,1));
                 res=catArray(res,IntegertoBytes(now.isConnected()?1:0,1));
+            }
+            return res;
+        }
+    }
+    private static byte[] work_04(int off,int len){
+        if(off==0xffff&&len==1){
+            int res=0;
+            for(Sensor i:SensorService.sensorList){
+                try {
+                    res+=MainApplication.dbService.getDrawPointbySensor(i.getID()).size();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            return IntegertoBytes(res,4);
+        } else{
+            byte[] res=new byte[0];
+            List<DataRecord> dataRecordList=null;
+            try {
+                dataRecordList=MainApplication.dbService.getDataRecordbyAmount(len);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            for(int i=0;i<len;i++){
+                DataRecord now=dataRecordList.get(i);
+                try {
+                    MainApplication.dbService.delDataRecordbyTime(now.time);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                res=catArray(res,IntegertoBytes(now.sensorID,4));
+                res=catArray(res,IntegertoBytes(now.data,4));
+                res=catArray(res,LongtoBytes(now.time,8));
             }
             return res;
         }

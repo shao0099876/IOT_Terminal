@@ -120,6 +120,25 @@ public class DatabaseService extends Service {
         }
 
         @Override
+        public List getDataRecordbyAmount(int amount) throws RemoteException {
+            List<DataRecord> res=new ArrayList<>();
+            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
+            Cursor cursor=readDB.query("SensorData",new String[]{"SensorID","time","data"},null,
+                    null,null,null,null);
+            for(int i=0;i<amount;i++){
+                cursor.moveToNext();
+                res.add(new DataRecord(cursor.getInt(0),cursor.getLong(1),cursor.getInt(2)));
+            }
+            return res;
+        }
+
+        @Override
+        public void delDataRecordbyTime(long time) throws RemoteException {
+            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
+            writeDB.delete("SensorData","time=?",new String[]{String.valueOf(time)});
+        }
+
+        @Override
         public List getDrawPointbySensor(int sensorID) {
             List<DataRecord> res=new ArrayList<>();
             SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();

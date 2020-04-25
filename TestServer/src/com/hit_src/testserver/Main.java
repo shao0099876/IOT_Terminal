@@ -62,6 +62,12 @@ public class Main {
                 System.out.println("设备数量：");
                 int len= Integer.parseInt(reader.readLine());
                 modbusSocket.readDeviceInfo(start,len);
+            } else if(cmd.equals("readDeviceDataCnt")){
+                modbusSocket.readDeviceDataCnt();
+            } else if(cmd.equals("readDeviceData")){
+                System.out.println("数据条数：");
+                int len= Integer.parseInt(reader.readLine());
+                modbusSocket.readDeviceData(len);
             }
             else{
                 System.out.println("Unknown Command!");

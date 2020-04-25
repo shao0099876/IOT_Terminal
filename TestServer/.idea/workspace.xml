@@ -8,16 +8,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/Global.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/BitOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/BitOperation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusServer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLSocket.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/packagemanager/XML2SensorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/packagemanager/XML2SensorType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/tools/BitOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/tools/BitOperation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,10 +191,18 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="418" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1440.860@0.0.1440.860" timestamp="1587707984167" />
+    <state x="513" y="93" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587794421749">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="513" y="93" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1440.860@0.0.1440.860" timestamp="1587794421749" />
     <state x="807" y="123" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1587707779226">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="807" y="123" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1440.860@0.0.1440.860" timestamp="1587707779226" />
+    <state x="376" y="195" key="run.anything.popup" timestamp="1587800791138">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="376" y="195" key="run.anything.popup/0.0.1440.860@0.0.1440.860" timestamp="1587800791138" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

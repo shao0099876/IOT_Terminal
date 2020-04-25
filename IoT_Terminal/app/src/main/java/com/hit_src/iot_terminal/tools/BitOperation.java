@@ -1,6 +1,23 @@
 package com.hit_src.iot_terminal.tools;
 
 public class BitOperation {
+    public static byte[] LongtoBytes(long p,int len){
+        byte[] res=new byte[len];
+        for(int i=0;i<len;i++){
+            res[i]=(byte)(p&0x0ff);
+            p>>=8;
+        }
+        return res;
+    }
+    public static long BytestoLong(byte[] p){
+        long res=0;
+        for(int i=p.length-1;i>=1;i--){
+            res|=p[i]&0x0ff;
+            res<<=8;
+        }
+        res|=p[0]&0x0ff;
+        return res;
+    }
     public static byte[] IntegertoBytes(int p,int len){
         byte[] res=new byte[len];
         for(int i=0;i<len;i++){
