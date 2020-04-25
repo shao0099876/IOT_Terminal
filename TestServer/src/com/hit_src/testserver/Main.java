@@ -11,41 +11,35 @@ import java.net.Socket;
 public class Main {
     public static ModbusSocket modbusSocket=new ModbusSocket();
     public static PackageSocket packageSocket=new PackageSocket();
-    public static PackageManager packageManager=new PackageManager();
+    public static String[] sensorType=new String[]{"超声测距传感器"};
     public static void main(String[] args) throws IOException {
 
-        Thread modbusServerThread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    ServerSocket serverSocket=new ServerSocket(2020);
-                    Log.d("Modbus Listening...");
-                    while(true){
-                        Socket socket=serverSocket.accept();
-                        Log.d("Modbus Connection Established");
-                        Main.modbusSocket=new ModbusSocket(socket);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        Thread modbusServerThread=new Thread(() -> {
+            try{
+                ServerSocket serverSocket=new ServerSocket(2020);
+                Log.d("Modbus Listening...");
+                while(true){
+                    Socket socket=serverSocket.accept();
+                    Log.d("Modbus Connection Established");
+                    Main.modbusSocket=new ModbusSocket(socket);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         modbusServerThread.start();
 
-        Thread packageServerThread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    ServerSocket serverSocket=new ServerSocket(2021);
-                    Log.d("Package Listening...");
-                    while(true){
-                        Socket socket=serverSocket.accept();
-                        Log.d("Package Connection Established");
-                        Main.packageSocket=new PackageSocket(socket);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        Thread packageServerThread=new Thread(() -> {
+            try{
+                ServerSocket serverSocket=new ServerSocket(2021);
+                Log.d("Package Listening...");
+                while(true){
+                    Socket socket=serverSocket.accept();
+                    Log.d("Package Connection Established");
+                    Main.packageSocket=new PackageSocket(socket);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         packageServerThread.start();
@@ -62,7 +56,14 @@ public class Main {
                 break;
             } else if(cmd.equals("readDeviceCnt")){
                 modbusSocket.readDeviceCnt();
-            } else{
+            } else if(cmd.equals("readDeviceInfo")){
+                System.out.println("设备起始地址：");
+                int start= Integer.parseInt(reader.readLine());
+                System.out.println("设备数量：");
+                int len= Integer.parseInt(reader.readLine());
+                modbusSocket.readDeviceInfo(start,len);
+            }
+            else{
                 System.out.println("Unknown Command!");
             }
         }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sensortype>
+    <id>1</id>
+    <name>温度</name>
+    <data>
+        <dataname>温度</dataname>
+        <unit>℃</unit>
+    </data>
+    <send>
+        <sendlength>1</sendlength>
+        <sendvalue>50</sendvalue>
+    </send>
+    <receive>
+        <recvlength>1</recvlength>
+        <operation>
+            <add>[0]</add>
+            <add>-45</add>
+        </operation>
+    </receive>
+</sensortype>

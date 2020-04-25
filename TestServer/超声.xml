@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sensortype>
+    <id>0</id>
+    <name>超声</name>
+    <data>
+        <dataname>距离</dataname>
+        <unit>mm</unit>
+    </data>
+    <send>
+        <sendlength>1</sendlength>
+        <sendvalue>55</sendvalue>
+    </send>
+    <receive>
+        <recvlength>2</recvlength>
+        <operation>
+            <add>[0]</add>
+            <mul>256</mul>
+            <add>[1]</add>
+        </operation>
+    </receive>
+</sensortype>
