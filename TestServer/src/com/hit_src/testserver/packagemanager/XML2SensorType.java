@@ -7,7 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XML2SensorType extends DefaultHandler {
     private SensorType res;
     private Datatype data;
-    private final StringBuilder sb=new StringBuilder();
+    private StringBuilder sb=new StringBuilder();
     public SensorType getResults(){
         return res;
     }

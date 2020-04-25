@@ -7,26 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/cpp/Global-JNI.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/Global.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/GlobalVar.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/GlobalVar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/XMLRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/object/XMLRecord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/protocol/Modbus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/PackageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/tools/pm/PackageManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/advance/AdvancePackageManagerViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataDetailedFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/overview/OverviewViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorAddFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorInfoFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorInfoFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/sensor/SensorViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/settings/SettingsInternetFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/settings/SettingsInternetFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../IoT_Terminal/app/src/main/java/com/hit_src/iot_terminal/ui/data/DataFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusServer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/ModbusSocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/Terminal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLServer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/XMLSocket.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/hit_src/testserver/packagemanager/XML2SensorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/hit_src/testserver/packagemanager/XML2SensorType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
@@ -52,17 +44,31 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.hit_src.testserver.tools" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.hit_src.testserver" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.hit_src.testserver.Main" />
       <module name="TestServer" />
@@ -73,9 +79,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.hit_src.testserver.tools.Test" />
+      <module name="TestServer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BitOperationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TestServer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hit_src.testserver.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hit_src.testserver.tools" />
+      <option name="MAIN_CLASS_NAME" value="com.hit_src.testserver.tools.BitOperationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.BitOperationTest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.BitOperationTest" />
       </list>
     </recent_temporary>
   </component>
@@ -93,6 +127,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="174" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587708331121">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="174" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.860@0.0.1440.860" timestamp="1587708331121" />
     <state x="464" y="238" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586570555727">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
@@ -101,10 +139,10 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="477" y="143" key="#com.intellij.ide.macro.MacrosDialog/0.0.1440.860@0.0.1440.860" timestamp="1587531946763" />
-    <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586414267093">
+    <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1587708328907">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1440.860@0.0.1440.860" timestamp="1586414267093" />
+    <state x="450" y="219" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1440.860@0.0.1440.860" timestamp="1587708328907" />
     <state x="450" y="176" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587544988675">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
@@ -117,25 +155,60 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="462" y="209" width="470" height="452" key="#com.intellij.tools.ToolEditorDialog/0.0.1440.860@0.0.1440.860" timestamp="1587532247423" />
-    <state width="1397" height="222" key="GridCell.Tab.0.bottom" timestamp="1587561025498">
+    <state width="1397" height="276" key="GridCell.Tab.0.bottom" timestamp="1587740663858">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
-    <state width="1397" height="222" key="GridCell.Tab.0.center" timestamp="1587561025498">
+    <state width="1397" height="276" key="GridCell.Tab.0.bottom/0.0.1440.860@0.0.1440.860" timestamp="1587740663858" />
+    <state width="1397" height="276" key="GridCell.Tab.0.center" timestamp="1587740663858">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
-    <state width="1397" height="222" key="GridCell.Tab.0.left" timestamp="1587561025498">
+    <state width="1397" height="276" key="GridCell.Tab.0.center/0.0.1440.860@0.0.1440.860" timestamp="1587740663858" />
+    <state width="1397" height="276" key="GridCell.Tab.0.left" timestamp="1587740663858">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
-    <state width="1397" height="222" key="GridCell.Tab.0.right" timestamp="1587561025498">
+    <state width="1397" height="276" key="GridCell.Tab.0.left/0.0.1440.860@0.0.1440.860" timestamp="1587740663858" />
+    <state width="1397" height="276" key="GridCell.Tab.0.right" timestamp="1587740663858">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
-    <state width="1397" height="222" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1587561025498" />
+    <state width="1397" height="276" key="GridCell.Tab.0.right/0.0.1440.860@0.0.1440.860" timestamp="1587740663858" />
+    <state width="1397" height="276" key="GridCell.Tab.1.bottom" timestamp="1587740663862">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="276" key="GridCell.Tab.1.bottom/0.0.1440.860@0.0.1440.860" timestamp="1587740663862" />
+    <state width="1397" height="276" key="GridCell.Tab.1.center" timestamp="1587740663861">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="276" key="GridCell.Tab.1.center/0.0.1440.860@0.0.1440.860" timestamp="1587740663861" />
+    <state width="1397" height="276" key="GridCell.Tab.1.left" timestamp="1587740663859">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="276" key="GridCell.Tab.1.left/0.0.1440.860@0.0.1440.860" timestamp="1587740663859" />
+    <state width="1397" height="276" key="GridCell.Tab.1.right" timestamp="1587740663862">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state width="1397" height="276" key="GridCell.Tab.1.right/0.0.1440.860@0.0.1440.860" timestamp="1587740663862" />
     <state x="274" y="149" key="SettingsEditor" timestamp="1587533480203">
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="274" y="149" key="SettingsEditor/0.0.1440.860@0.0.1440.860" timestamp="1587533480203" />
+    <state x="418" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1587707984167">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="418" y="321" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1440.860@0.0.1440.860" timestamp="1587707984167" />
+    <state x="807" y="123" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1587707779226">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="807" y="123" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1440.860@0.0.1440.860" timestamp="1587707779226" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/hit_src/testserver/tools/Test.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
