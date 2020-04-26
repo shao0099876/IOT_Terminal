@@ -29,12 +29,8 @@ public class InternetService extends Service {
                 Socket socket = new Socket();
                 String hostname = null;
                 int port = -1;
-                try {
-                    hostname = MainApplication.settingsService.getUpperServerAddr();
-                    port = MainApplication.settingsService.getUpperServerModbusPort();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                hostname = SettingsService.getInstance().getUpperServerAddr();
+                port = SettingsService.getInstance().getUpperServerModbusPort();
                 if (hostname == null || port == -1) {
                     OverviewViewModel.addLogLiveData("网络连接设置错误！");
                     try {

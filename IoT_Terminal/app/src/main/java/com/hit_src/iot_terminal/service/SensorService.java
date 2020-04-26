@@ -3,7 +3,6 @@ package com.hit_src.iot_terminal.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -71,11 +70,7 @@ public class SensorService extends Service {
         public void run() {
             while (true) {
                 boolean serialQueryEnabled = false;
-                try {
-                    serialQueryEnabled = MainApplication.settingsService.getSerialQuerySetting();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                serialQueryEnabled = SettingsService.getInstance().getSerialQuerySetting();
                 if (!serialQueryEnabled) {
                     try {
                         Thread.sleep(5000);

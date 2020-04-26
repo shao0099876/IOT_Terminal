@@ -1,72 +1,63 @@
 package com.hit_src.iot_terminal.service;
 
-import android.app.Service;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
 
-public class SettingsService extends Service {
+import com.hit_src.iot_terminal.MainApplication;
+
+import static android.content.Context.MODE_PRIVATE;
+
+public class SettingsService {
     private SharedPreferences settingsFile;
+    private static SettingsService self = null;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        settingsFile = getSharedPreferences("settings", MODE_PRIVATE);
+    public static SettingsService getInstance() {
+        if (self == null) {
+            self = new SettingsService();
+        }
+        return self;
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return new SettingsServiceImpl();
+    private SettingsService() {
+        settingsFile = MainApplication.self.getSharedPreferences("settings", MODE_PRIVATE);
     }
 
-    public class SettingsServiceImpl extends ISettingsService.Stub {
+    public String getUpperServerAddr() {
+        return settingsFile.getString("UpperServerAddr", "");
+    }
 
-        @Override
-        public String getUpperServerAddr() {
-            return settingsFile.getString("UpperServerAddr", "");
-        }
+    public void setUpperServerAddr(String addr) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putString("UpperServerAddr", addr);
+        editor.commit();
+    }
 
-        @Override
-        public void setUpperServerAddr(String addr) {
-            SharedPreferences.Editor editor = settingsFile.edit();
-            editor.putString("UpperServerAddr", addr);
-            editor.commit();
-        }
+    public int getUpperServerModbusPort() {
+        return settingsFile.getInt("UpperServerModbusPort", -1);
+    }
 
-        @Override
-        public int getUpperServerModbusPort() {
-            return settingsFile.getInt("UpperServerModbusPort", -1);
-        }
+    public void setUpperServerModbusPort(int port) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putInt("UpperServerModbusPort", port);
+        editor.commit();
+    }
 
-        @Override
-        public void setUpperServerModbusPort(int port) {
-            SharedPreferences.Editor editor = settingsFile.edit();
-            editor.putInt("UpperServerModbusPort", port);
-            editor.commit();
-        }
+    public int getUpperServerXMLPort() {
+        return settingsFile.getInt("UpperServerXMLPort", -1);
+    }
 
-        @Override
-        public int getUpperServerXMLPort() {
-            return settingsFile.getInt("UpperServerXMLPort", -1);
-        }
+    public void setUpperServerXMLPort(int port) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putInt("UpperServerXMLPort", port);
+        editor.commit();
+    }
 
-        @Override
-        public void setUpperServerXMLPort(int port) {
-            SharedPreferences.Editor editor = settingsFile.edit();
-            editor.putInt("UpperServerXMLPort", port);
-            editor.commit();
-        }
+    public boolean getSerialQuerySetting() {
+        return settingsFile.getBoolean("SerialQuerySetting", true);
+    }
 
-        @Override
-        public boolean getSerialQuerySetting() {
-            return settingsFile.getBoolean("SerialQuerySetting", true);
-        }
-
-        @Override
-        public void setSerialQuerySetting(boolean setting) {
-            SharedPreferences.Editor editor = settingsFile.edit();
-            editor.putBoolean("SerialQuerySetting", setting);
-            editor.commit();
-        }
+    public void setSerialQuerySetting(boolean setting) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putBoolean("SerialQuerySetting", setting);
+        editor.commit();
     }
 }
