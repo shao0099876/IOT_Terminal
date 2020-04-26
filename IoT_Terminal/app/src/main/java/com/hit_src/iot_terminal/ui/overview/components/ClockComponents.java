@@ -30,20 +30,21 @@ public class ClockComponents extends TextView {
         super(context, attrs, defStyleAttr);
         init();
     }
-    private void init(){
+
+    private void init() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("HH:mm:ss");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                final String s1=simpleDateFormat.format(new Date());
-                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                final String s1 = simpleDateFormat.format(new Date());
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ClockComponents.this.setText(s1);
                     }
                 });
             }
-        },10,1000);
+        }, 10, 1000);
     }
 }

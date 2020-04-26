@@ -28,7 +28,6 @@ public class SensorAddFragment extends Fragment {
     private Spinner typeSpinner;
     private EditText loraAddrEditText;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -36,54 +35,49 @@ public class SensorAddFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
-        View view=getView();
-        typeSpinner=view.findViewById(R.id.Sensor_Type_Spinner);
-        loraAddrEditText=view.findViewById(R.id.Sensor_Add_LoraAddr_EditText);
-        Button confirmButton=view.findViewById(R.id.Sensor_Add_Button);
+        View view = getView();
+        typeSpinner = view.findViewById(R.id.Sensor_Type_Spinner);
+        loraAddrEditText = view.findViewById(R.id.Sensor_Add_LoraAddr_EditText);
+        Button confirmButton = view.findViewById(R.id.Sensor_Add_Button);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loraAddrEditText.getText().toString()==null||loraAddrEditText.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(),"LoRa地址不能为空",Toast.LENGTH_SHORT).show();
+                if (loraAddrEditText.getText().toString() == null || loraAddrEditText.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "LoRa地址不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
-                    String datatype= (String) typeSpinner.getSelectedItem();
-                    for(int i: MainApplication.sensorTypeHashMap.keySet()){
-                        SensorType now=MainApplication.sensorTypeHashMap.get(i);
-                        if(datatype.equals(now.name)){
-                            MainApplication.dbService.addSensor(i,Integer.valueOf(loraAddrEditText.getText().toString()));
+                    String datatype = (String) typeSpinner.getSelectedItem();
+                    for (int i : MainApplication.sensorTypeHashMap.keySet()) {
+                        SensorType now = MainApplication.sensorTypeHashMap.get(i);
+                        if (datatype.equals(now.name)) {
+                            MainApplication.dbService.addSensor(i, Integer.valueOf(loraAddrEditText.getText().toString()));
                             break;
                         }
                     }
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                FragmentManager manager=getParentFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
+                FragmentManager manager = getParentFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
                 transaction.remove(SensorAddFragment.this);
                 transaction.commit();
             }
         });
-        Set<String> set=new HashSet<>();
-        for(int i: MainApplication.sensorTypeHashMap.keySet()){
+        Set<String> set = new HashSet<>();
+        for (int i : MainApplication.sensorTypeHashMap.keySet()) {
             set.add(MainApplication.sensorTypeHashMap.get(i).name);
         }
-        Object[] tmp=set.toArray();
-        String[] data=new String[tmp.length];
-        for(int i=0;i<data.length;i++){
-            data[i]= (String) tmp[i];
+        Object[] tmp = set.toArray();
+        String[] data = new String[tmp.length];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (String) tmp[i];
         }
-        final ArrayAdapter<String> spinnerAdapter= new ArrayAdapter<>(getContext(), R.layout.spinner_display_style, data);
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), R.layout.spinner_display_style, data);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_style);
         getActivity().runOnUiThread(new Runnable() {
             @Override

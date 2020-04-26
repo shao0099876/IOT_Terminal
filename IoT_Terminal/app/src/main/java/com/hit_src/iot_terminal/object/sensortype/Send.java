@@ -7,11 +7,11 @@ public class Send {
     public ArrayList<Byte> value;
 
     public void setLength(String trim) {
-        length=Integer.parseInt(trim);
-        value=new ArrayList<>();
+        length = Integer.parseInt(trim);
+        value = new ArrayList<>();
     }
 
     public void addValue(String trim) {
-        value.add(Byte.parseByte(trim,16));
+        value.add(Byte.parseByte(trim, 16));
     }
 }

@@ -20,16 +20,16 @@ import java.util.Date;
 import java.util.List;
 
 public class DatabaseService extends Service {
-    public class DatabaseServiceImpl extends IDatabaseService.Stub{
+    public class DatabaseServiceImpl extends IDatabaseService.Stub {
 
         @Override
         public List getSensorList() {
-            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id","sensor_type","sensor_addr","sensor_enabled"},null,
-                    null,null,null,null);
-            ArrayList<Sensor> res=new ArrayList<>();
-            while(cursor.moveToNext()){
-                Sensor sensor=new Sensor();
+            SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
+            Cursor cursor = readDB.query("Sensor", new String[]{"sensor_id", "sensor_type", "sensor_addr", "sensor_enabled"}, null,
+                    null, null, null, null);
+            ArrayList<Sensor> res = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                Sensor sensor = new Sensor();
                 sensor.setID(cursor.getInt(0));
                 sensor.setType(cursor.getInt(1));
                 sensor.setLoraAddr(cursor.getInt(2));
@@ -42,42 +42,42 @@ public class DatabaseService extends Service {
 
         @Override
         public int getSensorAmount() {
-            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("Sensor",new String[]{"sensor_id"},null,
-                    null,null,null,null);
-            int res=cursor.getCount();
+            SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
+            Cursor cursor = readDB.query("Sensor", new String[]{"sensor_id"}, null,
+                    null, null, null, null);
+            int res = cursor.getCount();
             cursor.close();
             return res;
         }
 
         @Override
-        public void addSensor(int type,int loraAddr) {
-            ArrayList<Sensor> list= (ArrayList<Sensor>) getSensorList();
-            int id=0;
-            for(Sensor i:list){
-                if(i.getID()>=id){
-                    id=i.getID()+1;
+        public void addSensor(int type, int loraAddr) {
+            ArrayList<Sensor> list = (ArrayList<Sensor>) getSensorList();
+            int id = 0;
+            for (Sensor i : list) {
+                if (i.getID() >= id) {
+                    id = i.getID() + 1;
                 }
             }
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            ContentValues contentValues=new ContentValues();
-            contentValues.put("sensor_id",id);
-            contentValues.put("sensor_type",type);
-            contentValues.put("sensor_addr",loraAddr);
-            contentValues.put("sensor_enabled",1);
-            writeDB.insert("Sensor",null,contentValues);
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("sensor_id", id);
+            contentValues.put("sensor_type", type);
+            contentValues.put("sensor_addr", loraAddr);
+            contentValues.put("sensor_enabled", 1);
+            writeDB.insert("Sensor", null, contentValues);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
         }
 
         @Override
-        public void updateSensor(int ID, int type,int loraAddr,boolean enabled) {
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            ContentValues contentValues=new ContentValues();
-            contentValues.put("sensor_type",type);
-            contentValues.put("sensor_addr",loraAddr);
-            contentValues.put("sensor_enabled",enabled);
-            writeDB.update("Sensor",contentValues,"sensor_id=?",
+        public void updateSensor(int ID, int type, int loraAddr, boolean enabled) {
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("sensor_type", type);
+            contentValues.put("sensor_addr", loraAddr);
+            contentValues.put("sensor_enabled", enabled);
+            writeDB.update("Sensor", contentValues, "sensor_id=?",
                     new String[]{Integer.toString(ID)});
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
@@ -85,24 +85,25 @@ public class DatabaseService extends Service {
 
         @Override
         public void delSensor(int ID) {
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            String[] arg=new String[1];
-            arg[0]=Integer.toString(ID);
-            writeDB.delete("Sensor","sensor_id=?",arg);
-            writeDB.delete("SensorData","SensorID=?",arg);
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            String[] arg = new String[1];
+            arg[0] = Integer.toString(ID);
+            writeDB.delete("Sensor", "sensor_id=?", arg);
+            writeDB.delete("SensorData", "SensorID=?", arg);
             SensorService.sensorList.clear();
             SensorService.sensorList.addAll(getSensorList());
         }
+
         @Override
-        public void delSensorByType(int type){
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            List<Sensor> list=getSensorList();
-            for(Sensor i:list){
-                if(i.getType()==type){
-                    String[] arg=new String[1];
-                    arg[0]=Integer.toString(i.getID());
-                    writeDB.delete("Sensor","sensor_id=?",arg);
-                    writeDB.delete("SensorData","SensorID=?",arg);
+        public void delSensorByType(int type) {
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            List<Sensor> list = getSensorList();
+            for (Sensor i : list) {
+                if (i.getType() == type) {
+                    String[] arg = new String[1];
+                    arg[0] = Integer.toString(i.getID());
+                    writeDB.delete("Sensor", "sensor_id=?", arg);
+                    writeDB.delete("SensorData", "SensorID=?", arg);
                 }
             }
             SensorService.sensorList.clear();
@@ -110,70 +111,74 @@ public class DatabaseService extends Service {
         }
 
         @Override
-        public void addSensorData(int ID,int data){
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            ContentValues contentValues=new ContentValues();
-            contentValues.put("SensorID",ID);
-            contentValues.put("time",new Date().getTime());
-            contentValues.put("data",data);
-            writeDB.insert("SensorData",null,contentValues);
+        public void addSensorData(int ID, int data) {
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("SensorID", ID);
+            contentValues.put("time", new Date().getTime());
+            contentValues.put("data", data);
+            writeDB.insert("SensorData", null, contentValues);
         }
 
         @Override
         public List getDataRecordbyAmount(int amount) throws RemoteException {
-            List<DataRecord> res=new ArrayList<>();
-            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("SensorData",new String[]{"SensorID","time","data"},null,
-                    null,null,null,null);
-            for(int i=0;i<amount;i++){
+            List<DataRecord> res = new ArrayList<>();
+            SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
+            Cursor cursor = readDB.query("SensorData", new String[]{"SensorID", "time", "data"}, null,
+                    null, null, null, null);
+            for (int i = 0; i < amount; i++) {
                 cursor.moveToNext();
-                res.add(new DataRecord(cursor.getInt(0),cursor.getLong(1),cursor.getInt(2)));
+                res.add(new DataRecord(cursor.getInt(0), cursor.getLong(1), cursor.getInt(2)));
             }
             return res;
         }
 
         @Override
         public void delDataRecordbyTime(long time) throws RemoteException {
-            SQLiteDatabase writeDB=databaseOpenHelper.getWritableDatabase();
-            writeDB.delete("SensorData","time=?",new String[]{String.valueOf(time)});
+            SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+            writeDB.delete("SensorData", "time=?", new String[]{String.valueOf(time)});
         }
 
         @Override
         public List getDrawPointbySensor(int sensorID) {
-            List<DataRecord> res=new ArrayList<>();
-            SQLiteDatabase readDB=databaseOpenHelper.getReadableDatabase();
-            Cursor cursor=readDB.query("SensorData",new String[]{"time","data"},"SensorID=?",
-                    new String[]{Integer.toString(sensorID)},null,null,null);
-            while(cursor.moveToNext()){
-                long time=cursor.getLong(0);
-                int data=cursor.getInt(1);
-                res.add(new DataRecord(sensorID,time,data));
+            List<DataRecord> res = new ArrayList<>();
+            SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
+            Cursor cursor = readDB.query("SensorData", new String[]{"time", "data"}, "SensorID=?",
+                    new String[]{Integer.toString(sensorID)}, null, null, null);
+            while (cursor.moveToNext()) {
+                long time = cursor.getLong(0);
+                int data = cursor.getInt(1);
+                res.add(new DataRecord(sensorID, time, data));
             }
             cursor.close();
             return res;
         }
     }
+
     private DatabaseOpenHelper databaseOpenHelper;
+
     @Override
-    public void onCreate(){//初始化
+    public void onCreate() {//初始化
         super.onCreate();
-        databaseOpenHelper=new DatabaseOpenHelper(this,"iot",null,1);
+        databaseOpenHelper = new DatabaseOpenHelper(this, "iot", null, 1);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return new DatabaseServiceImpl();
     }
+
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
-        static String[] dbCreateSQL=new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
-                                                 "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
+        static String[] dbCreateSQL = new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
+                "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
+
         DatabaseOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            for(String i:dbCreateSQL){
+            for (String i : dbCreateSQL) {
                 db.execSQL(i);
             }
         }

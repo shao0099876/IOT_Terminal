@@ -5,10 +5,10 @@ public class Receive {
     public Operation operation;
 
     public void setLength(String trim) {
-        length=Integer.parseInt(trim);
+        length = Integer.parseInt(trim);
     }
 
     public void setOperation(Operation operation) {
-        this.operation=operation;
+        this.operation = operation;
     }
 }
