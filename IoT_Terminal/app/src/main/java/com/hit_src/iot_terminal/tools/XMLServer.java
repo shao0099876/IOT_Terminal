@@ -5,6 +5,7 @@ import android.os.RemoteException;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.XMLRecord;
+import com.hit_src.iot_terminal.service.SettingsService;
 import com.hit_src.iot_terminal.xml.XML;
 
 import java.io.BufferedReader;
@@ -21,7 +22,7 @@ public class XMLServer {
     public static ArrayList<XML> getList() {
         ArrayList<XML> res = new ArrayList<>();
         try {
-            Socket socket = new Socket(MainApplication.settingsService.getUpperServerAddr(), MainApplication.settingsService.getUpperServerXMLPort());
+            Socket socket = new Socket(SettingsService.getInstance().getUpperServerAddr(), SettingsService.getInstance().getUpperServerXMLPort());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             writer.write("getList" + "\n");
@@ -38,15 +39,13 @@ public class XMLServer {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
         return res;
     }
 
     public static void addXML(Context context, XMLRecord selected) {
         try {
-            Socket socket = new Socket(MainApplication.settingsService.getUpperServerAddr(), MainApplication.settingsService.getUpperServerXMLPort());
+            Socket socket = new Socket(SettingsService.getInstance().getUpperServerAddr(), SettingsService.getInstance().getUpperServerXMLPort());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             StringBuilder sb = new StringBuilder();
@@ -71,14 +70,12 @@ public class XMLServer {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
         }
     }
 
     public static void updateXML(Context context, XMLRecord selected) {
         try {
-            Socket socket = new Socket(MainApplication.settingsService.getUpperServerAddr(), MainApplication.settingsService.getUpperServerXMLPort());
+            Socket socket = new Socket(SettingsService.getInstance().getUpperServerAddr(), SettingsService.getInstance().getUpperServerXMLPort());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             StringBuilder sb = new StringBuilder();
@@ -102,8 +99,6 @@ public class XMLServer {
             writer.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
