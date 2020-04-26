@@ -15,7 +15,7 @@ import com.hit_src.iot_terminal.tools.Filesystem;
 import java.util.HashMap;
 
 public class MainApplication extends Application {
-    public static IDatabaseService dbService;
+    public static MainApplication self;
     public static ISettingsService settingsService;
     public static HashMap<Integer, SensorType> sensorTypeHashMap = new HashMap<>();
     public static HashMap<String, Integer> xmlRecordHashMap = new HashMap<>();
@@ -27,28 +27,6 @@ public class MainApplication extends Application {
 
     boolean runSerialService = true;
     boolean runInternetService = true;
-    protected ServiceConnection dbServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            dbService = IDatabaseService.Stub.asInterface(service);
-            synchronized ((Integer) serviceReadyCnt) {
-                serviceReadyCnt += 1;
-                if (serviceReadyCnt >= 2) {
-                    if (runSerialService) {
-                        startService(new Intent().setAction("SensorService"));
-                    }
-                    if (runInternetService) {
-                        startService(new Intent().setAction("InternetService"));
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
     protected ServiceConnection settingServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -75,7 +53,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        bindService(new Intent("com.hit_src.iot_terminal.service.IDatabaseService"), dbServiceConnection, BIND_AUTO_CREATE);
+        self=this;
         bindService(new Intent("com.hit_src.iot_terminal.service.ISettingsService"), settingServiceConnection, BIND_AUTO_CREATE);
         Filesystem.build(this);
         WifiManager manager = (WifiManager) getSystemService(WIFI_SERVICE);

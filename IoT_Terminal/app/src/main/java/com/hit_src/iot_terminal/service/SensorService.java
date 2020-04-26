@@ -49,11 +49,7 @@ public class SensorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-            sensorList.addAll(MainApplication.dbService.getSensorList());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        sensorList.addAll(DatabaseService.getInstance().getSensorList());
         mainThread.start();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -134,11 +130,7 @@ public class SensorService extends Service {
             realtimeData = new DataRecord(i.getID(), new Date().getTime(), null);
             return true;
         }
-        try {
-            MainApplication.dbService.addSensorData(i.getID(), res);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        DatabaseService.getInstance().addSensorData(i.getID(), res);
         realtimeData = new DataRecord(i.getID(), new Date().getTime(), res);
         return true;
     }

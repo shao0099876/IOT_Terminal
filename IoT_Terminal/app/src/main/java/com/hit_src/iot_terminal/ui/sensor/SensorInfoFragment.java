@@ -18,6 +18,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.DataChart;
 
@@ -85,11 +86,7 @@ public class SensorInfoFragment extends Fragment {
                         }
                     });
                 }
-                try {
-                    MainApplication.dbService.updateSensor(sensor.getID(), sensor.getType(), sensor.getLoraAddr(), isChecked);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                DatabaseService.getInstance().updateSensor(sensor.getID(), sensor.getType(), sensor.getLoraAddr(), isChecked);
             }
         });
         realtimeDataSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -97,11 +94,7 @@ public class SensorInfoFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     List<DataRecord> dataList = null;
-                    try {
-                        dataList = MainApplication.dbService.getDrawPointbySensor(sensor.getID());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    dataList = DatabaseService.getInstance().getDrawPointbySensor(sensor.getID());
                     chart.setData(dataList);
                     timer = new Timer();
                     timerTask = new TimerTask() {
@@ -139,11 +132,7 @@ public class SensorInfoFragment extends Fragment {
         });
 
         List<DataRecord> dataList = null;
-        try {
-            dataList = MainApplication.dbService.getDrawPointbySensor(sensor.getID());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        dataList = DatabaseService.getInstance().getDrawPointbySensor(sensor.getID());
         chart.setData(dataList);
         getActivity().runOnUiThread(new Runnable() {
             @Override

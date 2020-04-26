@@ -6,6 +6,7 @@ import android.util.Log;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.CMD;
 
@@ -84,25 +85,21 @@ public class Modbus {
         if (off == 0xffff && len == 1) {
             int res = 0;
             for (Sensor i : SensorService.sensorList) {
-                try {
-                    res += MainApplication.dbService.getDrawPointbySensor(i.getID()).size();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                res += DatabaseService.getInstance().getDrawPointbySensor(i.getID()).size();
             }
             return IntegertoBytes(res, 4);
         } else {
             byte[] res = new byte[0];
             List<DataRecord> dataRecordList = null;
             try {
-                dataRecordList = MainApplication.dbService.getDataRecordbyAmount(len);
+                dataRecordList = DatabaseService.getInstance().getDataRecordbyAmount(len);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
             for (int i = 0; i < len; i++) {
                 DataRecord now = dataRecordList.get(i);
                 try {
-                    MainApplication.dbService.delDataRecordbyTime(now.time);
+                    DatabaseService.getInstance().delDataRecordbyTime(now.time);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

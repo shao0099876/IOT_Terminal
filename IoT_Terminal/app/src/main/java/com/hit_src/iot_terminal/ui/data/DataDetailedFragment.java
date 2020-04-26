@@ -19,6 +19,7 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.DataChart;
 
@@ -62,11 +63,7 @@ public class DataDetailedFragment extends Fragment {
                 if (isChecked) {
                     ArrayList<DataRecord> dataRecords = new ArrayList<>();
                     for (Sensor i : sensors) {
-                        try {
-                            dataRecords.addAll((ArrayList<DataRecord>) MainApplication.dbService.getDrawPointbySensor(i.getID()));
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
+                        dataRecords.addAll((ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID()));
                     }
                     chart.setData(dataRecords);
                     timer = new Timer();
@@ -115,15 +112,11 @@ public class DataDetailedFragment extends Fragment {
         }
         ArrayList<DataRecord> dataRecords = new ArrayList<>();
         for (Sensor i : sensors) {
-            try {
-                ArrayList<DataRecord> dataRecordArrayList = (ArrayList<DataRecord>) MainApplication.dbService.getDrawPointbySensor(i.getID());
-                for (DataRecord j : dataRecordArrayList) {
-                    Log.e("SRCDEBUG", String.valueOf(j));
-                }
-                dataRecords.addAll((ArrayList<DataRecord>) MainApplication.dbService.getDrawPointbySensor(i.getID()));
-            } catch (RemoteException e) {
-                e.printStackTrace();
+            ArrayList<DataRecord> dataRecordArrayList = (ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID());
+            for (DataRecord j : dataRecordArrayList) {
+                Log.e("SRCDEBUG", String.valueOf(j));
             }
+            dataRecords.addAll((ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID()));
         }
         chart.setData(dataRecords);
         getActivity().runOnUiThread(new Runnable() {
