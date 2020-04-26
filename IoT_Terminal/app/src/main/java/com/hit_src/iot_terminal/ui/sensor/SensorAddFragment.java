@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.service.DatabaseService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,17 +51,13 @@ public class SensorAddFragment extends Fragment {
                     Toast.makeText(getContext(), "LoRa地址不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                try {
-                    String datatype = (String) typeSpinner.getSelectedItem();
-                    for (int i : MainApplication.sensorTypeHashMap.keySet()) {
-                        SensorType now = MainApplication.sensorTypeHashMap.get(i);
-                        if (datatype.equals(now.name)) {
-                            MainApplication.dbService.addSensor(i, Integer.valueOf(loraAddrEditText.getText().toString()));
-                            break;
-                        }
+                String datatype = (String) typeSpinner.getSelectedItem();
+                for (int i : MainApplication.sensorTypeHashMap.keySet()) {
+                    SensorType now = MainApplication.sensorTypeHashMap.get(i);
+                    if (datatype.equals(now.name)) {
+                        DatabaseService.getInstance().addSensor(i, Integer.valueOf(loraAddrEditText.getText().toString()));
+                        break;
                     }
-                } catch (RemoteException e) {
-                    e.printStackTrace();
                 }
                 FragmentManager manager = getParentFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();

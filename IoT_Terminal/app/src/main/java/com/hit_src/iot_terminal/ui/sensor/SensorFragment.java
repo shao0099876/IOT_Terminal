@@ -24,6 +24,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
 
 import java.util.ArrayList;
@@ -70,11 +71,7 @@ public class SensorFragment extends Fragment {
                     Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                try {
-                    MainApplication.dbService.delSensor(SensorService.sensorList.get(selected).getID());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                DatabaseService.getInstance().delSensor(SensorService.sensorList.get(selected).getID());
                 if (childFragment != null) {
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.remove(childFragment);
@@ -113,12 +110,8 @@ public class SensorFragment extends Fragment {
         ((Activity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    ArrayList<Sensor> list = (ArrayList<Sensor>) MainApplication.dbService.getSensorList();
-                    sensorListView.setAdapter(makeAdapter(list));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                ArrayList<Sensor> list = (ArrayList<Sensor>) DatabaseService.getInstance().getSensorList();
+                sensorListView.setAdapter(makeAdapter(list));
             }
         });
     }
