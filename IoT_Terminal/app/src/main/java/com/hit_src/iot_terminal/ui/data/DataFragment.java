@@ -26,8 +26,8 @@ import java.util.Set;
 public class DataFragment extends Fragment {
     private ListView dataTypeListView;
 
-    private Fragment childFragment=null;
-    private ArrayList<String> dataTypeList=new ArrayList<>();
+    private Fragment childFragment = null;
+    private ArrayList<String> dataTypeList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -36,14 +36,10 @@ public class DataFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        View view=getView();
-        dataTypeListView=view.findViewById(R.id.Data_ListView);
+        View view = getView();
+        dataTypeListView = view.findViewById(R.id.Data_ListView);
 
         dataTypeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,25 +47,25 @@ public class DataFragment extends Fragment {
                 view.setBackgroundColor(333399);
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                childFragment=new DataDetailedFragment(dataTypeList.get(position));
+                childFragment = new DataDetailedFragment(dataTypeList.get(position));
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();
             }
         });
 
-        Set<Integer> sensorTypeIntegerSet= MainApplication.sensorTypeHashMap.keySet();
-        HashSet<String> dataTypeSet =new HashSet<>();
-        ArrayList<Map<String,Object>> list=new ArrayList<>();
-        for(int i:sensorTypeIntegerSet) {
+        Set<Integer> sensorTypeIntegerSet = MainApplication.sensorTypeHashMap.keySet();
+        HashSet<String> dataTypeSet = new HashSet<>();
+        ArrayList<Map<String, Object>> list = new ArrayList<>();
+        for (int i : sensorTypeIntegerSet) {
             dataTypeSet.add(MainApplication.sensorTypeHashMap.get(i).data.name);
         }
-        for(String t:dataTypeSet){
-            HashMap<String,Object> map=new HashMap<>();
-            map.put("content",t);
+        for (String t : dataTypeSet) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("content", t);
             list.add(map);
             dataTypeList.add(t);
         }
-        final SimpleAdapter simpleAdapter=new SimpleAdapter(getContext(),list,R.layout.data_listview_layout,new String[]{"content"},new int[]{R.id.Data_Listview_TextView});
+        final SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list, R.layout.data_listview_layout, new String[]{"content"}, new int[]{R.id.Data_Listview_TextView});
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

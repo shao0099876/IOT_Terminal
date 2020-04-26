@@ -30,21 +30,22 @@ public class DateComponents extends TextView {
         super(context, attrs, defStyleAttr);
         init();
     }
-    private void init(){
+
+    private void init() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
                 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-                final String s=simpleDateFormat.format(new Date());
-                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                final String s = simpleDateFormat.format(new Date());
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         DateComponents.this.setText(s);
                     }
                 });
             }
-        },10,1000);
+        }, 10, 1000);
 
     }
 }

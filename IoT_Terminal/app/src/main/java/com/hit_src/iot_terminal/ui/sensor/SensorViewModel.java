@@ -1,21 +1,18 @@
 package com.hit_src.iot_terminal.ui.sensor;
 
-import android.os.RemoteException;
-import android.util.Log;
-
 import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.SensorService;
 
 import java.util.ArrayList;
 
 public class SensorViewModel extends ViewModel {
-    public MutableLiveData<ArrayList<Sensor>> sensorListLiveData=new MutableLiveData<>();
-    public SensorViewModel(){
+    public MutableLiveData<ArrayList<Sensor>> sensorListLiveData = new MutableLiveData<>();
+
+    public SensorViewModel() {
         sensorListLiveData.setValue(SensorService.sensorList);
         SensorService.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
             @Override

@@ -6,12 +6,8 @@ public class DataRecord {
     public int sensorID;
 
     public DataRecord(int sensorID, long time, Integer data) {
-        this.time=time;
-        this.data=data;
-        this.sensorID=sensorID;
-    }
-
-    public String formatSensorName() {
-        return "传感器#"+sensorID;
+        this.time = time;
+        this.data = data;
+        this.sensorID = sensorID;
     }
 }

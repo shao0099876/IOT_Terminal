@@ -1,17 +1,7 @@
 package com.hit_src.iot_terminal.ui.sensor;
 
-import androidx.fragment.app.Fragment;
-
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +11,14 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
@@ -46,33 +44,29 @@ public class SensorFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
     public void onStart() {
         super.onStart();
 
         View view = getView();
         sensorListView = view.findViewById(R.id.Sensor_SensorListView);
-        Button addButton=view.findViewById(R.id.Sensor_Add_Button);
+        Button addButton = view.findViewById(R.id.Sensor_Add_Button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                selected=null;
-                childFragment=new SensorAddFragment();
+                selected = null;
+                childFragment = new SensorAddFragment();
                 transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }
         });
-        Button delButton=view.findViewById(R.id.Sensor_Delete_Button);
+        Button delButton = view.findViewById(R.id.Sensor_Delete_Button);
         delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                if (selected==null) {
+                if (selected == null) {
                     Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -81,8 +75,8 @@ public class SensorFragment extends Fragment {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                if(childFragment!=null){
-                    FragmentTransaction transaction=manager.beginTransaction();
+                if (childFragment != null) {
+                    FragmentTransaction transaction = manager.beginTransaction();
                     transaction.remove(childFragment);
                     transaction.commit();
                 }
@@ -95,8 +89,8 @@ public class SensorFragment extends Fragment {
                 view.setBackgroundColor(333399);
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
-                selected=position;
-                childFragment=new SensorInfoFragment(SensorService.sensorList.get(position));
+                selected = position;
+                childFragment = new SensorInfoFragment(SensorService.sensorList.get(position));
                 transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }
@@ -107,7 +101,7 @@ public class SensorFragment extends Fragment {
         viewModel.sensorListLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<Sensor>>() {
             @Override
             public void onChanged(final ArrayList<Sensor> sensors) {
-                ((Activity)getContext()).runOnUiThread(new Runnable() {
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         sensorListView.setAdapter(makeAdapter(sensors));
@@ -116,11 +110,11 @@ public class SensorFragment extends Fragment {
             }
         });
 
-        ((Activity)getContext()).runOnUiThread(new Runnable() {
+        ((Activity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    ArrayList<Sensor> list=(ArrayList<Sensor>) MainApplication.dbService.getSensorList();
+                    ArrayList<Sensor> list = (ArrayList<Sensor>) MainApplication.dbService.getSensorList();
                     sensorListView.setAdapter(makeAdapter(list));
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -128,12 +122,13 @@ public class SensorFragment extends Fragment {
             }
         });
     }
-    private SimpleAdapter makeAdapter(ArrayList<Sensor> sensors){
-        ArrayList<Map<String,Object>> arrayList = new ArrayList<>();
-        for(Sensor i:sensors){
+
+    private SimpleAdapter makeAdapter(ArrayList<Sensor> sensors) {
+        ArrayList<Map<String, Object>> arrayList = new ArrayList<>();
+        for (Sensor i : sensors) {
             arrayList.add(SensorAdapter.toListViewAdapter(i));
         }
-        return new SimpleAdapter(getContext(),arrayList,R.layout.sensor_listview_layout,new String[]{"ID", "type", "status"}, new int[]{R.id.Sensor_ListView_No, R.id.Sensor_ListView_Type, R.id.Sensor_ListView_ConnectionStatus});
+        return new SimpleAdapter(getContext(), arrayList, R.layout.sensor_listview_layout, new String[]{"ID", "type", "status"}, new int[]{R.id.Sensor_ListView_No, R.id.Sensor_ListView_Type, R.id.Sensor_ListView_ConnectionStatus});
     }
 
 }

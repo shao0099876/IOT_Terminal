@@ -2,7 +2,6 @@ package com.hit_src.iot_terminal.ui.sensor;
 
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,20 +26,22 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SensorInfoFragment extends Fragment {
-    public Sensor sensor=null;
+    public Sensor sensor = null;
     private TextView sensorIDTextView;
     private TextView sensorTypeTextView;
     private TextView sensorLoraAddrTextView;
     private Switch enabledSwitch;
     private Switch realtimeDataSwitch;
-    private DataChart chart=new DataChart();
+    private DataChart chart = new DataChart();
 
     private Timer timer;
     private TimerTask timerTask;
 
-    public SensorInfoFragment(){}
-    public SensorInfoFragment(Sensor sensor){
-        this.sensor=sensor;
+    public SensorInfoFragment() {
+    }
+
+    public SensorInfoFragment(Sensor sensor) {
+        this.sensor = sensor;
     }
 
     @Override
@@ -50,29 +51,25 @@ public class SensorInfoFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
-        View view=getView();
-        sensorIDTextView=view.findViewById(R.id.Sensor_ID_TextView);
-        sensorTypeTextView=view.findViewById(R.id.Sensor_Info_Type_TextView);
-        sensorLoraAddrTextView=view.findViewById(R.id.Sensor_Info_LoraAddr_TextView);
-        enabledSwitch=view.findViewById(R.id.Sensor_Enabled_Switch);
-        realtimeDataSwitch=view.findViewById(R.id.Sensor_RealtimeData_Switch);
+        View view = getView();
+        sensorIDTextView = view.findViewById(R.id.Sensor_ID_TextView);
+        sensorTypeTextView = view.findViewById(R.id.Sensor_Info_Type_TextView);
+        sensorLoraAddrTextView = view.findViewById(R.id.Sensor_Info_LoraAddr_TextView);
+        enabledSwitch = view.findViewById(R.id.Sensor_Enabled_Switch);
+        realtimeDataSwitch = view.findViewById(R.id.Sensor_RealtimeData_Switch);
         chart.setComponent((LineChart) view.findViewById(R.id.Sensor_Draw_LineChart));
 
         enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked==sensor.isEnabled()){
+                if (isChecked == sensor.isEnabled()) {
                     return;
                 }
                 sensor.setEnabled(isChecked);
-                if(isChecked==false){
+                if (isChecked == false) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -80,8 +77,7 @@ public class SensorInfoFragment extends Fragment {
                             realtimeDataSwitch.setEnabled(false);
                         }
                     });
-                }
-                else {
+                } else {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -90,7 +86,7 @@ public class SensorInfoFragment extends Fragment {
                     });
                 }
                 try {
-                    MainApplication.dbService.updateSensor(sensor.getID(),sensor.getType(),sensor.getLoraAddr(),isChecked);
+                    MainApplication.dbService.updateSensor(sensor.getID(), sensor.getType(), sensor.getLoraAddr(), isChecked);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -99,20 +95,20 @@ public class SensorInfoFragment extends Fragment {
         realtimeDataSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    List<DataRecord> dataList=null;
+                if (isChecked) {
+                    List<DataRecord> dataList = null;
                     try {
-                        dataList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
+                        dataList = MainApplication.dbService.getDrawPointbySensor(sensor.getID());
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                     chart.setData(dataList);
-                    timer=new Timer();
-                    timerTask=new TimerTask() {
+                    timer = new Timer();
+                    timerTask = new TimerTask() {
                         @Override
                         public void run() {
-                            DataRecord dataRecord= SensorService.getRealtimeData(sensor.getID());
-                            if(dataRecord==null){
+                            DataRecord dataRecord = SensorService.getRealtimeData(sensor.getID());
+                            if (dataRecord == null) {
                                 return;
                             }
                             chart.addData(dataRecord);
@@ -123,29 +119,28 @@ public class SensorInfoFragment extends Fragment {
                                         chart.invalidate(true);
                                     }
                                 });
-                            } catch (NullPointerException e){
+                            } catch (NullPointerException e) {
                                 timer.cancel();
                                 timerTask.cancel();
-                                timer=null;
-                                timerTask=null;
+                                timer = null;
+                                timerTask = null;
                             }
 
                         }
                     };
-                    timer.schedule(timerTask,0,1000);
-                }
-                else{
+                    timer.schedule(timerTask, 0, 1000);
+                } else {
                     timer.cancel();
                     timerTask.cancel();
-                    timer=null;
-                    timerTask=null;
+                    timer = null;
+                    timerTask = null;
                 }
             }
         });
 
-        List<DataRecord> dataList=null;
+        List<DataRecord> dataList = null;
         try {
-            dataList= MainApplication.dbService.getDrawPointbySensor(sensor.getID());
+            dataList = MainApplication.dbService.getDrawPointbySensor(sensor.getID());
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -19,17 +19,18 @@ public class LogoActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_logo);
-        AlphaAnimation alphaAnimation= (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.logo);
-        ImageView imageView=findViewById(R.id.Main_logo_ImageView);
+        AlphaAnimation alphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.logo);
+        ImageView imageView = findViewById(R.id.Main_logo_ImageView);
         imageView.setAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
             }
+
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent=new Intent(LogoActivity.this, MainActivity.class);
+                Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

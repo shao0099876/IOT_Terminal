@@ -26,13 +26,14 @@ public class GuidanceButton extends Button {
     public GuidanceButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-    protected void init(final Fragment targetFragment){
+
+    protected void init(final Fragment targetFragment) {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager=((FragmentActivity)getContext()).getSupportFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                transaction.add(R.id.MainFragment,targetFragment);
+                FragmentManager manager = ((FragmentActivity) getContext()).getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.MainFragment, targetFragment);
                 transaction.commit();
             }
         });
