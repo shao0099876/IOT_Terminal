@@ -6,19 +6,42 @@ import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.InternetService;
 import com.hit_src.iot_terminal.service.SensorService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import static java.lang.Thread.sleep;
 
 public class OverviewViewModel extends ViewModel {
+    public MutableLiveData<Date> timeLiveData = new MutableLiveData<>();
     public MutableLiveData<Integer> sensorConnectedLiveData = new MutableLiveData<>();
     public MutableLiveData<Integer> sensorAmountLiveData = new MutableLiveData<>();
     public MutableLiveData<Boolean> internetConnectionLiveData = new MutableLiveData<>();
     public static MutableLiveData<ArrayList<String>> logLiveData = new MutableLiveData<>();
 
     public OverviewViewModel() {
+        timeLiveData.setValue(new Date());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (MainApplication.self != null) {
+                    timeLiveData.postValue(new Date());
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
         sensorAmountLiveData.setValue(SensorService.sensorList.size());
         int connected = 0;
         for (Sensor i : SensorService.sensorList) {
