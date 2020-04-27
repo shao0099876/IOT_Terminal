@@ -12,12 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.R;
-import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
+import com.hit_src.iot_terminal.ui.advance.AdvanceFragment;
+import com.hit_src.iot_terminal.ui.data.DataFragment;
+import com.hit_src.iot_terminal.ui.sensor.SensorFragment;
+import com.hit_src.iot_terminal.ui.settings.SettingsFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +35,7 @@ public class OverviewFragment extends Fragment {
     private TextView dateTextView;
     private LinearLayout sensorStatusLinearLayout;
     private TextView sensorStatusTextView;
-    private StatusLinearLayout internetStatusLinearLayout;
+    private LinearLayout internetStatusLinearLayout;
     private TextView internetStatusTextView;
     private EditText logEditText;
 
@@ -92,6 +96,38 @@ public class OverviewFragment extends Fragment {
                 updateSensorStatus(viewModel.sensorStatusLiveData.getValue().first, viewModel.sensorStatusLiveData.getValue().second);
                 updateInternetStatus(viewModel.internetConnectionLiveData.getValue());
                 updateLog(viewModel.logLiveData.getValue());
+            }
+        });
+        view.findViewById(R.id.Overview_SensorButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = MainActivity.self.getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.MainFragment, new SensorFragment());
+                transaction.commit();
+            }
+        });
+        view.findViewById(R.id.Overview_DataButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = MainActivity.self.getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.MainFragment, new DataFragment());
+                transaction.commit();
+            }
+        });
+        view.findViewById(R.id.Overview_SettingsButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = MainActivity.self.getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.MainFragment, new SettingsFragment());
+                transaction.commit();
+            }
+        });
+        view.findViewById(R.id.Overview_AdvanceButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = MainActivity.self.getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.MainFragment, new AdvanceFragment());
+                transaction.commit();
             }
         });
     }
