@@ -69,7 +69,7 @@ public class SensorService extends Service {
     private Thread mainThread = new Thread(new Runnable() {
         @Override
         public void run() {
-            while (true) {
+            while (MainApplication.self!=null) {
                 boolean serialQueryEnabled = false;
                 serialQueryEnabled = SettingsService.getInstance().getSerialQuerySetting();
                 if (!serialQueryEnabled) {
@@ -90,10 +90,10 @@ public class SensorService extends Service {
                         send(now);
                         if (recv(now)) {
                             now.setConnected(true);
-                            OverviewViewModel.addLogLiveData(now.getID() + "号传感器交互成功");
+                            GlobalVar.log(now.getID() + "号传感器交互成功");
                         } else {
                             now.setConnected(false);
-                            OverviewViewModel.addLogLiveData(now.getID() + "号传感器交互失败");
+                            GlobalVar.log(now.getID() + "号传感器交互失败");
                         }
                         GlobalVar.sensorList.set(i, now);
                     }
