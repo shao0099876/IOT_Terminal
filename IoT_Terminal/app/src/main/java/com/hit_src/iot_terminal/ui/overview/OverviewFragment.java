@@ -20,7 +20,6 @@ import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;

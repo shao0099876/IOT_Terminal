@@ -11,22 +11,16 @@ import androidx.lifecycle.ViewModel;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.service.InternetService;
-import com.hit_src.iot_terminal.service.SensorService;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import static java.lang.Thread.sleep;
 
 public class OverviewViewModel extends ViewModel {
     public MutableLiveData<Date> timeLiveData = new MutableLiveData<>();
-    public MutableLiveData<Pair<Integer,Integer>> sensorStatusLiveData=new MutableLiveData<>();
+    public MutableLiveData<Pair<Integer, Integer>> sensorStatusLiveData = new MutableLiveData<>();
     public MutableLiveData<Boolean> internetConnectionLiveData = new MutableLiveData<>();
-    public static MutableLiveData<String> logLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> logLiveData = new MutableLiveData<>();
 
     public OverviewViewModel() {
         {
@@ -48,9 +42,10 @@ public class OverviewViewModel extends ViewModel {
         {
             sensorStatusLiveData.setValue(new Pair<>(GlobalVar.getSensorConnectedAmount(), GlobalVar.sensorList.size()));
             GlobalVar.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
-                private void work(){
+                private void work() {
                     sensorStatusLiveData.postValue(new Pair<>(GlobalVar.getSensorConnectedAmount(), GlobalVar.sensorList.size()));
                 }
+
                 @Override
                 public void onChanged(ObservableList<Sensor> sender) {
                     work();
@@ -77,20 +72,22 @@ public class OverviewViewModel extends ViewModel {
                 }
             });
         }
-
-        internetConnectionLiveData.setValue(InternetService.internetConnectionStatus.get());
-        InternetService.internetConnectionStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(Observable sender, int propertyId) {
-                internetConnectionLiveData.postValue(((ObservableBoolean) sender).get());
-            }
-        });
+        {
+            internetConnectionLiveData.setValue(GlobalVar.internetConnectionStatus.get());
+            GlobalVar.internetConnectionStatus.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+                @Override
+                public void onPropertyChanged(Observable sender, int propertyId) {
+                    internetConnectionLiveData.postValue(((ObservableBoolean) sender).get());
+                }
+            });
+        }
         {
             logLiveData.setValue(GlobalVar.getLog());
             GlobalVar.logList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<String>>() {
-                private void work(){
+                private void work() {
                     logLiveData.postValue(GlobalVar.getLog());
                 }
+
                 @Override
                 public void onChanged(ObservableList<String> sender) {
                     work();
@@ -117,6 +114,5 @@ public class OverviewViewModel extends ViewModel {
                 }
             });
         }
-
     }
 }
