@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.SensorAdapter;
@@ -71,7 +72,7 @@ public class SensorFragment extends Fragment {
                     Toast.makeText(getContext(), "未选中传感器", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                DatabaseService.getInstance().delSensor(SensorService.sensorList.get(selected).getID());
+                DatabaseService.getInstance().delSensor(GlobalVar.sensorList.get(selected).getID());
                 if (childFragment != null) {
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.remove(childFragment);
@@ -87,7 +88,7 @@ public class SensorFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 selected = position;
-                childFragment = new SensorInfoFragment(SensorService.sensorList.get(position));
+                childFragment = new SensorInfoFragment(GlobalVar.sensorList.get(position));
                 transaction.replace(R.id.Sensor_Detailed_Fragment, childFragment);
                 transaction.commit();
             }

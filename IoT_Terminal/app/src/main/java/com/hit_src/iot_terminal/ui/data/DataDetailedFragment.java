@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
@@ -102,7 +103,7 @@ public class DataDetailedFragment extends Fragment {
         });
 
         //根据Datatype找Sensor
-        List<Sensor> sensorArrayList = SensorService.sensorList.subList(0, SensorService.sensorList.size());
+        List<Sensor> sensorArrayList = GlobalVar.sensorList.subList(0, GlobalVar.sensorList.size());
         sensors = new ArrayList<>();
         for (Sensor i : sensorArrayList) {
             SensorType sensorType = MainApplication.sensorTypeHashMap.get(i.getType());

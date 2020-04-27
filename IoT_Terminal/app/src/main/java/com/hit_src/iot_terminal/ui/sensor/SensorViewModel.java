@@ -4,6 +4,7 @@ import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.SensorService;
 
@@ -13,8 +14,8 @@ public class SensorViewModel extends ViewModel {
     public MutableLiveData<ArrayList<Sensor>> sensorListLiveData = new MutableLiveData<>();
 
     public SensorViewModel() {
-        sensorListLiveData.setValue(SensorService.sensorList);
-        SensorService.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
+        sensorListLiveData.setValue(GlobalVar.sensorList);
+        GlobalVar.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
             @Override
             public void onChanged(ObservableList<Sensor> sender) {
             }
