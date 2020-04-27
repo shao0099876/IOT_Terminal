@@ -1,6 +1,8 @@
 package com.hit_src.iot_terminal;
 
 import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
 
 import com.hit_src.iot_terminal.object.Sensor;
 
@@ -12,6 +14,7 @@ import java.util.TimeZone;
 public class GlobalVar {
     public volatile static ObservableArrayList<Sensor> sensorList = new ObservableArrayList<>();
     public volatile static ObservableArrayList<String> logList=new ObservableArrayList<>();
+    public volatile static ObservableBoolean internetConnectionStatus = new ObservableBoolean();
 
     public static int getSensorConnectedAmount() {
         int res=0;
