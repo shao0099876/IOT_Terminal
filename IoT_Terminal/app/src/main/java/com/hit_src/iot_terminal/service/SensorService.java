@@ -116,7 +116,7 @@ public class SensorService extends Service {
     }
 
     private boolean recv(Sensor i) {
-        byte[] raw_data = SerialPort.read(MainApplication.sensorTypeHashMap.get(i.getType()).recv.length);
+        byte[] raw_data = SerialPort.read(GlobalVar.sensorTypeHashMap.get(i.getType()).recv.length);
         if (raw_data == null) {
             return false;
         }

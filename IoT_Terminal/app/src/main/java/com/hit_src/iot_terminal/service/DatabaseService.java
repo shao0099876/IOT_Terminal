@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.ObservableList;
 
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
@@ -22,6 +23,7 @@ public class DatabaseService {
 
     private DatabaseOpenHelper databaseOpenHelper;
     private static DatabaseService self = null;
+    private ArrayList<Sensor> sensors=null;
 
     public static DatabaseService getInstance() {
         if (self == null) {
@@ -32,6 +34,44 @@ public class DatabaseService {
 
     private DatabaseService() {//初始化
         databaseOpenHelper = new DatabaseOpenHelper(MainApplication.self, "iot", null, 1);
+        sensors=getSensorList();
+        GlobalVar.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
+            @Override
+            public void onChanged(ObservableList<Sensor> sender) {
+
+            }
+
+            @Override
+            public void onItemRangeChanged(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+
+            }
+
+            @Override
+            public void onItemRangeInserted(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+
+            }
+
+            @Override
+            public void onItemRangeMoved(ObservableList<Sensor> sender, int fromPosition, int toPosition, int itemCount) {
+
+            }
+
+            @Override
+            public void onItemRangeRemoved(ObservableList<Sensor> sender, int positionStart, int itemCount) {
+                for(Sensor i:sensors){
+                    boolean exists=false;
+                    for(Sensor j:sender){
+                        if(i.getID()==j.getID()){
+                            exists=true;
+                            break;
+                        }
+                    }
+                    if(!exists){
+                        delSensor(i.getID());
+                    }
+                }
+            }
+        });
     }
 
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
@@ -55,7 +95,7 @@ public class DatabaseService {
         }
     }
 
-    public List getSensorList() {
+    public ArrayList<Sensor> getSensorList() {
         SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
         Cursor cursor = readDB.query("Sensor", new String[]{"sensor_id", "sensor_type", "sensor_addr", "sensor_enabled"}, null,
                 null, null, null, null);
@@ -82,7 +122,7 @@ public class DatabaseService {
     }
 
     public void addSensor(int type, int loraAddr) {
-        ArrayList<Sensor> list = (ArrayList<Sensor>) getSensorList();
+        ArrayList<Sensor> list = getSensorList();
         int id = 0;
         for (Sensor i : list) {
             if (i.getID() >= id) {
@@ -118,8 +158,7 @@ public class DatabaseService {
         arg[0] = Integer.toString(ID);
         writeDB.delete("Sensor", "sensor_id=?", arg);
         writeDB.delete("SensorData", "SensorID=?", arg);
-        GlobalVar.sensorList.clear();
-        GlobalVar.sensorList.addAll(getSensorList());
+        sensors=getSensorList();
     }
 
     public void delSensorByType(int type) {

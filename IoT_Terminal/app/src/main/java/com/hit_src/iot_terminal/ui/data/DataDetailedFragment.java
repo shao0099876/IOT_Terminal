@@ -106,7 +106,7 @@ public class DataDetailedFragment extends Fragment {
         List<Sensor> sensorArrayList = GlobalVar.sensorList.subList(0, GlobalVar.sensorList.size());
         sensors = new ArrayList<>();
         for (Sensor i : sensorArrayList) {
-            SensorType sensorType = MainApplication.sensorTypeHashMap.get(i.getType());
+            SensorType sensorType = GlobalVar.sensorTypeHashMap.get(i.getType());
             if (sensorType.data.name.equals(Datatype)) {
                 sensors.add(i);
             }

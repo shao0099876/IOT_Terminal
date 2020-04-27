@@ -4,9 +4,11 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -14,7 +16,7 @@ public class GlobalVar {
     public volatile static ObservableArrayList<Sensor> sensorList = new ObservableArrayList<>();
     public volatile static ObservableArrayList<String> logList = new ObservableArrayList<>();
     public volatile static ObservableBoolean internetConnectionStatus = new ObservableBoolean();
-
+    public static HashMap<Integer, SensorType> sensorTypeHashMap = new HashMap<>();
     public static int getSensorConnectedAmount() {
         int res = 0;
         for (Sensor i : sensorList) {
@@ -40,5 +42,14 @@ public class GlobalVar {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss->", Locale.CHINA);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
         logList.add(simpleDateFormat.format(new Date()) + s);
+    }
+
+    public static void removeSensor(int id) {
+        for(Sensor i:sensorList){
+            if(i.getID()==id){
+                sensorList.remove(i);
+                break;
+            }
+        }
     }
 }
