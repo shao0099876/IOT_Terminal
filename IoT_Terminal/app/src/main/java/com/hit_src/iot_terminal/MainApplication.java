@@ -1,11 +1,8 @@
 package com.hit_src.iot_terminal;
 
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.net.wifi.WifiManager;
-import android.os.IBinder;
 
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.tools.Filesystem;
@@ -20,14 +17,12 @@ public class MainApplication extends Application {
     static {
         System.loadLibrary("JNISO");
     }
-
-    boolean runSerialService = true;
-    boolean runInternetService = true;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        self=this;
+        self = this;
+        boolean runSerialService = true;
+        boolean runInternetService = true;
         if (runSerialService) {
             startService(new Intent().setAction("SensorService"));
         }
