@@ -1,10 +1,12 @@
 package com.hit_src.iot_terminal.ui.overview;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +30,7 @@ public class OverviewFragment extends Fragment {
     private OverviewViewModel viewModel;
     private TextView clockTextView;
     private TextView dateTextView;
-    private StatusLinearLayout sensorStatusLinearLayout;
+    private LinearLayout sensorStatusLinearLayout;
     private TextView sensorStatusTextView;
     private StatusLinearLayout internetStatusLinearLayout;
     private TextView internetStatusTextView;
@@ -48,6 +50,12 @@ public class OverviewFragment extends Fragment {
         assert view != null;
         clockTextView = view.findViewById(R.id.Overview_Clock_TextView);
         dateTextView = view.findViewById(R.id.Overview_Date_TextView);
+        sensorStatusLinearLayout = view.findViewById(R.id.Overview_SensorStatus_LinearLayout);
+        sensorStatusTextView = view.findViewById(R.id.Overview_SensorStatus_TextView);
+        internetStatusLinearLayout = view.findViewById(R.id.Overview_InternetConnectionStatus_LinearLayout);
+        internetStatusTextView = view.findViewById(R.id.Overview_InternetStatus_TextView);
+        logEditText = view.findViewById(R.id.Overview_Log_EditText);
+
         viewModel.timeLiveData.observe(getViewLifecycleOwner(), new Observer<Date>() {
             @Override
             public void onChanged(final Date date) {
@@ -59,100 +67,81 @@ public class OverviewFragment extends Fragment {
                 });
             }
         });
+        viewModel.sensorStatusLiveData.observe(getViewLifecycleOwner(), new Observer<Pair<Integer, Integer>>() {
+            @Override
+            public void onChanged(Pair<Integer, Integer> integerIntegerPair) {
+                updateSensorStatus(integerIntegerPair.first, integerIntegerPair.second);
+            }
+        });
+        viewModel.internetConnectionLiveData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                updateInternetStatus(aBoolean);
+            }
+        });
+        viewModel.logLiveData.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                updateLog(s);
+            }
+        });
 
         MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 updateClock(viewModel.timeLiveData.getValue());
-            }
-        });
-
-        sensorStatusLinearLayout = view.findViewById(R.id.Overview_SensorStatus_LinearLayout);
-        sensorStatusTextView = view.findViewById(R.id.Overview_SensorStatus_TextView);
-        internetStatusLinearLayout = view.findViewById(R.id.Overview_InternetConnectionStatus_LinearLayout);
-        internetStatusTextView = view.findViewById(R.id.Overview_InternetStatus_TextView);
-        logEditText = view.findViewById(R.id.Overview_Log_EditText);
-
-        viewModel.sensorConnectedLiveData.observe(getViewLifecycleOwner(), sensorStatusObserver);
-        viewModel.sensorAmountLiveData.observe(getViewLifecycleOwner(), sensorStatusObserver);
-        viewModel.internetConnectionLiveData.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean newStatus) {
-                setInternetStatusShow(newStatus);
-            }
-        });
-        viewModel.logLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                StringBuilder sb = new StringBuilder();
-                for (String i : strings) {
-                    sb.append(i);
-                    sb.append("\n");
-                }
-                final String s = sb.toString();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        logEditText.setText(s);
-                        logEditText.setSelection(s.length());
-                    }
-                });
-            }
-        });
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setSensorStatusShow(viewModel.sensorConnectedLiveData.getValue(), viewModel.sensorAmountLiveData.getValue());
-                setInternetStatusShow(viewModel.internetConnectionLiveData.getValue());
-                logEditText.setText("");
+                updateSensorStatus(viewModel.sensorStatusLiveData.getValue().first, viewModel.sensorStatusLiveData.getValue().second);
+                updateInternetStatus(viewModel.internetConnectionLiveData.getValue());
+                updateLog(viewModel.logLiveData.getValue());
             }
         });
     }
 
-    private void setSensorStatusShow(int connected, int amount) {
-        if (connected == amount) {
-            sensorStatusLinearLayout.setGreen();
-        } else if (connected == 0) {
-            sensorStatusLinearLayout.setRed();
+    private void updateLog(final String s) {
+        MainActivity.self.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                logEditText.setText(s);
+                logEditText.setSelection(s.length());
+            }
+        });
+    }
+
+    private void updateInternetStatus(boolean status) {
+        final int color;
+        if (status) {
+            color = getResources().getColor(R.color.Overview_Status_Green);
         } else {
-            sensorStatusLinearLayout.setYellow();
+            color = getResources().getColor(R.color.Overview_Status_Red);
+        }
+        final String s = status ? "已连接" : "未连接";
+        MainActivity.self.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                internetStatusLinearLayout.setBackgroundColor(color);
+                internetStatusTextView.setText(s);
+            }
+        });
+    }
+
+    private void updateSensorStatus(int connected, int amount) {
+        final int color;
+        if (connected == amount) {
+            color = getResources().getColor(R.color.Overview_Status_Green);
+        } else if (connected == 0) {
+            color = getResources().getColor(R.color.Overview_Status_Red);
+        } else {
+            color = getResources().getColor(R.color.Overview_Status_Yellow);
         }
         final String s = connected + "/" + amount;
-        getActivity().runOnUiThread(new Runnable() {
+        MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 sensorStatusTextView.setText(s);
+                sensorStatusLinearLayout.setBackgroundColor(color);
             }
         });
     }
-
-    private void setInternetStatusShow(Boolean newStatus) {
-        String s;
-        boolean status = newStatus;
-        if (status) {
-            internetStatusLinearLayout.setGreen();
-            s = "已连接";
-        } else {
-            internetStatusLinearLayout.setRed();
-            s = "未连接";
-        }
-        final String final_s = s;
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                internetStatusTextView.setText(final_s);
-            }
-        });
-    }
-
-    private Observer<Integer> sensorStatusObserver = new Observer<Integer>() {
-        @Override
-        public void onChanged(Integer integer) {
-            int connected = viewModel.sensorConnectedLiveData.getValue();
-            int amount = viewModel.sensorAmountLiveData.getValue();
-            setSensorStatusShow(connected, amount);
-        }
-    };
 
     private void updateClock(final Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);

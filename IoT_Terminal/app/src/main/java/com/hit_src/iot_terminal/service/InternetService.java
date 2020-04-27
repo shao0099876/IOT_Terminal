@@ -8,6 +8,7 @@ import android.os.RemoteException;
 import androidx.annotation.Nullable;
 import androidx.databinding.ObservableBoolean;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.protocol.Modbus;
 import com.hit_src.iot_terminal.ui.overview.OverviewViewModel;
@@ -32,7 +33,7 @@ public class InternetService extends Service {
                 hostname = SettingsService.getInstance().getUpperServerAddr();
                 port = SettingsService.getInstance().getUpperServerModbusPort();
                 if (hostname == null || port == -1) {
-                    OverviewViewModel.addLogLiveData("网络连接设置错误！");
+                    GlobalVar.log("网络连接设置错误！");
                     try {
                         sleep(3000);
                     } catch (InterruptedException e) {

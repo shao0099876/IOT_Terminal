@@ -63,7 +63,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout
+                <LinearLayout
                     android:id="@+id/Overview_SensorStatus_LinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                         android:text="[已连接/总数]"
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
-                </com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout>
+                </LinearLayout>
 
                 <com.hit_src.iot_terminal.ui.overview.components.StatusLinearLayout
                     android:id="@+id/Overview_InternetConnectionStatus_LinearLayout"
