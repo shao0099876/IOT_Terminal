@@ -9,6 +9,7 @@ import android.os.RemoteException;
 
 import androidx.annotation.Nullable;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
@@ -95,8 +96,8 @@ public class DatabaseService {
         contentValues.put("sensor_addr", loraAddr);
         contentValues.put("sensor_enabled", 1);
         writeDB.insert("Sensor", null, contentValues);
-        SensorService.sensorList.clear();
-        SensorService.sensorList.addAll(getSensorList());
+        GlobalVar.sensorList.clear();
+        GlobalVar.sensorList.addAll(getSensorList());
     }
 
     public void updateSensor(int ID, int type, int loraAddr, boolean enabled) {
@@ -107,8 +108,8 @@ public class DatabaseService {
         contentValues.put("sensor_enabled", enabled);
         writeDB.update("Sensor", contentValues, "sensor_id=?",
                 new String[]{Integer.toString(ID)});
-        SensorService.sensorList.clear();
-        SensorService.sensorList.addAll(getSensorList());
+        GlobalVar.sensorList.clear();
+        GlobalVar.sensorList.addAll(getSensorList());
     }
 
     public void delSensor(int ID) {
@@ -117,8 +118,8 @@ public class DatabaseService {
         arg[0] = Integer.toString(ID);
         writeDB.delete("Sensor", "sensor_id=?", arg);
         writeDB.delete("SensorData", "SensorID=?", arg);
-        SensorService.sensorList.clear();
-        SensorService.sensorList.addAll(getSensorList());
+        GlobalVar.sensorList.clear();
+        GlobalVar.sensorList.addAll(getSensorList());
     }
 
     public void delSensorByType(int type) {
@@ -132,8 +133,8 @@ public class DatabaseService {
                 writeDB.delete("SensorData", "SensorID=?", arg);
             }
         }
-        SensorService.sensorList.clear();
-        SensorService.sensorList.addAll(getSensorList());
+        GlobalVar.sensorList.clear();
+        GlobalVar.sensorList.addAll(getSensorList());
     }
 
     public void addSensorData(int ID, int data) {

@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.databinding.ObservableArrayList;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.hardware.SerialPort;
 import com.hit_src.iot_terminal.object.DataRecord;
@@ -21,7 +22,7 @@ import static java.lang.Thread.sleep;
 
 public class SensorService extends Service {
 
-    public volatile static ObservableArrayList<Sensor> sensorList = new ObservableArrayList<>();
+
 
     public static DataRecord getRealtimeData(int id) {
         if (realtimeData.sensorID == id) {
@@ -48,7 +49,7 @@ public class SensorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sensorList.addAll(DatabaseService.getInstance().getSensorList());
+        GlobalVar.sensorList.addAll(DatabaseService.getInstance().getSensorList());
         mainThread.start();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -80,8 +81,8 @@ public class SensorService extends Service {
                     continue;
                 }
                 try {
-                    for (int i = 0; i < sensorList.size(); i++) {
-                        Sensor now = sensorList.get(i);
+                    for (int i = 0; i < GlobalVar.sensorList.size(); i++) {
+                        Sensor now = GlobalVar.sensorList.get(i);
                         if (!now.isEnabled()) {
                             continue;
                         }
@@ -94,7 +95,7 @@ public class SensorService extends Service {
                             now.setConnected(false);
                             OverviewViewModel.addLogLiveData(now.getID() + "号传感器交互失败");
                         }
-                        sensorList.set(i, now);
+                        GlobalVar.sensorList.set(i, now);
                     }
                 } catch (IndexOutOfBoundsException e) {
 

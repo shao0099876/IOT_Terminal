@@ -3,6 +3,7 @@ package com.hit_src.iot_terminal.protocol;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
@@ -65,12 +66,12 @@ public class Modbus {
 
     private static byte[] work_03(int off, int len) {
         if (off == 0xffff && len == 1) {
-            int raw = SensorService.sensorList.size();
+            int raw = GlobalVar.sensorList.size();
             return IntegertoBytes(raw, 4);
         } else {
             byte[] res = new byte[0];
             for (int i = 0; i < len; i++) {
-                Sensor now = SensorService.sensorList.get(i + off);
+                Sensor now = GlobalVar.sensorList.get(i + off);
                 res = catArray(res, IntegertoBytes(now.getID(), 4));
                 res = catArray(res, IntegertoBytes(now.getType(), 4));
                 res = catArray(res, IntegertoBytes(now.getLoraAddr(), 2));
@@ -84,7 +85,7 @@ public class Modbus {
     private static byte[] work_04(int off, int len) {
         if (off == 0xffff && len == 1) {
             int res = 0;
-            for (Sensor i : SensorService.sensorList) {
+            for (Sensor i : GlobalVar.sensorList) {
                 res += DatabaseService.getInstance().getDrawPointbySensor(i.getID()).size();
             }
             return IntegertoBytes(res, 4);

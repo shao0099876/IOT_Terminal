@@ -6,6 +6,7 @@ import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.service.InternetService;
@@ -42,16 +43,16 @@ public class OverviewViewModel extends ViewModel {
             }
         }).start();
 
-        sensorAmountLiveData.setValue(SensorService.sensorList.size());
+        sensorAmountLiveData.setValue(GlobalVar.sensorList.size());
         int connected = 0;
-        for (Sensor i : SensorService.sensorList) {
+        for (Sensor i : GlobalVar.sensorList) {
             if (i.isConnected()) {
                 connected += 1;
             }
         }
         sensorConnectedLiveData.setValue(connected);
         internetConnectionLiveData.setValue(InternetService.internetConnectionStatus.get());
-        SensorService.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
+        GlobalVar.sensorList.addOnListChangedCallback(new ObservableList.OnListChangedCallback<ObservableList<Sensor>>() {
             void change(ObservableList<Sensor> sender) {
                 sensorAmountLiveData.postValue(sender.size());
                 int connected = 0;
