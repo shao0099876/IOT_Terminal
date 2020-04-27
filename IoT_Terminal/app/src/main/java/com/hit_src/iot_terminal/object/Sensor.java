@@ -1,5 +1,6 @@
 package com.hit_src.iot_terminal.object;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.sensortype.Operation;
 import com.hit_src.iot_terminal.object.sensortype.Receive;
@@ -70,7 +71,7 @@ public class Sensor {
     }
 
     public byte[] packageCMD() {
-        SensorType sensorType = MainApplication.sensorTypeHashMap.get(type);
+        SensorType sensorType = GlobalVar.sensorTypeHashMap.get(type);
         Send send = sensorType.send;
         ByteBuffer buffer = ByteBuffer.allocate(3 + send.length);
         buffer.put((byte) ((loraAddr >>= 4) & 15));
@@ -83,7 +84,7 @@ public class Sensor {
     }
 
     public int unpackage(byte[] raw_data) {
-        SensorType sensorType = MainApplication.sensorTypeHashMap.get(type);
+        SensorType sensorType = GlobalVar.sensorTypeHashMap.get(type);
         Receive recv = sensorType.recv;
         int reg = 0;
         Operation operation = recv.operation;

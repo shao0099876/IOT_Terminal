@@ -3,6 +3,7 @@ package com.hit_src.iot_terminal.tools;
 import android.content.Context;
 import android.util.Xml;
 
+import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.XMLRecord;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
@@ -33,7 +34,7 @@ public class Filesystem {
 
     public static void build(Context context) {
         getSensorTypeDir(context);
-        MainApplication.sensorTypeHashMap.clear();
+        GlobalVar.sensorTypeHashMap.clear();
         MainApplication.xmlRecordHashMap.clear();
         ArrayList<XML> xmls = getXMLList(context);
         for (XML j : xmls) {
@@ -53,7 +54,7 @@ public class Filesystem {
                 e.printStackTrace();
             }
             SensorType res = xml2SensorType.getResults();
-            MainApplication.sensorTypeHashMap.put(res.id, res);
+            GlobalVar.sensorTypeHashMap.put(res.id, res);
             MainApplication.xmlRecordHashMap.put(j.name, res.id);
         }
     }
