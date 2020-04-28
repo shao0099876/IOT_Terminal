@@ -17,6 +17,7 @@ public class GlobalVar {
     public volatile static ObservableArrayList<String> logList = new ObservableArrayList<>();
     public volatile static ObservableBoolean internetConnectionStatus = new ObservableBoolean();
     public static HashMap<Integer, SensorType> sensorTypeHashMap = new HashMap<>();
+
     public static int getSensorConnectedAmount() {
         int res = 0;
         for (Sensor i : sensorList) {
@@ -45,10 +46,18 @@ public class GlobalVar {
     }
 
     public static void removeSensor(int id) {
-        for(Sensor i:sensorList){
-            if(i.getID()==id){
+        for (Sensor i : sensorList) {
+            if (i.getID() == id) {
                 sensorList.remove(i);
                 break;
+            }
+        }
+    }
+
+    public static void updateSensor(Sensor sensor) {
+        for (int i = 0; i < sensorList.size(); i++) {
+            if (sensorList.get(i).getID() == sensor.getID()) {
+                sensorList.set(i, sensor);
             }
         }
     }

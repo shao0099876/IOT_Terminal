@@ -43,7 +43,10 @@ public class DatabaseService {
 
             @Override
             public void onItemRangeChanged(ObservableList<Sensor> sender, int positionStart, int itemCount) {
-
+                for(int i=0;i<itemCount;i++){
+                    Sensor now=sender.get(positionStart+i);
+                    updateSensor(now);
+                }
             }
 
             @Override
@@ -73,6 +76,8 @@ public class DatabaseService {
             }
         });
     }
+
+
 
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
         static String[] dbCreateSQL = new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
@@ -139,7 +144,15 @@ public class DatabaseService {
         GlobalVar.sensorList.clear();
         GlobalVar.sensorList.addAll(getSensorList());
     }
-
+    public void updateSensor(Sensor p){
+        SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("sensor_type", p.getType());
+        contentValues.put("sensor_addr", p.getLoraAddr());
+        contentValues.put("sensor_enabled", p.isEnabled()?1:0);
+        writeDB.update("Sensor", contentValues, "sensor_id=?",
+                new String[]{Integer.toString(p.getID())});
+    }
     public void updateSensor(int ID, int type, int loraAddr, boolean enabled) {
         SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -211,6 +224,19 @@ public class DatabaseService {
             long time = cursor.getLong(0);
             int data = cursor.getInt(1);
             res.add(new DataRecord(sensorID, time, data));
+        }
+        cursor.close();
+        return res;
+    }
+    public List<DataRecord> getDataRecordsbySensorID(int id) {
+        List<DataRecord> res=new ArrayList<>();
+        SQLiteDatabase readDB = databaseOpenHelper.getReadableDatabase();
+        Cursor cursor = readDB.query("SensorData", new String[]{"time", "data"}, "SensorID=?",
+                new String[]{Integer.toString(id)}, null, null, null);
+        while (cursor.moveToNext()) {
+            long time = cursor.getLong(0);
+            int data = cursor.getInt(1);
+            res.add(new DataRecord(id, time, data));
         }
         cursor.close();
         return res;
