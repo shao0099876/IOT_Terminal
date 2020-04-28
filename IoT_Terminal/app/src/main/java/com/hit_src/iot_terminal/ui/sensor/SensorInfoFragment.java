@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainActivity;
+import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
@@ -97,25 +98,28 @@ public class SensorInfoFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    chart.setData(DatabaseService.getInstance().getDataRecordsbySensorID(sensor.getID()));
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            chart.setData(DatabaseService.getInstance().getDataRecordsbySensorID(sensor.getID()));
-                            DataRecord dataRecord = SensorService.getRealtimeData(sensor.getID());
-                            if (dataRecord != null) {
-                                chart.addData(dataRecord);
-                                MainActivity.self.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        chart.invalidate(true);
-                                    }
-                                });
+                            while(MainApplication.self!=null){
+                                DataRecord dataRecord = SensorService.getRealtimeData(sensor.getID());
+                                if (dataRecord != null) {
+                                    chart.addData(dataRecord);
+                                    MainActivity.self.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            chart.invalidate(true);
+                                        }
+                                    });
+                                }
+                                try {
+                                    sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            try {
-                                sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+
                         }
                     });
                     thread.start();
