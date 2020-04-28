@@ -96,4 +96,22 @@ public class GlobalVar {
         }
         return new ArrayList<>(Arrays.asList(res.toArray(new Datatype[0])));
     }
+
+    public static ArrayList<Sensor> getSensorListbyDatatype(String name) {
+        HashSet<SensorType> sensorTypes=new HashSet<>();
+        for(SensorType i:sensorTypeHashMap.values()){
+            if(i.data.name.equals(name)){
+                sensorTypes.add(i);
+            }
+        }
+        ArrayList<Sensor> res=new ArrayList<>();
+        for(SensorType i:sensorTypes){
+            for(Sensor j:sensorList){
+                if(j.getType()==i.id){
+                    res.add(j);
+                }
+            }
+        }
+        return res;
+    }
 }

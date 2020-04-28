@@ -30,6 +30,9 @@ public class SensorService extends Service {
     }
 
     public static DataRecord getRealtimeData(ArrayList<Sensor> sensors) {
+        if(realtimeData==null){
+            return null;
+        }
         boolean check = false;
         for (Sensor i : sensors) {
             if (i.getID() == realtimeData.sensorID) {

@@ -14,9 +14,11 @@ import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class DatabaseService {
@@ -261,6 +263,23 @@ public class DatabaseService {
             res.add(new DataRecord(id, time, data));
         }
         cursor.close();
+        return res;
+    }
+    public List<DataRecord> getDataRecordsbyDatatypeName(String name) {
+        HashSet<SensorType> sensorTypes=new HashSet<>();
+        for(SensorType i:GlobalVar.sensorTypeHashMap.values()){
+            if(name.equals(i.data.name)){
+                sensorTypes.add(i);
+            }
+        }
+        List<DataRecord> res=new ArrayList<>();
+        for(SensorType i:sensorTypes){
+            for(Sensor j:GlobalVar.sensorList){
+                if(i.id==j.getType()){
+                    res.addAll(getDataRecordsbySensorID(j.getID()));
+                }
+            }
+        }
         return res;
     }
 }
