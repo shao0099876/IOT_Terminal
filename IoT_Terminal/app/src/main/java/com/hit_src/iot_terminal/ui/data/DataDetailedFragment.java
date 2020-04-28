@@ -19,6 +19,7 @@ import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
@@ -30,7 +31,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DataDetailedFragment extends Fragment {
-    private String Datatype = null;
+    private Datatype datatype = null;
     private Timer timer;
     private TimerTask timerTask;
     private ArrayList<Sensor> sensors;
@@ -41,8 +42,8 @@ public class DataDetailedFragment extends Fragment {
     public DataDetailedFragment() {
     }
 
-    public DataDetailedFragment(String datatype) {
-        Datatype = datatype;
+    public DataDetailedFragment(Datatype datatype) {
+        this.datatype = datatype;
     }
 
     @Override
@@ -107,7 +108,7 @@ public class DataDetailedFragment extends Fragment {
         sensors = new ArrayList<>();
         for (Sensor i : sensorArrayList) {
             SensorType sensorType = GlobalVar.sensorTypeHashMap.get(i.getType());
-            if (sensorType.data.name.equals(Datatype)) {
+            if (sensorType.data.name.equals(datatype.name)) {
                 sensors.add(i);
             }
         }
