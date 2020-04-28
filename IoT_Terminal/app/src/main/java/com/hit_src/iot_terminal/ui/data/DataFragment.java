@@ -52,7 +52,7 @@ public class DataFragment extends Fragment {
                 }
                 view.setBackgroundColor(getResources().getColor(R.color.List_Clicked_Color));
                 lastSelectedView = view;
-                childFragment = new DataDetailedFragment((Datatype) parent.getSelectedItem());
+                childFragment = new DataDetailedFragment((Datatype) parent.getItemAtPosition(position));
                 FragmentTransaction transaction = MainActivity.self.getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.Data_DrawFragment, childFragment);
                 transaction.commit();

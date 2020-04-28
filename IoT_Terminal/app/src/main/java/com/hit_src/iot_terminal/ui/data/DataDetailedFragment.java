@@ -1,8 +1,6 @@
 package com.hit_src.iot_terminal.ui.data;
 
 import android.os.Bundle;
-import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,27 +13,23 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.hit_src.iot_terminal.GlobalVar;
+import com.hit_src.iot_terminal.MainActivity;
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
 import com.hit_src.iot_terminal.object.DataRecord;
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.sensortype.Datatype;
-import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.DatabaseService;
 import com.hit_src.iot_terminal.service.SensorService;
 import com.hit_src.iot_terminal.tools.DataChart;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import static java.lang.Thread.sleep;
 
 public class DataDetailedFragment extends Fragment {
     private Datatype datatype = null;
-    private Timer timer;
-    private TimerTask timerTask;
-    private ArrayList<Sensor> sensors;
-
+    private Thread thread;
     private Switch realtimeSwitch;
     private DataChart chart = new DataChart();
 
@@ -56,76 +50,50 @@ public class DataDetailedFragment extends Fragment {
     public void onStart() {
         super.onStart();
         View view = getView();
+        assert view != null;
         realtimeSwitch = view.findViewById(R.id.Data_Realtime_Switch);
         chart.setComponent((LineChart) view.findViewById(R.id.Data_Draw_LineChart));
-
+        chart.setData(DatabaseService.getInstance().getDataRecordsbyDatatypeName(datatype.name));
+        MainActivity.self.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                chart.invalidate(false);
+                realtimeSwitch.setChecked(false);
+            }
+        });
         realtimeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ArrayList<DataRecord> dataRecords = new ArrayList<>();
-                    for (Sensor i : sensors) {
-                        dataRecords.addAll((ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID()));
-                    }
-                    chart.setData(dataRecords);
-                    timer = new Timer();
-                    timerTask = new TimerTask() {
+                    chart.setData(DatabaseService.getInstance().getDataRecordsbyDatatypeName(datatype.name));
+                    thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            DataRecord dataRecord = SensorService.getRealtimeData(sensors);
-                            if (dataRecord == null) {
-                                return;
-                            }
-                            chart.addData(dataRecord);
-                            try {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        chart.invalidate(true);
-                                    }
-                                });
-                            } catch (NullPointerException e) {
-                                timer.cancel();
-                                timerTask.cancel();
-                                timer = null;
-                                timerTask = null;
+                            while (MainApplication.self != null) {
+                                ArrayList<Sensor> sensors = GlobalVar.getSensorListbyDatatype(datatype.name);
+                                DataRecord dataRecord = SensorService.getRealtimeData(sensors);
+                                if (dataRecord != null) {
+                                    chart.addData(dataRecord);
+                                    MainActivity.self.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            chart.invalidate(true);
+                                        }
+                                    });
+                                }
+                                try {
+                                    sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                         }
-                    };
-                    timer.schedule(timerTask, 10, 1000);
+                    });
+                    thread.start();
                 } else {
-                    timer.cancel();
-                    timerTask.cancel();
-                    timer = null;
-                    timerTask = null;
+                    thread.interrupt();
                 }
-            }
-        });
-
-        //根据Datatype找Sensor
-        List<Sensor> sensorArrayList = GlobalVar.sensorList.subList(0, GlobalVar.sensorList.size());
-        sensors = new ArrayList<>();
-        for (Sensor i : sensorArrayList) {
-            SensorType sensorType = GlobalVar.sensorTypeHashMap.get(i.getType());
-            if (sensorType.data.name.equals(datatype.name)) {
-                sensors.add(i);
-            }
-        }
-        ArrayList<DataRecord> dataRecords = new ArrayList<>();
-        for (Sensor i : sensors) {
-            ArrayList<DataRecord> dataRecordArrayList = (ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID());
-            for (DataRecord j : dataRecordArrayList) {
-                Log.e("SRCDEBUG", String.valueOf(j));
-            }
-            dataRecords.addAll((ArrayList<DataRecord>) DatabaseService.getInstance().getDrawPointbySensor(i.getID()));
-        }
-        chart.setData(dataRecords);
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                realtimeSwitch.setChecked(false);
-                chart.invalidate(false);
             }
         });
     }
