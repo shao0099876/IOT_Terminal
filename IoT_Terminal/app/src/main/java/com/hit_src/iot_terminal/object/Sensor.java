@@ -74,8 +74,8 @@ public class Sensor {
         SensorType sensorType = GlobalVar.sensorTypeHashMap.get(type);
         Send send = sensorType.send;
         ByteBuffer buffer = ByteBuffer.allocate(3 + send.length);
-        buffer.put((byte) ((loraAddr >>= 4) & 15));
-        buffer.put((byte) (loraAddr & 15));
+        buffer.put((byte) ((loraAddr >>= 4) & 0x0ff));
+        buffer.put((byte) (loraAddr & 0x0ff));
         buffer.put((byte) 0x01);
         for (int i = 0; i < send.length; i++) {
             buffer.put(send.value.get(i));

@@ -21,9 +21,7 @@ import java.util.Date;
 import static java.lang.Thread.sleep;
 
 public class SensorService extends Service {
-
-
-
+    public static ArrayList<Sensor> sensors=new ArrayList<>();
     public static DataRecord getRealtimeData(int id) {
         if (realtimeData.sensorID == id) {
             return realtimeData;
@@ -49,7 +47,7 @@ public class SensorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        GlobalVar.sensorList.addAll(DatabaseService.getInstance().getSensorList());
+        sensors.addAll(GlobalVar.sensorList.subList(0,GlobalVar.sensorList.size()));
         mainThread.start();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -70,42 +68,28 @@ public class SensorService extends Service {
         @Override
         public void run() {
             while (MainApplication.self!=null) {
-                boolean serialQueryEnabled = false;
-                serialQueryEnabled = SettingsService.getInstance().getSerialQuerySetting();
-                if (!serialQueryEnabled) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                for(Sensor i:sensors){
+                    if(!i.isEnabled()){
+                        continue;
                     }
-                    continue;
-                }
-                try {
-                    for (int i = 0; i < GlobalVar.sensorList.size(); i++) {
-                        Sensor now = GlobalVar.sensorList.get(i);
-                        if (!now.isEnabled()) {
-                            continue;
-                        }
-                        Log.d("SRCDEBUG", "begin interact");
-                        send(now);
-                        if (recv(now)) {
-                            now.setConnected(true);
-                            GlobalVar.log(now.getID() + "号传感器交互成功");
-                        } else {
-                            now.setConnected(false);
-                            GlobalVar.log(now.getID() + "号传感器交互失败");
-                        }
-                        GlobalVar.sensorList.set(i, now);
+                    send(i);
+                    if(recv(i)){
+                        i.setConnected(true);
+                        GlobalVar.log(i.getID() + "号传感器交互成功");
+                    } else {
+                        i.setConnected(false);
+                        GlobalVar.log(i.getID() + "号传感器交互失败");
                     }
-                } catch (IndexOutOfBoundsException e) {
+                    GlobalVar.updateSensor(i);
 
                 }
-
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                sensors.clear();
+                sensors.addAll(GlobalVar.sensorList.subList(0,GlobalVar.sensorList.size()));
             }
         }
     });
@@ -126,8 +110,8 @@ public class SensorService extends Service {
             realtimeData = new DataRecord(i.getID(), new Date().getTime(), null);
             return true;
         }
-        DatabaseService.getInstance().addSensorData(i.getID(), res);
         realtimeData = new DataRecord(i.getID(), new Date().getTime(), res);
+        DatabaseService.getInstance().addDataRecord(realtimeData);
         return true;
     }
 
