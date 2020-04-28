@@ -58,16 +58,16 @@ public class SensorInfoFragment extends Fragment {
         enabledSwitch = view.findViewById(R.id.Sensor_Enabled_Switch);
         realtimeDataSwitch = view.findViewById(R.id.Sensor_RealtimeData_Switch);
         chart.setComponent((LineChart) view.findViewById(R.id.Sensor_Draw_LineChart));
+        chart.setData(DatabaseService.getInstance().getDataRecordsbySensorID(sensor.getID()));
         MainActivity.self.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 sensorIDTextView.setText(String.valueOf(sensor.getID()));
                 sensorTypeTextView.setText(GlobalVar.sensorTypeHashMap.get(sensor.getType()).name);
                 sensorLoraAddrTextView.setText(String.valueOf(sensor.getLoraAddr()));
-                ;
                 enabledSwitch.setChecked(sensor.isEnabled());
                 realtimeDataSwitch.setChecked(false);
-                chart.setData(DatabaseService.getInstance().getDataRecordsbySensorID(sensor.getID()));
+                chart.invalidate(false);
             }
         });
         enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

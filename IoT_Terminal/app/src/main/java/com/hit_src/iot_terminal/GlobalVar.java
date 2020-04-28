@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean;
 
 import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.service.DatabaseService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class GlobalVar {
     public volatile static ObservableArrayList<String> logList = new ObservableArrayList<>();
     public volatile static ObservableBoolean internetConnectionStatus = new ObservableBoolean();
     public static HashMap<Integer, SensorType> sensorTypeHashMap = new HashMap<>();
+    static{
+        sensorList.addAll(DatabaseService.getInstance().getSensorList());
+    }
 
     public static int getSensorConnectedAmount() {
         int res = 0;

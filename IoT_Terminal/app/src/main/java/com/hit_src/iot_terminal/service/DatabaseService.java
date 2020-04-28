@@ -82,6 +82,7 @@ public class DatabaseService {
 
 
 
+
     static class DatabaseOpenHelper extends SQLiteOpenHelper {
         static String[] dbCreateSQL = new String[]{"CREATE TABLE Sensor ( sensor_id INTEGER PRIMARY KEY, sensor_type INTEGER NOT NULL, sensor_addr INTEGER NOT NULL, sensor_enabled INTEGER NOT NULL );",
                 "CREATE TABLE SensorData ( SensorID INTEGER NOT NULL, time DATETIME PRIMARY KEY, data INTEGER NOT NULL);"};
@@ -208,6 +209,14 @@ public class DatabaseService {
         contentValues.put("SensorID", ID);
         contentValues.put("time", new Date().getTime());
         contentValues.put("data", data);
+        writeDB.insert("SensorData", null, contentValues);
+    }
+    public void addDataRecord(DataRecord realtimeData) {
+        SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("SensorID", realtimeData.sensorID);
+        contentValues.put("time", realtimeData.time);
+        contentValues.put("data", realtimeData.data);
         writeDB.insert("SensorData", null, contentValues);
     }
 
