@@ -4,13 +4,16 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 
 import com.hit_src.iot_terminal.object.Sensor;
+import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 import com.hit_src.iot_terminal.service.DatabaseService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -84,5 +87,13 @@ public class GlobalVar {
         now.setLoraAddr(parseInt);
         now.setEnabled(true);
         sensorList.add(now);
+    }
+
+    public static ArrayList<Datatype> getDataTypeList() {
+        HashSet<Datatype> res=new HashSet<>();
+        for(SensorType i:sensorTypeHashMap.values()){
+            res.add(i.data);
+        }
+        return new ArrayList<>(Arrays.asList(res.toArray(new Datatype[0])));
     }
 }
