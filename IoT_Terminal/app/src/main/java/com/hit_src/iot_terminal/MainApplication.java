@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 public class MainApplication extends Application {
     public static MainApplication self;
-    public static HashMap<String, Integer> xmlRecordHashMap = new HashMap<>();
 
     static {
         System.loadLibrary("JNISO");

@@ -35,7 +35,7 @@ public class Filesystem {
     public static void build(Context context) {
         getSensorTypeDir(context);
         GlobalVar.sensorTypeHashMap.clear();
-        MainApplication.xmlRecordHashMap.clear();
+        GlobalVar.xmlRecordHashMap.clear();
         ArrayList<XML> xmls = getXMLList(context);
         for (XML j : xmls) {
             File i = new File(context.getFilesDir() + "/SensorType/" + j.name + ".xml");
@@ -55,7 +55,7 @@ public class Filesystem {
             }
             SensorType res = xml2SensorType.getResults();
             GlobalVar.sensorTypeHashMap.put(res.id, res);
-            MainApplication.xmlRecordHashMap.put(j.name, res.id);
+            GlobalVar.xmlRecordHashMap.put(j.name, res.id);
         }
     }
 
