@@ -6,10 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Document/通信协议/Modbus通信协议.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0d2408be-12ef-4f40-bb3e-47100822429f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -194,6 +191,10 @@
       <screen x="0" y="0" width="1440" height="860" />
     </state>
     <state x="807" y="123" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1440.860@0.0.1440.860" timestamp="1587707779226" />
+    <state x="94" y="39" key="new project wizard" timestamp="1588004774012">
+      <screen x="0" y="0" width="1440" height="860" />
+    </state>
+    <state x="94" y="39" key="new project wizard/0.0.1440.860@0.0.1440.860" timestamp="1588004774012" />
     <state x="376" y="195" key="run.anything.popup" timestamp="1587800791138">
       <screen x="0" y="0" width="1440" height="860" />
     </state>

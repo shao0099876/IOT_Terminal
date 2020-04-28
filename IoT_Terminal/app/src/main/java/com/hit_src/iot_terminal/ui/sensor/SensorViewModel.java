@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.hit_src.iot_terminal.GlobalVar;
 import com.hit_src.iot_terminal.object.Sensor;
-import com.hit_src.iot_terminal.service.SensorService;
 
 import java.util.ArrayList;
 
