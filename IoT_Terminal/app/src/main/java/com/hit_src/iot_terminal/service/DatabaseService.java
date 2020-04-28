@@ -51,7 +51,10 @@ public class DatabaseService {
 
             @Override
             public void onItemRangeInserted(ObservableList<Sensor> sender, int positionStart, int itemCount) {
-
+                for(int i=0;i<itemCount;i++){
+                    Sensor now=sender.get(positionStart+i);
+                    addSensor(now);
+                }
             }
 
             @Override
@@ -125,7 +128,16 @@ public class DatabaseService {
         cursor.close();
         return res;
     }
-
+    public void addSensor(Sensor p){
+        SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("sensor_id", p.getID());
+        contentValues.put("sensor_type", p.getType());
+        contentValues.put("sensor_addr", p.getLoraAddr());
+        contentValues.put("sensor_enabled", p.isEnabled()?1:0);
+        writeDB.insert("Sensor", null, contentValues);
+        sensors=getSensorList();
+    }
     public void addSensor(int type, int loraAddr) {
         ArrayList<Sensor> list = getSensorList();
         int id = 0;
@@ -152,6 +164,7 @@ public class DatabaseService {
         contentValues.put("sensor_enabled", p.isEnabled()?1:0);
         writeDB.update("Sensor", contentValues, "sensor_id=?",
                 new String[]{Integer.toString(p.getID())});
+        sensors=getSensorList();
     }
     public void updateSensor(int ID, int type, int loraAddr, boolean enabled) {
         SQLiteDatabase writeDB = databaseOpenHelper.getWritableDatabase();

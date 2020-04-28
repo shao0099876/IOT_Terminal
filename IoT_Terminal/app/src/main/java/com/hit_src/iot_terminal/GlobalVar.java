@@ -7,6 +7,7 @@ import com.hit_src.iot_terminal.object.Sensor;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,5 +61,24 @@ public class GlobalVar {
                 sensorList.set(i, sensor);
             }
         }
+    }
+
+    public static ArrayList<SensorType> getSensorTypeList() {
+        ArrayList<SensorType> res=new ArrayList<>();
+        res.addAll(sensorTypeHashMap.values());
+        return res;
+    }
+
+    public static void addSensor(SensorType sensorType, int parseInt) {
+        int id=0;
+        for(Sensor i:sensorList){
+            id=id<=i.getID()?i.getID()+1:id;
+        }
+        Sensor now=new Sensor();
+        now.setID(id);
+        now.setType(sensorType.id);
+        now.setLoraAddr(parseInt);
+        now.setEnabled(true);
+        sensorList.add(now);
     }
 }
