@@ -11,6 +11,6 @@ import java.util.ArrayList;
 public class PackageManagerFragmentViewModel extends ViewModel {
     public MutableLiveData<ArrayList<XMLRecord>> packageLiveData=new MutableLiveData<>();
     public PackageManagerFragmentViewModel(){
-        
+
     }
 }
