@@ -1,17 +1,24 @@
 package com.hit_src.iot_terminal.xml;
 
+import com.hit_src.iot_terminal.object.sensortype.Alert;
 import com.hit_src.iot_terminal.object.sensortype.Datatype;
 import com.hit_src.iot_terminal.object.sensortype.Operation;
+import com.hit_src.iot_terminal.object.sensortype.Reaction;
 import com.hit_src.iot_terminal.object.sensortype.Receive;
 import com.hit_src.iot_terminal.object.sensortype.Send;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.object.sensortype.Trigger;
+import com.hit_src.iot_terminal.object.sensortype.Validity;
 import com.hit_src.iot_terminal.object.sensortype.op.Add;
 import com.hit_src.iot_terminal.object.sensortype.op.Div;
 import com.hit_src.iot_terminal.object.sensortype.op.Mul;
+import com.hit_src.iot_terminal.object.sensortype.reaction.Message;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 public class XML2SensorType extends DefaultHandler {
     private SensorType res;
@@ -19,6 +26,11 @@ public class XML2SensorType extends DefaultHandler {
     private Send send;
     private Receive receive;
     private Operation operation;
+    private Validity validity;
+    private ArrayList<Alert> alerts;
+    private Alert alert;
+    private Trigger trigger;
+    private Reaction reaction;
     private StringBuilder sb = new StringBuilder();
 
     public SensorType getResults() {
@@ -33,6 +45,11 @@ public class XML2SensorType extends DefaultHandler {
         send = new Send();
         receive = new Receive();
         operation = new Operation();
+        validity = new Validity();
+        alerts = new ArrayList<>();
+        alert = new Alert();
+        trigger = new Trigger();
+        reaction = new Reaction();
     }
 
     @Override
@@ -89,6 +106,36 @@ public class XML2SensorType extends DefaultHandler {
         }
         if (localName.equals("receive")) {
             res.setReceive(receive);
+        }
+        if (localName.equals("min")) {
+            validity.setMin(sb.toString().trim());
+        }
+        if (localName.equals("max")) {
+            validity.setMax(sb.toString().trim());
+        }
+        if (localName.equals("validity")) {
+            res.setValidity(validity);
+        }
+        if (localName.equals("triggertype")) {
+            trigger.setType(sb.toString().trim());
+        }
+        if (localName.equals("triggervalue")) {
+            trigger.setValue(sb.toString().trim());
+        }
+        if (localName.equals("trigger")) {
+            alert.setTrigger(trigger);
+        }
+        if (localName.equals("message")) {
+            reaction.setReaction(new Message(sb.toString().trim()));
+        }
+        if (localName.equals("reaction")) {
+            alert.setReaction(reaction);
+        }
+        if (localName.equals("alert")) {
+            alerts.add(alert);
+        }
+        if (localName.equals("alerts")) {
+            res.setAlerts(alerts);
         }
         sb.setLength(0);
         super.endElement(uri, localName, qName);

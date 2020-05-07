@@ -6,6 +6,7 @@ import com.hit_src.iot_terminal.object.sensortype.Operation;
 import com.hit_src.iot_terminal.object.sensortype.Receive;
 import com.hit_src.iot_terminal.object.sensortype.Send;
 import com.hit_src.iot_terminal.object.sensortype.SensorType;
+import com.hit_src.iot_terminal.object.sensortype.Validity;
 import com.hit_src.iot_terminal.object.sensortype.op.OP;
 
 import java.nio.ByteBuffer;
@@ -93,5 +94,11 @@ public class Sensor {
             reg &= 0x0FFFF;
         }
         return reg;
+    }
+
+    public boolean isInvalid(int res) {
+        SensorType sensorType = GlobalVar.sensorTypeHashMap.get(type);
+        Validity validity=sensorType.validity;
+        return !validity.judge(res);
     }
 }
