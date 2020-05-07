@@ -60,4 +60,13 @@ public class SettingsService {
         editor.putBoolean("SerialQuerySetting", setting);
         editor.commit();
     }
+
+    public boolean getAlertEnableSetting() {
+        return settingsFile.getBoolean("AlertEnableSetting",true);
+    }
+    public void setAlertEnableSetting(boolean setting){
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putBoolean("AlertEnableSetting", setting);
+        editor.commit();
+    }
 }
