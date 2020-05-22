@@ -29,15 +29,16 @@ public class BackButton extends Button {
         super(context, attrs, defStyleAttr);
         init();
     }
-    private void init(){
+
+    private void init() {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = ((FragmentActivity)getContext()).getSupportFragmentManager();
-                ArrayList<Fragment> list= (ArrayList<Fragment>) manager.getFragments();
-                FragmentTransaction transaction=manager.beginTransaction();
-                for(int i=1;i<=list.size()-1;i++){
-                    transaction.remove(list.get(list.size()-i));
+                FragmentManager manager = ((FragmentActivity) getContext()).getSupportFragmentManager();
+                ArrayList<Fragment> list = (ArrayList<Fragment>) manager.getFragments();
+                FragmentTransaction transaction = manager.beginTransaction();
+                for (int i = 1; i <= list.size() - 1; i++) {
+                    transaction.remove(list.get(list.size() - i));
                 }
                 transaction.commit();
             }

@@ -14,4 +14,5 @@
     <color name="Overview_Status_Red">#B71C1C</color>
     <color name="touming">#00FFFFFF</color>
     <color name="BackgroundColor">#003333</color>
+    <color name="List_Clicked_Color">#01579B</color>
 </resources>

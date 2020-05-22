@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.hit_src.iot_terminal.ui.sensor.components.SensorAddButton
+                    <Button
                         android:id="@+id/Sensor_Add_Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -107,7 +107,7 @@
                         android:textColor="#FFFFFF"
                         android:textSize="35sp" />
 
-                    <com.hit_src.iot_terminal.ui.sensor.components.SensorDelButton
+                    <Button
                         android:id="@+id/Sensor_Delete_Button"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

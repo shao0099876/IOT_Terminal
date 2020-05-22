@@ -16,11 +16,13 @@ import androidx.fragment.app.Fragment;
 
 import com.hit_src.iot_terminal.MainApplication;
 import com.hit_src.iot_terminal.R;
+import com.hit_src.iot_terminal.service.SettingsService;
 
 public class SettingsInternetFragment extends Fragment {
     private EditText serverAddrEditText;
     private EditText serverModbusPortEditText;
     private EditText serverXMLPortEditText;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -28,16 +30,12 @@ public class SettingsInternetFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
     public void onStart() {
         super.onStart();
-        View view=getView();
-        serverAddrEditText=view.findViewById(R.id.Settings_Internet_ServerAddr_EditText);
-        serverModbusPortEditText=view.findViewById(R.id.Settings_Internet_ModbusPort_EditText);
-        serverXMLPortEditText=view.findViewById(R.id.Settings_Internet_XMLPort_EditText);
+        View view = getView();
+        serverAddrEditText = view.findViewById(R.id.Settings_Internet_ServerAddr_EditText);
+        serverModbusPortEditText = view.findViewById(R.id.Settings_Internet_ModbusPort_EditText);
+        serverXMLPortEditText = view.findViewById(R.id.Settings_Internet_XMLPort_EditText);
 
         serverAddrEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -52,12 +50,8 @@ public class SettingsInternetFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String addr=s.toString();
-                try {
-                    MainApplication.settingsService.setUpperServerAddr(addr);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                String addr = s.toString();
+                SettingsService.getInstance().setUpperServerAddr(addr);
             }
         });
         serverModbusPortEditText.addTextChangedListener(new TextWatcher() {
@@ -73,13 +67,11 @@ public class SettingsInternetFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String port=s.toString();
+                String port = s.toString();
                 try {
-                    MainApplication.settingsService.setUpperServerModbusPort(Integer.parseInt(port));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (NumberFormatException e){
-                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT);
+                    SettingsService.getInstance().setUpperServerModbusPort(Integer.parseInt(port));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "格式错误", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -96,31 +88,25 @@ public class SettingsInternetFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String port=s.toString();
+                String port = s.toString();
                 try {
-                    MainApplication.settingsService.setUpperServerXMLPort(Integer.parseInt(port));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (NumberFormatException e){
-                    Toast.makeText(getContext(),"格式错误",Toast.LENGTH_SHORT);
+                    SettingsService.getInstance().setUpperServerXMLPort(Integer.parseInt(port));
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "格式错误", Toast.LENGTH_SHORT);
                 }
             }
         });
         String serverAddr = null;
         String serverModbusPort = null;
-        String serverXMLPort=null;
-        try {
-            serverAddr = MainApplication.settingsService.getUpperServerAddr();
-            int modbusPort=MainApplication.settingsService.getUpperServerModbusPort();
-            serverModbusPort=modbusPort<0?"":String.valueOf(modbusPort);
-            int xmlPort=MainApplication.settingsService.getUpperServerXMLPort();
-            serverXMLPort=xmlPort<0?"":String.valueOf(xmlPort);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        final String serverAddr_final=serverAddr;
-        final String serverModbusPort_final=serverModbusPort;
-        final String serverXMLPort_final=serverXMLPort;
+        String serverXMLPort = null;
+        serverAddr = SettingsService.getInstance().getUpperServerAddr();
+        int modbusPort = SettingsService.getInstance().getUpperServerModbusPort();
+        serverModbusPort = modbusPort < 0 ? "" : String.valueOf(modbusPort);
+        int xmlPort = SettingsService.getInstance().getUpperServerXMLPort();
+        serverXMLPort = xmlPort < 0 ? "" : String.valueOf(xmlPort);
+        final String serverAddr_final = serverAddr;
+        final String serverModbusPort_final = serverModbusPort;
+        final String serverXMLPort_final = serverXMLPort;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

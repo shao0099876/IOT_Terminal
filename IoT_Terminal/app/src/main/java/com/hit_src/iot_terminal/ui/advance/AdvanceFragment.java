@@ -22,20 +22,16 @@ public class AdvanceFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-    @Override
     public void onStart() {
         super.onStart();
-        View view=getView();
-        Button sensorType=view.findViewById(R.id.Advance_SensorType_Button);
+        View view = getView();
+        Button sensorType = view.findViewById(R.id.Advance_SensorType_Button);
         sensorType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager=getFragmentManager();
-                FragmentTransaction transaction=manager.beginTransaction();
-                transaction.replace(R.id.Advance_Fragment,new AdvanceSensorTypeFragment());
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.Advance_Fragment, new AdvancePackageManagerFragment());
                 transaction.commit();
             }
         });
