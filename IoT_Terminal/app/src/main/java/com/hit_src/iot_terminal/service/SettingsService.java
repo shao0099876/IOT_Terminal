@@ -62,7 +62,8 @@ public class SettingsService {
     }
 
     public boolean getAlertEnableSetting() {
-        return settingsFile.getBoolean("AlertEnableSetting",true);
+        //return settingsFile.getBoolean("AlertEnableSetting",true);
+        return true;
     }
     public void setAlertEnableSetting(boolean setting){
         SharedPreferences.Editor editor = settingsFile.edit();
