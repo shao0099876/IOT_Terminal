@@ -104,7 +104,6 @@ public class SensorService extends Service {
             stringBuilder.append(j);
             stringBuilder.append(" ");
         }
-        GlobalVar.log(i.getID() + "号传感器发送：" + stringBuilder.toString());
         SerialPort.write(cmd);
     }
 
@@ -115,7 +114,6 @@ public class SensorService extends Service {
             return false;
         }
         int res = i.unpackage(raw_data);
-        GlobalVar.log(i.getID() + "号传感器接收：" + res);
         if (i.isInvalid(res)) {
             GlobalVar.log(i.getID() + "号传感器数据无效");
             realtimeData = new DataRecord(i.getID(), new Date().getTime(), null);
