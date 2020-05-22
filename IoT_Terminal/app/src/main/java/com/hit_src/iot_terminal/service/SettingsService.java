@@ -1,73 +1,73 @@
 package com.hit_src.iot_terminal.service;
 
-import android.app.Service;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
 
-import java.util.ArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
+import com.hit_src.iot_terminal.MainApplication;
 
-public class SettingsService extends Service {
+import static android.content.Context.MODE_PRIVATE;
+
+public class SettingsService {
     private SharedPreferences settingsFile;
-    @Override
-    public void onCreate(){
-        super.onCreate();
-        settingsFile=getSharedPreferences("settings",MODE_PRIVATE);
-    }
-    public class SettingsServiceImpl extends ISettingsService.Stub {
+    private static SettingsService self = null;
 
-        @Override
-        public String getUpperServerAddr() {
-            return settingsFile.getString("UpperServerAddr","");
+    public static SettingsService getInstance() {
+        if (self == null) {
+            self = new SettingsService();
         }
-
-        @Override
-        public void setUpperServerAddr(String addr) {
-            SharedPreferences.Editor editor=settingsFile.edit();
-            editor.putString("UpperServerAddr",addr);
-            editor.commit();
-        }
-
-        @Override
-        public int getUpperServerModbusPort() {
-            return settingsFile.getInt("UpperServerModbusPort",-1);
-        }
-
-        @Override
-        public void setUpperServerModbusPort(int port) {
-            SharedPreferences.Editor editor=settingsFile.edit();
-            editor.putInt("UpperServerModbusPort",port);
-            editor.commit();
-        }
-
-        @Override
-        public int getUpperServerXMLPort() {
-            return settingsFile.getInt("UpperServerXMLPort",-1);
-        }
-
-        @Override
-        public void setUpperServerXMLPort(int port) {
-            SharedPreferences.Editor editor=settingsFile.edit();
-            editor.putInt("UpperServerXMLPort",port);
-            editor.commit();
-        }
-
-        @Override
-        public boolean getSerialQuerySetting() {
-            return settingsFile.getBoolean("SerialQuerySetting",true);
-        }
-
-        @Override
-        public void setSerialQuerySetting(boolean setting) {
-            SharedPreferences.Editor editor=settingsFile.edit();
-            editor.putBoolean("SerialQuerySetting",setting);
-            editor.commit();
-        }
+        return self;
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return new SettingsServiceImpl();
+    private SettingsService() {
+        settingsFile = MainApplication.self.getSharedPreferences("settings", MODE_PRIVATE);
+    }
+
+    public String getUpperServerAddr() {
+        return settingsFile.getString("UpperServerAddr", "");
+    }
+
+    public void setUpperServerAddr(String addr) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putString("UpperServerAddr", addr);
+        editor.commit();
+    }
+
+    public int getUpperServerModbusPort() {
+        return settingsFile.getInt("UpperServerModbusPort", -1);
+    }
+
+    public void setUpperServerModbusPort(int port) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putInt("UpperServerModbusPort", port);
+        editor.commit();
+    }
+
+    public int getUpperServerXMLPort() {
+        return settingsFile.getInt("UpperServerXMLPort", -1);
+    }
+
+    public void setUpperServerXMLPort(int port) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putInt("UpperServerXMLPort", port);
+        editor.commit();
+    }
+
+    public boolean getSerialQuerySetting() {
+        return settingsFile.getBoolean("SerialQuerySetting", true);
+    }
+
+    public void setSerialQuerySetting(boolean setting) {
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putBoolean("SerialQuerySetting", setting);
+        editor.commit();
+    }
+
+    public boolean getAlertEnableSetting() {
+        //return settingsFile.getBoolean("AlertEnableSetting",true);
+        return true;
+    }
+    public void setAlertEnableSetting(boolean setting){
+        SharedPreferences.Editor editor = settingsFile.edit();
+        editor.putBoolean("AlertEnableSetting", setting);
+        editor.commit();
     }
 }
