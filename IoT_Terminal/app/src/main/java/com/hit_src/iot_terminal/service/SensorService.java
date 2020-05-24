@@ -99,11 +99,6 @@ public class SensorService extends Service {
 
     private void send(Sensor i) {
         byte[] cmd = i.packageCMD();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (byte j : cmd) {
-            stringBuilder.append(j);
-            stringBuilder.append(" ");
-        }
         SerialPort.write(cmd);
     }
 
@@ -121,12 +116,10 @@ public class SensorService extends Service {
         }
         realtimeData = new DataRecord(i.getID(), new Date().getTime(), res);
         DatabaseService.getInstance().addDataRecord(realtimeData);
-        if(SettingsService.getInstance().getAlertEnableSetting()){
-            SensorType sensorType=GlobalVar.sensorTypeHashMap.get(i.getType());
-            for(Alert alert:sensorType.alerts){
-                if(alert.activated(res)){
-                    alert.react(new Environment(i,res));
-                }
+        SensorType sensorType=GlobalVar.sensorTypeHashMap.get(i.getType());
+        for(Alert alert:sensorType.alerts){
+            if(alert.activated(res)){
+                alert.react(new Environment(i,res));
             }
         }
 
